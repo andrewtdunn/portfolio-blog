@@ -4,7 +4,6 @@
 /node_modules
 /.pnp
 .pnp.js
-.yarn/install-state.gz
 
 # testing
 /coverage
@@ -12,6 +11,7 @@
 # next.js
 /.next/
 /out/
+portfolio.code-workspace
 
 # production
 /build
@@ -56,3 +56,6 @@ amplifytools.xcconfig
 .secret-*
 **.sample
 #amplify-do-not-edit-end
+
+# Sentry Config File
+.sentryclirc
