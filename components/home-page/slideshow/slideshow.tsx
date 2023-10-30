@@ -25,7 +25,7 @@ const Slideshow = ({
       >
         <ul className={styles.slideList}>
           {projects &&
-            projects.map((project, index) => (
+            projects.map((project: any, index: number) => (
               <li key={project.id} className={styles.slideshow}>
                 {isFocused && currentIndex == index ? (
                   <FocusedSlide

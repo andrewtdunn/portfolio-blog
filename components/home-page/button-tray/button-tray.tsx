@@ -9,7 +9,7 @@ const ButtonTray = () => {
   return (
     <div className={styles.ButtonTray}>
       {projects &&
-        projects.map((project) => {
+        projects.map((project: any) => {
           return <ButtonTrayButton project={project} key={project.id} />;
         })}
     </div>

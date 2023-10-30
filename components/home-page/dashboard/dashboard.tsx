@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   let strings: string[];
   if (isFocused!) {
-    let newDetails = project.details!.map((detail) => `* ${detail}`);
+    let newDetails = project.details!.map((detail: any) => `* ${detail}`);
     strings = [newDetails.join("<br/>")];
   } else {
     strings = [project.tagline!];
