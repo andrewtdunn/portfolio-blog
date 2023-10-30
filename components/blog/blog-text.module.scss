@@ -1,0 +1,76 @@
+@import "../../styles/base";
+
+.Post {
+  .post_text {
+    padding-left: 10px;
+    padding-right: 10px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18px;
+    line-height: 1.25;
+    margin-bottom: 1em;
+    white-space: pre-wrap;
+
+    @include for-phone-only {
+      padding-left: 5px;
+      padding-right: 5px;
+      text-align: justify;
+    }
+
+    a {
+      color: $hot-pink;
+      text-decoration: none;
+    }
+
+    iframe {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .drop_cap {
+      font-family: AlbertusMedium;
+      font-size: 234%;
+      float: left;
+      position: relative;
+      margin-right: 5px;
+      margin-top: -2px;
+      margin-bottom: -18px;
+
+      @include for-phone-only {
+        margin-top: -4px;
+        font-size: 250%;
+      }
+    }
+
+    &.two_column {
+      -moz-column-count: 2;
+      -moz-column-gap: 1em;
+      -webkit-column-count: 2;
+      -webkit-column-gap: 1em;
+      column-count: 2;
+      column-gap: 1em;
+      text-align: justify;
+
+      //&:first-line {
+      //  font-variant: small-caps;
+      //  line-height: 150%;
+      //  font-size: 18px;
+      //}
+
+      @include for-phone-only {
+        -moz-column-count: 1;
+        -moz-column-gap: 0;
+        -webkit-column-count: 1;
+        -webkit-column-gap: 0;
+        column-count: 1;
+        column-gap: 0;
+      }
+    }
+
+    .pub_date {
+      color: $gray;
+      @include for-phone-only {
+        font-size: 12px;
+      }
+    }
+  }
+}

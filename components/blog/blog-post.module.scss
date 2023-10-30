@@ -1,0 +1,122 @@
+@import "../../styles/base";
+
+.Post {
+  @include rolling-stone-post;
+  font-size: 14px;
+  transition: opacity 0.25s ease-in;
+
+  h1 {
+    font-size: 28px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin: 5px;
+    width: 100%;
+    text-align: left;
+
+    @include for-phone-only {
+      font-size: 24px;
+    }
+  }
+
+  .fader {
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
+  &.fadedOut {
+    opacity: 0;
+  }
+  .clear {
+    clear: both;
+  }
+  .faderHolder {
+    height: 300px;
+    width: 100%;
+    border: 1px solid $offblack;
+    margin-bottom: 20px;
+
+    @include for-phone-only {
+      width: 100%;
+      height: calc((100vw - 56px) * 0.452);
+      max-height: calc((100vw - 56px) * 0.452);
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .slideHolder {
+      width: 100%;
+      height: 100%;
+      max-height: 300px;
+      background-color: black;
+
+      @include for-phone-only {
+        width: 100%;
+        height: calc((100vw - 56px) * 0.452);
+        max-height: calc((100vw - 56px) * 0.452);
+      }
+
+      img {
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        max-height: 300px !important;
+        @include for-phone-only {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .meta {
+    padding-bottom: 10px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
+
+    @include for-phone-only {
+      font-size: 16px;
+    }
+    .comments {
+      float: left;
+      cursor: pointer;
+    }
+    .comment_link {
+      text-decoration: underline;
+    }
+    .pub_date {
+      float: right;
+      color: $gray;
+    }
+  }
+
+  .videoHolder {
+    margin-bottom: 10px;
+  }
+
+  hr {
+    border-top: 1px solid $offblack;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  .postFooter {
+    font-size: 16px;
+    color: $darkestgray;
+    display: flex;
+    justify-content: space-between;
+
+    .footerLeft {
+      cursor: pointer;
+    }
+
+    .footerRight {
+      font-style: italic;
+    }
+  }
+}

@@ -1,0 +1,16 @@
+@import "../../styles/base";
+
+.CertificationImage {
+  img {
+    max-width: 110px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.3s ease-out;
+
+    @include for-desktop-up {
+      &:hover {
+        transform: translate(0, -5px);
+      }
+    }
+  }
+}

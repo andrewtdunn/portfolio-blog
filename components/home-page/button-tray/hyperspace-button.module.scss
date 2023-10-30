@@ -1,0 +1,81 @@
+@import "../../../styles/base";
+
+.HyperspaceButton {
+  color: rgba($transparent-yellow, 0.75);
+  z-index: 100000;
+  position: absolute;
+  bottom: 120px;
+  font-size: 1.6em;
+  border: 2px solid rgba($color: #fff, $alpha: 0.8);
+  border-radius: 10px;
+  text-transform: uppercase;
+  cursor: pointer;
+  opacity: 1;
+  transition: opacity 0.3s ease-in;
+  display: flex;
+  flex-direction: row;
+  gap: 3px;
+  padding: 0px 10px;
+  justify-content: center;
+
+  .buttonText {
+    @include for-phone-only {
+      display: none;
+    }
+  }
+
+  .icons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 5px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &:hover {
+    .icons {
+      animation: pulse 0.5s 0.5s infinite;
+    }
+  }
+
+  &.hidden {
+    color: rgba($hot-blue, 0.5);
+    opacity: 1;
+    .icons {
+      opacity: 0.6;
+      animation: pulse 0.5s 0.5s infinite;
+    }
+
+    @include for-phone-only {
+      opacity: 1;
+    }
+  }
+
+  @include for-phone-only {
+    top: 670px;
+    bottom: auto;
+    border-radius: 50%;
+    padding: 5px;
+    font-size: 3em;
+    border-width: 3px;
+  }
+
+  h1 {
+    animation: pulse 4s ease-in 1s infinite;
+  }
+
+  @keyframes pulse {
+    0% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+}

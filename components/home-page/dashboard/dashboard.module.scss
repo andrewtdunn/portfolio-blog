@@ -1,0 +1,58 @@
+@import "../../../styles/base.scss";
+
+.Dashboard {
+  @include hero;
+  @include unselectable;
+  @include crt_monitor;
+  position: relative;
+  font-size: 1.25em;
+  color: $bright-green;
+  background-color: rgba(0, 0, 0);
+  padding: 15px;
+  box-sizing: border-box;
+  width: 700px;
+  height: 120px;
+  text-align: left;
+  z-index: 11;
+  overflow: hidden;
+  //border: 2px solid $white;
+  opacity: 1;
+  transition: opacity 0.5s ease-in;
+  backdrop-filter: blur(20px);
+
+  .inner {
+    display: block;
+    line-height: 20px;
+  }
+
+  @include for-phone-only {
+    top: 100px;
+    max-height: 110px;
+    font-size: 1.2em;
+    display: none;
+  }
+
+  @include for-small-phone-only {
+    font-size: 1.15em;
+    padding-top: 8px;
+  }
+  .magenta {
+    color: $hot-pink;
+  }
+  .darkMagenta {
+    color: $hot-blue;
+  }
+
+  .white {
+    color: $white;
+  }
+
+  .TypeWriter {
+    display: inline;
+    margin-left: 7px;
+  }
+
+  &.active {
+    opacity: 1;
+  }
+}

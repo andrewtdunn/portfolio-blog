@@ -1,0 +1,27 @@
+@import "../../../styles/base.scss";
+
+.cover {
+  @include crt_monitor;
+  height: 350px;
+  width: 698px;
+  box-shadow: inset 0px 0px 0px 5px rgba(0, 0, 0, 1);
+
+  @include for-phone-only {
+    width: 95vw;
+    height: 47vw;
+  }
+}
+
+.slideshow {
+  padding: 0;
+  margin: 0;
+
+  .slideList {
+    padding: 0;
+  }
+
+  @include for-phone-only {
+    width: 95vw;
+    height: 47vw;
+  }
+}

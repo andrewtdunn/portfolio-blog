@@ -1,0 +1,74 @@
+@import "../../styles/base.scss";
+
+.RightNav {
+  @include sideMenu;
+  right: 0px;
+  width: $sideMenuWidth;
+  background-color: black;
+  max-width: 50vw;
+  width: 220px;
+  height: 100vh;
+  overflow: hidden;
+
+  @include for-phone-only {
+    width: $sideMenuWidthMobile !important;
+  }
+
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+    transform: scaleX(-1);
+  }
+
+  .rightElevatorImage2 {
+    position: absolute;
+    left: 0;
+    top: $navBackgroundTop;
+    transform: scaleX(-1) scaleY(-1);
+    @include for-phone-only {
+      top: $navBackgroundTopMobile;
+    }
+  }
+
+  h2 {
+    display: inline-block;
+    margin-top: 10px;
+  }
+  button,
+  h2 {
+    display: inline-block;
+    @include three_d;
+    margin-top: 10px;
+    font-size: 1.2em;
+    color: white;
+    margin: 10px 0 0 0;
+    text-shadow: none;
+    letter-spacing: 3px;
+    user-select: none;
+
+    &.signOutButton {
+      @include scifiBtn($hot-blue);
+      margin-top: 40px;
+      padding: 5px;
+    }
+
+    @include for-phone-only {
+      width: 100%;
+    }
+  }
+
+  .formHolder {
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 9;
+
+    margin-top: 100px;
+    margin-right: 20px;
+    @include for-phone-only {
+      margin-right: 10px;
+      width: 100%;
+    }
+  }
+}

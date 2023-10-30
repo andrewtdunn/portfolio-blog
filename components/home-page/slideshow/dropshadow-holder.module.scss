@@ -1,0 +1,16 @@
+@import "../../../styles/base.scss";
+
+.DropShadowHolder {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 1000;
+  height: 350px;
+  width: 698px;
+  box-shadow: inset 0px 10px 40px rgba(0, 0, 0, 0.8);
+
+  @include for-phone-only {
+    width: 95vw;
+    height: 47vw;
+  }
+}

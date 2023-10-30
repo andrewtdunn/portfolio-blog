@@ -1,0 +1,82 @@
+@import "../../styles/base";
+
+.Modal {
+  position: relative;
+  display: none;
+  z-index: 9999999999999;
+  width: 100%;
+  height: 100vh;
+  top: 0px;
+  left: 0px;
+  margin: 0 auto;
+  opacity: 0;
+  transition: opacity 1s ease-out;
+  cursor: pointer;
+
+  &.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+  }
+
+  .tint {
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .modalInner {
+    width: 80%;
+    height: 80%;
+    border: 5px solid orange;
+    // background-color: rgba(0, 0, 0, 0.7);
+    background-color: white;
+    border-radius: 15px;
+    display: flex;
+    color: $white;
+    justify-content: center;
+    position: absolute;
+    flex-direction: column;
+    overflow: hidden;
+    cursor: auto;
+
+    .closeButton {
+      color: white;
+      font-size: 3em;
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .infoDiv {
+      width: 100%;
+      height: 200px;
+      background-color: cadetblue;
+      padding: 10px;
+      border-bottom: 3px solid orange;
+    }
+
+    .formHolder {
+      background-color: beige;
+      width: 100%;
+      height: 100%;
+      overflow-y: scroll;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 1.3em;
+    }
+
+    @include for-phone-only {
+      width: 90%;
+      height: 70%;
+      position: absolute;
+      top: 100px;
+      background-color: rgba(0, 0, 0, 0.9);
+    }
+  }
+}

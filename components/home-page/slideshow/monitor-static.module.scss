@@ -1,0 +1,85 @@
+@import "../../../styles/base";
+
+.MonitorStatic {
+  @include hero;
+
+  z-index: 100000;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 700px;
+  opacity: 0.1;
+
+  @include for-phone-only {
+    width: 100%;
+  }
+}
+
+.tvstatic {
+  //@include pacman;
+  @include hero;
+  z-index: 4;
+  background: #000;
+  transition: opacity 0.25s ease-in;
+  opacity: 0.1;
+  border: none;
+  animation: flickerstatic 10s infinite;
+
+  @include for-phone-only {
+    width: 100%;
+  }
+
+  &.faded {
+    opacity: 0.1;
+  }
+
+  &.hidden {
+    display: none;
+  }
+
+  &.paused {
+    animation: none;
+    opacity: 0.2;
+  }
+
+  //@include for-phone-only {
+  //  width: auto;
+  //  height: auto;
+  //}
+
+  video#staticvid {
+    width: 700px;
+    height: 350px;
+
+    @include for-phone-only {
+      width: calc(100% - 20px);
+      height: calc((100vw - 20px) / 2);
+    }
+  }
+
+  @keyframes flickerstatic {
+    0% {
+      opacity: 0;
+    }
+
+    71% {
+      opacity: 0;
+    }
+
+    73% {
+      opacity: 0;
+    }
+
+    94% {
+      opacity: 0.25;
+    }
+
+    95% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}

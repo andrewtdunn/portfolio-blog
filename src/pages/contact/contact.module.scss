@@ -1,0 +1,18 @@
+@import "../../../styles/base.scss";
+
+.Contact {
+  background-color: black;
+  min-height: 100vh;
+  @include punk-bkgd3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h2 {
+    @include tape-text();
+    @include rotate(-28);
+    color: $darkRed;
+    font-weight: 180;
+    z-index: 12;
+  }
+}

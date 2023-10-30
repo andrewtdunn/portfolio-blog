@@ -1,0 +1,168 @@
+type BadReception
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  url: String
+}
+
+type Project
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read], provider: iam }
+    ]
+  ) {
+  id: ID!
+  title: String!
+  image: String!
+  description: String!
+  tagline: String
+  projectLogo: String!
+  details: [String!]
+  slides: [String]
+  showcaseType: String!
+  vimeoId: String
+  completionData: AWSDate
+  isActive: Boolean
+}
+
+type Blog
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read], provider: iam }
+    ]
+  ) {
+  id: ID!
+  title: String
+  text: String
+  image: String
+  heroAlignment: String
+  heroSize: String
+  isTwoColumn: Boolean
+  dropCap: Boolean
+  publishDate: AWSDate
+  display: Boolean
+  slides: [String]
+  videoId: String
+}
+
+type Agency
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read], provider: iam }
+    ]
+  ) {
+  id: ID!
+  name: String
+  image: String
+  bioID: ID! @index(name: "byBio")
+}
+
+type School
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  name: String
+  degree: String
+  image: String
+  bioID: ID! @index(name: "byBio")
+}
+
+type MiscCertification
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  name: String
+  link: String
+  image: String
+  bioID: ID! @index(name: "byBio")
+}
+
+type Bio
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  image: String
+  intro: String!
+  introClosing: String!
+  AWSCertifications: [AWSCertification]
+    @hasMany(indexName: "byBio", fields: ["id"])
+  MiscCertifications: [MiscCertification]
+    @hasMany(indexName: "byBio", fields: ["id"])
+  Agencies: [Agency] @hasMany(indexName: "byBio", fields: ["id"])
+  signatureImage: String
+  mainUser: Boolean
+  Schools: [School] @hasMany(indexName: "byBio", fields: ["id"])
+}
+
+type AWSCertification
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
+  id: ID!
+  name: String!
+  link: String!
+  image: String!
+  bioID: ID! @index(name: "byBio")
+}

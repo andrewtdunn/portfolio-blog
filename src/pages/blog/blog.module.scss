@@ -1,0 +1,39 @@
+@import "../../../styles/base.scss";
+
+.Blog {
+  @include punk-bkgd2;
+  background-color: black;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+
+  .blogHolder {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow-y: scroll;
+    flex-direction: column;
+
+    .innerContainer {
+      padding-top: 100px;
+      padding-bottom: 50px;
+      position: relative;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      align-items: center;
+      @include for-phone-only {
+        max-width: 100%;
+        width: 100%;
+        padding-bottom: 100px;
+      }
+
+      .emptyDiv {
+        height: 20px;
+      }
+    }
+  }
+}

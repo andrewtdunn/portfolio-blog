@@ -1,0 +1,49 @@
+@import "../../styles/base.scss";
+
+.AuthForm {
+  @include authform;
+  text-align: right;
+  color: $white;
+  margin-top: 5px;
+  text-shadow: none;
+  button {
+    @include scifiBtn($hot-pink);
+
+    margin-bottom: 10px;
+    letter-spacing: 3px;
+    @include for-phone-only {
+      width: 100% !important;
+    }
+  }
+
+  .signedIn {
+    overflow: hidden;
+    text-align: right;
+    h1 {
+      float: right;
+    }
+  }
+}
+
+.nameText {
+  display: block;
+  margin-top: 100px;
+  @include rotate(3);
+  .nametag {
+    font-size: 1.8em;
+    color: $tapeBlue;
+    background-color: $white;
+
+    white-space: pre;
+
+    text-align: right;
+    display: inline;
+    margin-bottom: 10px;
+
+    @include for-phone-only {
+      @include rotate(-3);
+      max-width: $sideMenuWidth;
+      float: right;
+    }
+  }
+}

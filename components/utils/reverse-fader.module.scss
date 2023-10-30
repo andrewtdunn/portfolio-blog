@@ -1,0 +1,15 @@
+@import "../../styles/base.scss";
+
+.ReverseFader {
+  position: fixed;
+  width: 100vw;
+  height: 100%;
+  z-index: 10;
+  background-color: black;
+  opacity: 0.8;
+  transition: opacity 1s ease-in;
+  z-index: 9;
+  &.light {
+    opacity: 0;
+  }
+}

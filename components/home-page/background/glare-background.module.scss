@@ -1,0 +1,30 @@
+@import "../../../styles/base";
+
+.GlareReflection {
+  width: 85%;
+  height: 25vh;
+  position: absolute;
+  z-index: 4;
+  -webkit-filter: blur(15px);
+  filter: blur(55px) saturate(1.5);
+  left: 50%;
+  top: 50%;
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  opacity: 0.3;
+  transition: opacity 1s ease-in;
+
+  &.opened {
+    filter: blur(55px);
+  }
+
+  &.lit {
+    opacity: 0.8;
+  }
+
+  @include for-phone-only {
+    display: none;
+  }
+}

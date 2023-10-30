@@ -1,0 +1,118 @@
+@import "reset";
+@import "colors";
+@import "mediaqueries";
+@import "mixins";
+
+$image_path: "/images/";
+$font_path: "/fonts/";
+
+$navBackgroundTop: 652px;
+$navBackgroundTopMobile: 534px;
+$sideMenuWidth: 220px;
+$sideMenuWidthMobile: 180px;
+
+@font-face {
+  font-family: "impact_label_reversedregular";
+  src: url($font_path + "Impact_Label_Reversed-webfont.eot");
+  src: url($font_path + "Impact_Label_Reversed-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url($font_path + "Impact_Label_Reversed-webfont.woff") format("woff"),
+    url($font_path + "Impact_Label_Reversed-webfont.ttf") format("truetype"),
+    url($font_path + "Impact_Label_Reversed-webfont.svg#impact_label_reversedregular")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ImpactLabelRegular";
+  src: url($font_path + "Impact_Label-webfont.eot");
+  src: url($font_path + "Impact_Label-webfont.eot?#iefix")
+      format("embedded-opentype"),
+    url($font_path + "Impact_Label-webfont.woff") format("woff"),
+    url($font_path + "Impact_Label-webfont.ttf") format("truetype"),
+    url($font_path + "Impact_Label-webfont.svg#ImpactLabelRegular")
+      format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "OpenSans";
+  font-style: normal;
+  font-weight: 400;
+  //   src: url('../fonts/open-sans-v13-latin-regular.eot'); /* IE9 Compat Modes */
+  src: local("OpenSans"), local("OpenSans"),
+    url($font_path + "OpenSans-Regular.ttf") format("truetype"),
+    url($font_path + "OpenSans-Regular.eot") format("embedded-opentype"),
+    url($font_path + "OpenSans-Regular.svg") format("svg"),
+    url($font_path + "OpenSans-Regular.woff") format("woff"),
+    url($font_path + "OpenSans-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "AlbertusMedium";
+  font-style: normal;
+  font-weight: 400;
+  src: url($font_path + "Albertus Medium Regular font.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url($font_path + "AlbertusMedium.ttf")
+      format("truetype"); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: "MotterTektura";
+  font-style: normal;
+  font-weight: 400;
+  src: url($font_path + "Motter Tektura Normal.ttf") format("truetype"); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: "Benegraphic";
+  font-style: normal;
+  font-weight: 400;
+  src: url($font_path + "beneg___.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url($font_path + "beneg___.ttf")
+      format("truetype"); /* Safari, Android, iOS */
+}
+
+@font-face {
+  font-family: "SpaceMono";
+  font-style: normal;
+  font-weight: 400;
+  src: url($font_path + "SpaceMono-Regular.ttf") format("truetype"),
+    /* Safari, Android, iOS */ url($font_path + "SpaceMono-Regular.ttf")
+      format("truetype"); /* Safari, Android, iOS */
+}
+
+/*--------------------------------------------------------------
+Accessibility
+--------------------------------------------------------------*/
+/* Text meant only for screen readers */
+.screen-reader-text {
+  clip: rect(1px, 1px, 1px, 1px);
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+}
+
+.screen-reader-text:hover,
+.screen-reader-text:active,
+.screen-reader-text:focus {
+  background-color: #f1f1f1;
+  border-radius: 3px;
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.6);
+  clip: auto !important;
+  color: #21759b;
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000; /* Above WP toolbar */
+}

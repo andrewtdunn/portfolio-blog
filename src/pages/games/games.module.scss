@@ -1,0 +1,24 @@
+@import "../../../styles/base.scss";
+
+.Games {
+  background-color: black;
+  min-height: 100vh;
+  @include punk-bkgd4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .labelHolder {
+    @include rotate(12);
+    z-index: 12;
+  }
+
+  h2 {
+    @include tape-text();
+
+    color: $darkpurple;
+    font-weight: 180;
+
+    display: inline;
+  }
+}

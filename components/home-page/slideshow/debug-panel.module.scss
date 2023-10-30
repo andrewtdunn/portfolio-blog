@@ -1,0 +1,20 @@
+@import "../../../styles/base.scss";
+
+.DebugPanel {
+  table {
+    @include debug_table;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+
+  @include for-phone-only {
+    display: none;
+  }
+}
+
+.leftOpen {
+  -webkit-transform: translateX(-220px);
+  transform: translateX(-220px);
+  transition: transform ease-out 150ms;
+}

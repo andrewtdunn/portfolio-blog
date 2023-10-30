@@ -1,0 +1,50 @@
+@import "../../../styles/base.scss";
+
+.SlideVideo {
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 700px;
+  height: 350px;
+  margin-bottom: 0px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-size: 2em;
+  }
+
+  @include for-phone-only {
+    width: 95vw;
+    height: 47vw;
+  }
+
+  .video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    @include for-phone-only {
+      margin-top: -15px;
+    }
+  }
+
+  .placeHolderImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    opacity: 0.6;
+
+    filter: grayscale(1) brightness(0.2);
+
+    &.hidden {
+      opacity: 0;
+    }
+
+    @include for-phone-only {
+      filter: grayscale(1) brightness(0.4);
+      margin-top: -15px;
+    }
+  }
+}

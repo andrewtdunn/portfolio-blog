@@ -1,0 +1,612 @@
+@mixin hero {
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid white;
+  box-sizing: border-box;
+}
+
+@mixin punk-bkgd {
+  background-image: url("/images/coffee_ring_opacity_sized2.png"),
+    url("/images/coffee_spill_opacity_sized3.png"), url("/images/honeycomb.png"),
+    url("/images/punk1.png");
+  background-attachment: fixed, fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, repeat, repeat;
+  background-position: -58px 581px, 1103px 155px, 0 0, 0 0;
+  background-blend-mode: darken, darken, darken, normal;
+  box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.3);
+}
+
+@mixin punk-bkgd2 {
+  @include punk-bkgd;
+  background-image: url("/images/glue_stain_opacity_sized3.png"),
+    url("/images/glue_stain_opacity_sized3.png"), url("/images/honeycomb.png"),
+    url("/images/punk2.png");
+  background-attachment: fixed, fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, repeat, repeat;
+  background-position: 5px 606px, 505px 606px, 0 0, 0 0;
+  background-blend-mode: darken, darken, darken, normal;
+}
+
+@mixin punk-bkgd3 {
+  @include punk-bkgd;
+  background-image: url("/images/coffee_ring_opacity_sized2.png"),
+    url("/images/coffee_ring_opacity_sized2_dark2.png"),
+    url("/images/honeycomb.png"), url("/images/worktour.png"),
+    url("/images/punk3.png");
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat, repeat;
+  background-position: 1100px 120px, 1040px 162px, 0 0, 100px 200px, 0px 0px;
+  background-blend-mode: darken, darken, darken, normal, normal;
+}
+
+@mixin punk-bkgd4 {
+  @include punk-bkgd;
+  background-image: url("/images/glue_stain_opacity_sized3.png"),
+    url("/images/coffee_ring_opacity_sized2_dark2.png"),
+    url("/images/honeycomb.png"), url("/images/burning_ad_green.png"),
+    url("/images/punk6.png");
+  background-attachment: fixed, fixed, fixed, fixed, fixed;
+  background-repeat: no-repeat, no-repeat, repeat, no-repeat, repeat;
+  background-position: 5px 606px, 1040px 262px, 0 0, 1227px 226px, 0px 0px;
+  background-blend-mode: darken, darken, darken, normal, normal;
+}
+
+@mixin sideMenu {
+  z-index: 5;
+  position: fixed;
+  top: 0;
+  background-color: lightgray;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-blend-mode: difference;
+  width: 300px;
+  height: 100vh;
+  opacity: 1;
+  -webkit-box-shadow: -5px 0px 11px -2px rgba(0, 0, 0, 0.66);
+  -moz-box-shadow: -5px 0px 11px -2px rgba(0, 0, 0, 0.66);
+  box-shadow: -5px 0px 11px -2px rgba(0, 0, 0, 0.66);
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+
+  &.hidden {
+    opacity: 0;
+  }
+
+  .scratched-glass {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 6;
+    background-image: url("/images/scratches.png");
+    mix-blend-mode: lighten;
+    opacity: 0.1;
+  }
+
+  .blackMask {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 5;
+    background-color: black;
+    opacity: 0.99;
+    transition: opacity 0.35s ease-in;
+    transition-delay: 0.5s;
+
+    &.lit {
+      opacity: 0.5;
+    }
+  }
+}
+
+@mixin scifiBtn($litcolor) {
+  text-align: center;
+  width: 180px;
+  display: inline-block;
+  cursor: pointer;
+  padding: 5px;
+  border: 1px solid white;
+  font-size: 1.2em;
+  color: white;
+  margin: 10px 0 0 0;
+  text-shadow: none;
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 100;
+
+  &:hover,
+  &:focus,
+  &.lit {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: $hot-pink;
+  }
+
+  &:active {
+    color: $litcolor;
+  }
+
+  @include for-phone-only {
+    min-height: 40px;
+  }
+}
+
+@mixin three_d {
+  color: $offblack;
+  text-transform: uppercase;
+  text-shadow: -3px 0 2px rgba(30, 242, 241, 0.4),
+    3px 0 3px rgba(246, 5, 10, 0.4);
+  letter-spacing: 4px;
+  margin: 30px 0 15px;
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+  &.light {
+    color: $very-transparent-white;
+  }
+  @include for-phone-only {
+    text-shadow: -1px 0 0.5px rgba(30, 242, 241, 0.4),
+      1px 0 0.5px rgba(246, 5, 10, 0.4);
+    letter-spacing: 2px;
+  }
+}
+
+@mixin tape-text($selectable: true) {
+  color: $tapeBlue;
+  background-color: rgb(255, 255, 255);
+  white-space: pre;
+  transition: color 0.25s ease;
+  font-size: 1.8em;
+  @if $selectable {
+    cursor: pointer;
+  }
+
+  &:hover {
+    @if $selectable {
+      color: $lightblue;
+      box-shadow: inset 0 0 6px #000000;
+      cursor: pointer;
+    }
+  }
+}
+
+@mixin rotate($deg) {
+  transform: rotate(#{$deg}deg);
+
+  /* Legacy vendor prefixes that you probably don't need... */
+
+  /* Safari */
+  -webkit-transform: rotate(#{$deg}deg);
+
+  /* Firefox */
+  -moz-transform: rotate(#{$deg}deg);
+
+  /* IE */
+  -ms-transform: rotate(#{$deg}deg);
+
+  /* Opera */
+  -o-transform: rotate(#{$deg}deg);
+}
+
+@mixin unselectable() {
+  -webkit-user-select: none; /* Safari */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* IE10+/Edge */
+  user-select: none; /* Standard */
+}
+
+@mixin crt_monitor {
+  animation: crt_textShadow 1.6s infinite;
+
+  @keyframes crt_flicker {
+    0% {
+      opacity: 0.27861;
+    }
+    5% {
+      opacity: 0.34769;
+    }
+    10% {
+      opacity: 0.23604;
+    }
+    15% {
+      opacity: 0.90626;
+    }
+    20% {
+      opacity: 0.18128;
+    }
+    25% {
+      opacity: 0.83891;
+    }
+    30% {
+      opacity: 0.65583;
+    }
+    35% {
+      opacity: 0.67807;
+    }
+    40% {
+      opacity: 0.26559;
+    }
+    45% {
+      opacity: 0.84693;
+    }
+    50% {
+      opacity: 0.96019;
+    }
+    55% {
+      opacity: 0.08594;
+    }
+    60% {
+      opacity: 0.20313;
+    }
+    65% {
+      opacity: 0.71988;
+    }
+    70% {
+      opacity: 0.53455;
+    }
+    75% {
+      opacity: 0.37288;
+    }
+    80% {
+      opacity: 0.71428;
+    }
+    85% {
+      opacity: 0.70419;
+    }
+    90% {
+      opacity: 0.7003;
+    }
+    95% {
+      opacity: 0.36108;
+    }
+    100% {
+      opacity: 0.24387;
+    }
+  }
+  @keyframes crt_textShadow {
+    0% {
+      text-shadow: 0.4389924193300864px 0 1px rgba(0, 30, 255, 0.5),
+        -0.4389924193300864px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    5% {
+      text-shadow: 2.7928974010788217px 0 1px rgba(0, 30, 255, 0.5),
+        -2.7928974010788217px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    10% {
+      text-shadow: 0.02956275843481219px 0 1px rgba(0, 30, 255, 0.5),
+        -0.02956275843481219px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    15% {
+      text-shadow: 0.40218538552878136px 0 1px rgba(0, 30, 255, 0.5),
+        -0.40218538552878136px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    20% {
+      text-shadow: 3.4794037899852017px 0 1px rgba(0, 30, 255, 0.5),
+        -3.4794037899852017px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    25% {
+      text-shadow: 1.6125630401149584px 0 1px rgba(0, 30, 255, 0.5),
+        -1.6125630401149584px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    30% {
+      text-shadow: 0.7015590085143956px 0 1px rgba(0, 30, 255, 0.5),
+        -0.7015590085143956px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    35% {
+      text-shadow: 3.896914047650351px 0 1px rgba(0, 30, 255, 0.5),
+        -3.896914047650351px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    40% {
+      text-shadow: 3.870905614848819px 0 1px rgba(0, 30, 255, 0.5),
+        -3.870905614848819px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    45% {
+      text-shadow: 2.231056963361899px 0 1px rgba(0, 30, 255, 0.5),
+        -2.231056963361899px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    50% {
+      text-shadow: 0.08084290417898504px 0 1px rgba(0, 30, 255, 0.5),
+        -0.08084290417898504px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    55% {
+      text-shadow: 2.3758461067427543px 0 1px rgba(0, 30, 255, 0.5),
+        -2.3758461067427543px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    60% {
+      text-shadow: 2.202193051050636px 0 1px rgba(0, 30, 255, 0.5),
+        -2.202193051050636px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    65% {
+      text-shadow: 2.8638780614874975px 0 1px rgba(0, 30, 255, 0.5),
+        -2.8638780614874975px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    70% {
+      text-shadow: 0.48874025155497314px 0 1px rgba(0, 30, 255, 0.5),
+        -0.48874025155497314px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    75% {
+      text-shadow: 1.8948491305757957px 0 1px rgba(0, 30, 255, 0.5),
+        -1.8948491305757957px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    80% {
+      text-shadow: 0.0833037308038857px 0 1px rgba(0, 30, 255, 0.5),
+        -0.0833037308038857px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    85% {
+      text-shadow: 0.09769827255241735px 0 1px rgba(0, 30, 255, 0.5),
+        -0.09769827255241735px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    90% {
+      text-shadow: 3.443339761481782px 0 1px rgba(0, 30, 255, 0.5),
+        -3.443339761481782px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    95% {
+      text-shadow: 2.1841838852799786px 0 1px rgba(0, 30, 255, 0.5),
+        -2.1841838852799786px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+    100% {
+      text-shadow: 2.6208764473832513px 0 1px rgba(0, 30, 255, 0.5),
+        -2.6208764473832513px 0 1px rgba(255, 0, 80, 0.3), 0 0 3px;
+    }
+  }
+
+  &::before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 2;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    opacity: 1;
+  }
+}
+
+@mixin ui_lightup {
+  opacity: 1;
+  filter: brightness(110%);
+}
+
+@mixin rolling-stone-post {
+  box-sizing: border-box;
+  background-color: $transparent-white;
+  -webkit-background-clip: padding-box; /* for Safari */
+  background-clip: padding-box;
+  border-width: 3px !important;
+  border-style: outset !important;
+  border-color: $offblack !important;
+  border-radius: 20px;
+  margin-bottom: 30px;
+  padding: 15px !important;
+  width: 700px;
+  color: $offblack;
+  overflow: hidden;
+  @include for-phone-only {
+    width: 95%;
+    margin: 0 auto 20px;
+  }
+
+  canvas,
+  image,
+  iframe,
+  blockquote {
+    max-width: 100%;
+  }
+
+  iframe {
+    @include for-phone-only {
+      max-width: 100%;
+    }
+  }
+}
+
+@mixin lightup {
+  &:hover {
+    filter: brightness(120%) saturate(120%);
+  }
+  &:active {
+    filter: brightness(90%) saturate(120%);
+  }
+}
+
+@mixin authform {
+  text-align: right;
+  @include for-phone-only {
+    max-width: 95%;
+  }
+
+  label,
+  h5 {
+    color: white;
+    font-size: 0.8em;
+    text-align: left;
+    width: 180px;
+    border: none;
+    text-transform: uppercase;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: block;
+    margin-left: 120px;
+    padding: 4px 4px;
+    box-sizing: border-box;
+    margin-top: 10px;
+    margin-bottom: -3px;
+    @include for-phone-only {
+      margin-left: 0px;
+      max-width: 100%;
+    }
+  }
+
+  h5 {
+    color: $hot-pink;
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+
+  .errorList {
+    font-family: "Courier New", Courier, monospace;
+    @include scifiBtn($hot-blue);
+    width: 180px;
+    padding: 5px;
+    text-align: right;
+    margin-left: 120px;
+    display: flex;
+    border: 1px solid $red;
+    text-transform: uppercase;
+    box-sizing: border-box;
+    margin-top: 5px;
+    font-size: 0.8em;
+    border: none;
+    color: $white;
+    background-color: rgba($color: $darkRed, $alpha: 0.2) !important;
+
+    @include for-phone-only {
+      margin-left: 0px;
+      max-width: 100%;
+    }
+
+    .error {
+      list-style: none;
+    }
+  }
+
+  input {
+    box-sizing: border-box;
+    margin: 10px 0 0 0;
+    width: 180px;
+    font-size: 1.3em;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 1px solid $white;
+    padding: 7px;
+    color: $white;
+    text-align: right;
+    &:focus {
+      border-color: $hot-blue;
+    }
+    &.error {
+      background-color: rgba($color: $darkRed, $alpha: 0.2) !important;
+      color: white;
+      border-color: $red !important;
+    }
+
+    @include for-phone-only {
+      height: 40px;
+      max-width: 100%;
+      padding: 5px;
+      font-size: 1em;
+    }
+  }
+
+  hr {
+    width: 180px;
+    float: right;
+    @include for-phone-only {
+      max-width: 95%;
+    }
+  }
+
+  button {
+    @include scifiBtn($hot-blue);
+
+    @include for-phone-only {
+      max-width: 95%;
+    }
+
+    &.secondary {
+      border: none;
+      background: none;
+      font-size: small;
+      margin: 0px 0px 5px;
+      width: 180px !important;
+      @include for-phone-only {
+        max-width: 95%;
+      }
+    }
+
+    &:disabled {
+      color: rgba(255, 255, 255, 0.3);
+      border-color: $bright-green;
+    }
+
+    &.resendButton {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 10px;
+      letter-spacing: 1px;
+    }
+
+    &.facebook-button {
+      font-size: 15px;
+      padding: 5px;
+      letter-spacing: 1px;
+
+      .fa {
+        margin-right: 5px;
+      }
+
+      @include for-phone-only {
+        height: 60px;
+      }
+    }
+
+    &.stateButton {
+      margin-top: 50px;
+    }
+
+    @include for-phone-only {
+      max-width: 100%;
+    }
+  }
+
+  @include for-phone-only {
+    max-width: 95%;
+    float: right;
+  }
+}
+
+@mixin debug_table {
+  border-collapse: separate;
+  border-spacing: 0px;
+  font-family: "Courier New", Courier, monospace;
+  padding: 5px;
+  color: black;
+  padding: 5px 10px;
+  border: 1px solid black;
+  text-align: right;
+  background-color: rgba($color: #fff, $alpha: 1);
+  z-index: 100000000000000;
+  line-height: 18px;
+}
+
+@mixin loadingSpinner() {
+  .loadingSpinner {
+    animation: spin 1.5s linear infinite;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

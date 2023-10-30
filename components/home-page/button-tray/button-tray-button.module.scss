@@ -1,0 +1,82 @@
+@import "../../../styles/base";
+
+$logoSize: 50px;
+
+.ButtonTrayButton {
+  @include lightup;
+  display: flex;
+  border-radius: 5px;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+
+  @include for-tablet-only {
+    flex-direction: row;
+  }
+
+  @include for-phone-only {
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid white;
+    padding: 5px;
+    &.lit {
+      border-color: $bright-green;
+    }
+  }
+}
+
+.statusLight {
+  width: 5px;
+  height: 5px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.25s ease-in-out;
+  @include for-phone-only {
+    display: none;
+  }
+
+  &.lit {
+    opacity: 1;
+  }
+  &.blink {
+    animation: lightup 0.75s infinite !important;
+    animation-delay: 0.15s;
+  }
+
+  @keyframes lightup {
+    0% {
+      opacity: 0;
+    }
+
+    50% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}
+
+.logoImg {
+  width: $logoSize;
+  height: $logoSize;
+  object-fit: contain;
+  border-radius: 5px;
+
+  @include for-tablet-only {
+    width: $logoSize * 0.75;
+    height: $logoSize * 0.75;
+    border-radius: 5px;
+  }
+
+  @include for-phone-only {
+    border-radius: 50%;
+    opacity: 0.8;
+  }
+}

@@ -1,0 +1,90 @@
+@import "../../styles/base";
+
+.ContactForm {
+  @include rolling-stone-post;
+  @include loadingSpinner;
+  box-sizing: border-box;
+  position: absolute;
+  min-height: 450px;
+  z-index: 30;
+  top: 100px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    margin: 5px;
+    width: 100%;
+    text-align: left;
+  }
+
+  input,
+  textarea {
+    background-color: $lightgray;
+    border: 1px solid $transparent-black;
+    box-sizing: border-box;
+    width: 100%;
+    margin-bottom: 2px;
+    font-size: 18px;
+    padding: 5px;
+
+    &.isDanger {
+      border-color: $form-red;
+    }
+    &.isSuccess {
+      border-color: $form-green;
+    }
+  }
+
+  hr {
+    border-top: 1px solid $transparent-black;
+    margin-top: 0px;
+    margin-bottom: 10px;
+    text-align: left;
+  }
+
+  textarea {
+    resize: none;
+  }
+
+  button {
+    font-size: 18px;
+    border-radius: 0px;
+    float: right;
+    padding: 5px 10px;
+    margin-right: 0px;
+    margin-right: 0px;
+    cursor: pointer;
+    background-color: $darkpurple;
+    color: white;
+    min-width: 100px;
+
+    &:disabled {
+      background-color: gray;
+      &:hover {
+        background-color: gray;
+      }
+    }
+
+    &:hover {
+      background-color: $lightpurple;
+    }
+  }
+
+  .errorHolder {
+    color: $form-red;
+    min-height: 14px;
+    margin-bottom: 4px;
+    font-size: 12px;
+  }
+
+  .errorMessage {
+    color: $form-red;
+    margin-top: 3px !important;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+}

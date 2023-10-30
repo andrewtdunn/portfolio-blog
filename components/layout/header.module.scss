@@ -1,0 +1,70 @@
+@import "../../styles/base.scss";
+
+.header {
+  position: fixed;
+  z-index: 11;
+  top: 0;
+  padding-top: 20px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  filter: drop-shadow(-10px 9px 6px rgba(0, 0, 0, 0.55));
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+  a {
+    text-decoration: none;
+  }
+  // @include for-phone-only {
+  //   display: none;
+  // }
+
+  // @include for-tablet-only {
+  //   height: 60px;
+  // }
+
+  h1 {
+    color: white;
+    font-size: 1.7em;
+    margin-bottom: 0px;
+    cursor: pointer;
+    width: auto;
+
+    @include for-phone-only {
+      font-size: 1.5em;
+    }
+  }
+
+  .dark {
+    color: $offwhite;
+
+    &:hover {
+      color: white;
+    }
+  }
+
+  .banner {
+    margin-top: 10px;
+    @include for-tablet-only {
+      max-width: 500px;
+      height: auto;
+    }
+
+    @include for-phone-only {
+      max-width: 90vw;
+      height: auto;
+      margin: 15px auto;
+    }
+  }
+
+  .subHeader {
+    h3 {
+      margin-top: -10px;
+      font-size: 30px !important;
+      color: $offwhite;
+      cursor: none;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+@import "../../styles/base.scss";
+
+.Title {
+  @include crt_monitor;
+  z-index: 1000;
+  //background-color: rgba(#000, 0.05);
+  display: flex;
+  flex-direction: column;
+  h3 {
+    font-size: x-large;
+    color: #7fff00;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  &::before {
+    background: none;
+  }
+}

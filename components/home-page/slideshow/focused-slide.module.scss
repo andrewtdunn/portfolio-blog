@@ -1,0 +1,17 @@
+@import "../../../styles/base.scss";
+
+.FocusedSlide {
+  background-color: pink;
+  width: 700px;
+  height: 353px;
+  margin-bottom: 0px;
+
+  @include for-phone-only {
+    width: 95vw;
+    height: 47vw;
+  }
+
+  &.odd {
+    background-color: aqua;
+  }
+}

@@ -1,0 +1,57 @@
+@import "../../styles/base.scss";
+
+$portfolioWidth: 700px;
+$portfolioHeight: 350px;
+$portfolioMobileWidth: 95vw;
+$portfolioMobileHeight: 47.5vw;
+$portfolioRatio: 0.5;
+
+$blogWidth: 664px;
+$blogMobileWidth: calc(95vw - 30px);
+$blogRatio: 0.451;
+
+.CrossFader {
+  width: $portfolioWidth;
+  height: $portfolioHeight;
+  position: relative;
+
+  @include for-phone-only {
+    margin-top: -20px;
+    width: $portfolioMobileWidth;
+    height: $portfolioMobileHeight;
+  }
+
+  &.blogImg {
+    width: $blogWidth;
+    height: calc($blogWidth * $blogRatio);
+
+    img {
+      width: $blogWidth;
+      height: calc($blogWidth * $blogRatio);
+    }
+    @include for-phone-only {
+      width: $blogMobileWidth;
+      height: calc($blogMobileWidth * $blogRatio);
+
+      img {
+        width: $blogMobileWidth;
+        height: calc($blogMobileWidth * $blogRatio);
+      }
+    }
+  }
+
+  .fadeSlide {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: $portfolioWidth;
+    height: $portfolioHeight;
+    transition: opacity 0.6s ease-in-out;
+    opacity: 0;
+
+    @include for-phone-only {
+      width: $portfolioMobileWidth;
+      height: $portfolioMobileHeight;
+    }
+  }
+}

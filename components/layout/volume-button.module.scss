@@ -1,0 +1,51 @@
+@import "../../styles/base";
+
+.VolumeButton {
+  position: fixed;
+  z-index: 1000;
+  top: auto;
+  bottom: 10px;
+  right: 15px;
+  font-size: 1.7em;
+  color: $offwhite;
+  &.light {
+    color: $bright-green;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  @include for-phone-only {
+    $button-size: 60px;
+    bottom: 34px;
+    border: 3px solid $offblack;
+    border-radius: 50%;
+    margin-top: 2px;
+    background-color: $offwhite;
+    color: $offblack;
+    width: $button-size;
+    height: $button-size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    filter: drop-shadow(5px 5px 5px rgba(0, 0, 0, 0.5));
+    div {
+      margin-top: 6px;
+    }
+    &.light {
+      border-color: $white;
+      background-color: transparent;
+    }
+    img {
+      margin-top: 20px;
+    }
+  }
+
+  @include for-small-phone-only {
+    bottom: 30px;
+    padding: 8px;
+  }
+
+  @include ui_lightup;
+}

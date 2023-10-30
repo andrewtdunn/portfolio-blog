@@ -1,0 +1,9 @@
+@import "../../styles/base.scss";
+
+.Spacer {
+  height: 40px;
+
+  @include for-phone-only {
+    height: 100px;
+  }
+}

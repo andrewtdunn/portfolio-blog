@@ -1,0 +1,46 @@
+@import "../../../styles/base.scss";
+
+$arrow-opacity: 0.35;
+
+.SlideCover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000000;
+  cursor: pointer;
+  pointer-events: all;
+  display: flex;
+  color: $transparent-white;
+  font-size: 3em;
+  .left,
+  .right {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  .left {
+    //background-color: rgba(255, 0, 0, 0.2);
+    justify-content: left;
+    &:hover {
+      .leftArrow {
+        opacity: $arrow-opacity;
+      }
+    }
+  }
+  .right {
+    //background-color: rgba(0, 0, 255, 0.2);
+    justify-content: right;
+    &:hover {
+      .rightArrow {
+        opacity: $arrow-opacity;
+      }
+    }
+  }
+  .leftArrow,
+  .rightArrow {
+    opacity: 0;
+  }
+}

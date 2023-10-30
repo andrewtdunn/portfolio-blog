@@ -1,0 +1,81 @@
+@import "../../styles/base.scss";
+
+.LeftNav {
+  @include sideMenu;
+  width: 220px;
+  height: 100vh;
+  overflow: hidden;
+  max-width: 50vw;
+  background-color: black;
+
+  @include for-phone-only {
+    width: $sideMenuWidthMobile;
+  }
+
+  img {
+    object-fit: contain;
+    width: 100%;
+    height: auto;
+  }
+
+  .leftElevatorImage2 {
+    position: absolute;
+    left: 0;
+    top: $navBackgroundTop;
+    transform: scaleY(-1);
+    @include for-phone-only {
+      top: $navBackgroundTopMobile;
+    }
+  }
+}
+
+.linkHolder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 9;
+  margin-top: 105px;
+  margin-left: 10px;
+
+  @include for-phone-only {
+    margin-left: 0;
+  }
+
+  .links {
+    color: white;
+    margin-left: 10px;
+  }
+
+  .link {
+    display: block;
+
+    button {
+      @include scifiBtn($hot-pink);
+      margin-bottom: 10px;
+      letter-spacing: 3px;
+      @include for-phone-only {
+        width: 100% !important;
+      }
+    }
+  }
+
+  .contactLabel {
+    top: 80px;
+    position: relative;
+    @include rotate(-13);
+
+    h1 {
+      @include tape-text;
+      margin-bottom: 10px;
+      display: inline;
+
+      font-weight: 180;
+
+      &.lit,
+      &.lit:hover {
+        color: $lightblue;
+        box-shadow: inset 0 0 6px #000000;
+      }
+    }
+  }
+}

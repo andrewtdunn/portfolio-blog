@@ -1,0 +1,39 @@
+import Image from "next/image";
+import styles from "./glare-background.module.scss";
+import { Project } from "@/models";
+import { useContext } from "react";
+import SlideshowContext from "../../../store/slideshow-context";
+
+type GlareReflectionProps = {
+  project: Project;
+  image_url: string;
+  lit?: boolean;
+};
+
+const GlareReflection = ({ project, image_url, lit }: GlareReflectionProps) => {
+  const slideCtx = useContext(SlideshowContext);
+  const { isFocused, secondaryIndex } = slideCtx!;
+  let imageUrl: string;
+  if (isFocused) {
+    const slides = [image_url, ...project.slides!];
+    imageUrl = slides[secondaryIndex % slides.length]!;
+  } else {
+    imageUrl = image_url;
+  }
+  return (
+    <>
+      {image_url && (
+        <Image
+          className={`${styles.GlareReflection} ${isFocused && styles.lit}`}
+          src={imageUrl}
+          alt={`${project.title} slide`}
+          width={700}
+          height={350}
+          priority
+        />
+      )}
+    </>
+  );
+};
+
+export default GlareReflection;

@@ -1,0 +1,58 @@
+@import "../../../styles/base.scss";
+
+.BadReception {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 101;
+  animation: jitterOpacity 2s ease-in alternate infinite;
+
+  &.hidden {
+    opacity: 0;
+    animation: none;
+  }
+  @include for-phone-only {
+    display: none;
+  }
+
+  @keyframes jitterOpacity {
+    0% {
+      opacity: 0;
+      -webkit-filter: blur(20px);
+    }
+    10% {
+      opacity: 0.3;
+      -webkit-filter: blur(0px);
+    }
+
+    20% {
+      opacity: 0.5;
+    }
+
+    25% {
+      opacity: 0.4;
+    }
+
+    50% {
+      opacity: 0;
+      -webkit-filter: blur(20px);
+    }
+
+    60% {
+      opacity: 0.3;
+      -webkit-filter: blur(0px);
+    }
+
+    70% {
+      opacity: 0.4;
+      -webkit-filter: blur(20px);
+    }
+
+    100% {
+      opacity: 0;
+      -webkit-filter: blur(0px);
+    }
+  }
+}

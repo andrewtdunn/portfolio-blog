@@ -1,0 +1,21 @@
+@import "../../styles/base";
+
+.NotFound {
+  background-color: black;
+  min-height: 100vh;
+  @include punk-bkgd2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  h3 {
+    font-size: 60px !important;
+
+    @include for-phone-only {
+      max-width: 80vw;
+      font-size: 35px !important;
+      display: block;
+    }
+  }
+}

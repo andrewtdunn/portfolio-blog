@@ -1,0 +1,93 @@
+@import "../../styles/base";
+
+.Nametag {
+  position: absolute;
+  top: 80px;
+  left: 15px;
+  z-index: 10000000;
+  color: rgba(255, 255, 255, 0.45);
+  filter: drop-shadow(-10px 9px 6px rgba(0, 0, 0, 0.55));
+
+  @include for-phone-only {
+    display: none;
+  }
+
+  @include for-phone-only {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100px;
+    text-align: left;
+    @include rotate(0);
+  }
+
+  h2 {
+    position: absolute;
+    color: rgba(0, 0, 0, 0.45);
+    left: 4px;
+    top: 1px;
+    &.home {
+      color: rgba(255, 255, 255, 0.45);
+    }
+  }
+
+  .dateHolder {
+    @include rotate(-6);
+    display: block;
+    margin-top: 20px;
+    z-index: 100;
+    position: relative;
+  }
+
+  h1 {
+    @include unselectable;
+    z-index: 100;
+    // color: $midnight;
+    text-align: left;
+    position: relative;
+    display: block;
+    font-weight: 180;
+
+    @include for-phone-only {
+      text-align: left;
+    }
+
+    &.tag1 {
+      position: absolute;
+      margin-bottom: 5px;
+      font-size: 2rem;
+      padding: 12px 3px 2px;
+      border: 1px solid rgba(0, 0, 0, 0.45);
+      border-radius: 5px;
+      color: rgba(0, 0, 0, 0.45);
+
+      &.home {
+        color: rgba(255, 255, 255, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+      }
+
+      @include for-phone-only {
+        top: 4px;
+        position: relative;
+        left: 50%;
+        -webkit-transform: translateX(-50%);
+        transform: translateX(-50%);
+        font-size: 35px;
+        display: inline-block;
+      }
+    }
+
+    &.tag2 {
+      left: 0px;
+      @include tape-text($selectable: false);
+      color: $tapeBlue;
+      display: inline;
+
+      top: 30px;
+
+      @include for-phone-only {
+        display: none;
+      }
+    }
+  }
+}
