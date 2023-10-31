@@ -318,10 +318,10 @@ const SoundProvider = ({ children }: { children: ReactNode }) => {
 
   const playTone = useCallback(
     (noteInt: number, numProjects: number) => {
-      let audCtx = new window.AudioContext();
       if (!isPlayingMemo) {
         return;
       }
+      let audCtx = new window.AudioContext();
 
       const bluesSounds = [
         174.61, // F (3)
