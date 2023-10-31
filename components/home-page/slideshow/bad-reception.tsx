@@ -37,20 +37,24 @@ const BadReceptionScreen = ({
           if (video.paused) {
             video.play();
             setHidden(true);
-            var playPromise = video.play();
+            try {
+              var playPromise = video.play();
 
-            if (playPromise !== undefined) {
-              playPromise
-                .then((_) => {
-                  // Automatic playback started!
-                  // Show playing UI.
-                  setHidden(false);
-                })
-                .catch((error) => {
-                  // Auto-play was prevented
-                  // Show paused UI.
-                  setHidden(true);
-                });
+              if (playPromise !== undefined) {
+                playPromise
+                  .then((_) => {
+                    // Automatic playback started!
+                    // Show playing UI.
+                    setHidden(false);
+                  })
+                  .catch((error) => {
+                    // Auto-play was prevented
+                    // Show paused UI.
+                    setHidden(true);
+                  });
+              }
+            } catch (e: any) {
+              console.log(e);
             }
           }
           await sleep(1000);
@@ -74,7 +78,6 @@ const BadReceptionScreen = ({
   return (
     <video
       ref={videoRef}
-      autoPlay
       loop
       muted
       controls={false}

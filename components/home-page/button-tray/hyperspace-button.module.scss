@@ -18,6 +18,10 @@
   padding: 0px 10px;
   justify-content: center;
 
+  @include for-tablet-only {
+    bottom: 20px;
+  }
+
   .buttonText {
     @include for-phone-only {
       display: none;
