@@ -94,7 +94,7 @@ const Hyperspace = () => {
     }
 
     const addSpheres = () => {
-      console.log("addSpheres");
+      //console.log("addSpheres");
       const hD = hyperspaceDetailRef.current;
       for (let z = -1000; z < 1000; z += 10) {
         // make a sphere
@@ -153,7 +153,7 @@ const Hyperspace = () => {
   }, []);
 
   useEffect(() => {
-    console.log("isFocused", isFocused);
+    //console.log("isFocused", isFocused);
     let hyperspace = !isFocused;
     const hD = hyperspaceDetailRef.current;
     hD.acceleration = 0.5;

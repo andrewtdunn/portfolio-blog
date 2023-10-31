@@ -36,6 +36,22 @@ const BadReceptionScreen = ({
           video.src = videoSrc.url!;
           if (video.paused) {
             video.play();
+            setHidden(true);
+            var playPromise = video.play();
+
+            if (playPromise !== undefined) {
+              playPromise
+                .then((_) => {
+                  // Automatic playback started!
+                  // Show playing UI.
+                  setHidden(false);
+                })
+                .catch((error) => {
+                  // Auto-play was prevented
+                  // Show paused UI.
+                  setHidden(true);
+                });
+            }
           }
           await sleep(1000);
           if (!video.paused) {
