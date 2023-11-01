@@ -23,6 +23,9 @@ const BadReceptionScreen = ({
       if (isMobile) {
         return null;
       }
+      if (!document.hasFocus()) {
+        return null;
+      }
       if (videoRef && videoRef.current) {
         try {
           let video = videoRef.current;
