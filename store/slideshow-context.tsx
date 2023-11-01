@@ -19,7 +19,6 @@ export const SlideshowProvider = ({ children }: { children: ReactNode }) => {
   const [innerIndex, setInnerIndex] = useState<number>(0);
   const [currentSlideImg, setCurrentSlideImage] = useState<string>("");
   const SLIDE_ROTATION_INTERVAL = 7000;
-  const SECONDARY_SLIDE_ROTATION_INTERVAL = 3000;
   const [isFocused, setIsFocused] = useState<boolean>(true);
 
   let timerInterval: any;

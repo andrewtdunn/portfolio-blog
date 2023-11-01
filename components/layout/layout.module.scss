@@ -4,6 +4,12 @@
   orientation: portrait;
 }
 
+.adminHeader {
+  color: $darkblue;
+  padding-left: 20px;
+  padding-top: 5px;
+}
+
 .main {
   position: fixed;
   height: 100vh;

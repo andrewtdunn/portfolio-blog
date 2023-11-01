@@ -1,4 +1,4 @@
-import React, { Fragment, useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import Logo from "./logo";
 import MenuButton from "../menu/menu-button";
 import styles from "./layout.module.scss";
@@ -12,6 +12,10 @@ import { SoundContext } from "../../store/sound-context";
 import Modal from "./modal";
 //import BlogCreateForm from "@/ui-components/BlogCreateForm";
 import ProjectCreateForm from "@/ui-components/ProjectCreateForm";
+import AdminContext from "../../store/admin-context";
+import BlogCreateForm from "@/ui-components/BlogCreateForm";
+import { AdminForm, AdminModel } from "../../type-definitions/enums";
+import AdminContentForm from "../admin/admin-content-form";
 
 export default function Layout({
   children,
@@ -22,6 +26,7 @@ export default function Layout({
 }) {
   let navigationCtx = useContext(NavigationContext);
   let soundCtx = useContext(SoundContext);
+  let adminCtx = useContext(AdminContext);
 
   if (home) {
     // console.log("home page");
@@ -48,13 +53,7 @@ export default function Layout({
       <VolumeButton home={home} />
       <NewSoundsLabel />
       <Modal>
-        {/* <SampleForm2 /> */}
-        <ProjectCreateForm
-          onSuccess={() => {
-            showAlert();
-            soundCtx?.buttonNoise();
-          }}
-        />
+        <AdminContentForm />
       </Modal>
       <main
         className={`${styles.main} ${

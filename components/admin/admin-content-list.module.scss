@@ -1,0 +1,25 @@
+@import "../../styles/base";
+
+.AdminContentList {
+  color: pink !important;
+  li {
+    margin-left: 0px;
+  }
+  .editLogo {
+    padding-left: 10px;
+    color: $darkblue !important;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+
+    .pencil {
+      color: $bright-green;
+      font-size: large;
+
+      &:hover {
+        cursor: pointer;
+        color: greenyellow;
+      }
+    }
+  }
+}

@@ -24,7 +24,6 @@ const HomePage = ({
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const SSR = withSSRContext();
   try {
     const models = await DataStore.query(Project);
     const videoList = await DataStore.query(BadReception);

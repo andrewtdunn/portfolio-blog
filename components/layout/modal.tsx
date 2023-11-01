@@ -8,6 +8,7 @@ import Fader from "../utils/fader";
 import UserInfo from "../utils/user-info";
 import { Project, Blog } from "@/models";
 import ModalButtonGroup from "./modal-button-group";
+import { AdminModel } from "../../type-definitions/enums";
 
 const Modal = ({ children }: { children: ReactNode }) => {
   const [currentModel, setCurrentModel] = useState<Project | Blog | null>(null);
@@ -46,8 +47,8 @@ const Modal = ({ children }: { children: ReactNode }) => {
           {user && (
             <div className={styles.buttonGroup}>
               <UserInfo user={user} />
-              <ModalButtonGroup modelType="Project" />
-              <ModalButtonGroup modelType="Blog" />
+              <ModalButtonGroup modelType={AdminModel.PROJECT} />
+              <ModalButtonGroup modelType={AdminModel.BLOG} />
             </div>
           )}
         </div>

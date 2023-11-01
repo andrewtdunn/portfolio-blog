@@ -12,6 +12,7 @@ import { SlideshowProvider } from "../../store/slideshow-context";
 import "@aws-amplify/ui-react/styles.css";
 import { ThemeProvider } from "@aws-amplify/ui-react";
 import studioTheme from "../ui-components/studioTheme";
+import { AdminProvider } from "../../store/admin-context";
 
 Amplify.configure({
   ...awsExports,
@@ -27,29 +28,31 @@ export default function App({ Component, pageProps }: AppProps) {
     router.asPath === "/" || router.asPath.replace(/[^0-9]/g, "").length > 8;
   return (
     <ThemeProvider theme={studioTheme}>
-      <SlideshowProvider>
-        <AuthProvider>
-          <SoundProvider>
-            <NavigationContextProvider>
-              <Head>
-                <title>Andrew T Dunn</title>
-                <meta
-                  name="description"
-                  content="Design, Development & Architecture"
-                />
-                <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1.0, user-scalable=no"
-                />
-                <link rel="shortcut icon" href="/images/favicon.ico" />
-              </Head>
-              <Layout home={isHome}>
-                <Component {...pageProps} />
-              </Layout>
-            </NavigationContextProvider>
-          </SoundProvider>
-        </AuthProvider>
-      </SlideshowProvider>
+      <AdminProvider>
+        <SlideshowProvider>
+          <AuthProvider>
+            <SoundProvider>
+              <NavigationContextProvider>
+                <Head>
+                  <title>Andrew T Dunn</title>
+                  <meta
+                    name="description"
+                    content="Design, Development & Architecture"
+                  />
+                  <meta
+                    name="viewport"
+                    content="width=device-width, initial-scale=1.0, user-scalable=no"
+                  />
+                  <link rel="shortcut icon" href="/images/favicon.ico" />
+                </Head>
+                <Layout home={isHome}>
+                  <Component {...pageProps} />
+                </Layout>
+              </NavigationContextProvider>
+            </SoundProvider>
+          </AuthProvider>
+        </SlideshowProvider>
+      </AdminProvider>
     </ThemeProvider>
   );
 }
