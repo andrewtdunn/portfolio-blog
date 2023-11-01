@@ -7,18 +7,33 @@ import ProjectCreateForm from "@/ui-components/ProjectCreateForm";
 
 import styles from "./admin-content-form.module.scss";
 import ContentList from "./admin-content-list";
+import AuthContext from "../../store/auth-context";
 
 const AdminContentForm = () => {
   const adminCtx = useContext(AdminContext);
   let soundCtx = useContext(SoundContext);
+  const authCtx = useContext(AuthContext);
+  const { user } = authCtx!;
+  if (!user) {
+    return null;
+  }
+
+  const session = user.getSignInUserSession();
+  const token = session?.getAccessToken();
+
+  const isAdmin =
+    token?.payload["cognito:groups"] &&
+    token?.payload["cognito:groups"].includes("admin").toString() == "true";
 
   return (
     <div className={styles.AdminContentForm}>
-      <h1>
-        {adminCtx?.editing ? "UPDATE" : adminCtx?.formType}{" "}
-        {adminCtx?.modelType}
-      </h1>
-      {adminCtx && adminCtx.formType == AdminForm.CREATE ? (
+      {isAdmin && (
+        <h1>
+          {adminCtx?.editing ? "UPDATE" : adminCtx?.formType}{" "}
+          {adminCtx?.modelType}
+        </h1>
+      )}
+      {adminCtx && isAdmin && adminCtx.formType == AdminForm.CREATE ? (
         adminCtx?.modelType == AdminModel.PROJECT ? (
           <ProjectCreateForm
             onSuccess={() => {
@@ -33,7 +48,7 @@ const AdminContentForm = () => {
           />
         )
       ) : (
-        <ContentList modelType={adminCtx?.modelType!} />
+        <ContentList isAdmin={isAdmin} modelType={adminCtx?.modelType!} />
       )}
     </div>
   );

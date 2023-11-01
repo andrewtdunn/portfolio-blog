@@ -3,14 +3,21 @@ import { DataStore } from "aws-amplify";
 import { GetServerSideProps } from "next";
 import { AdminModel } from "../../type-definitions/enums";
 import { useContext, useEffect, useState } from "react";
-import { GrEdit } from "react-icons/gr";
+import { MdOutlineEditNote, MdReport } from "react-icons/md";
 import styles from "./admin-content-list.module.scss";
 import ProjectUpdateForm from "@/ui-components/ProjectUpdateForm";
 import BlogUpdateForm from "@/ui-components/BlogUpdateForm";
 import { SoundContext } from "../../store/sound-context";
 import AdminContext from "../../store/admin-context";
+import Image from "next/image";
 
-const ContentList = ({ modelType }: { modelType: AdminModel }) => {
+const ContentList = ({
+  modelType,
+  isAdmin,
+}: {
+  modelType: AdminModel;
+  isAdmin: boolean;
+}) => {
   const [models, setModels] = useState<Blog[] | Project[] | []>([]);
   const [currModel, setCurrModel] = useState<Project | Blog | null>(null);
   const soundCtx = useContext(SoundContext);
@@ -43,14 +50,14 @@ const ContentList = ({ modelType }: { modelType: AdminModel }) => {
   }, [modelType, adminCtx]);
 
   if (adminCtx?.editing && currModel) {
-    if (modelType == AdminModel.PROJECT) {
+    if (modelType == AdminModel.PROJECT && isAdmin) {
       return (
         <ProjectUpdateForm
           project={currModel as Project}
           onSuccess={resetForm}
         />
       );
-    } else if (modelType == AdminModel.BLOG) {
+    } else if (modelType == AdminModel.BLOG && isAdmin) {
       return <BlogUpdateForm blog={currModel as Blog} onSuccess={resetForm} />;
     }
   }
@@ -58,9 +65,23 @@ const ContentList = ({ modelType }: { modelType: AdminModel }) => {
     <ul className={styles.AdminContentList}>
       {models.map((model, index) => (
         <li key={index}>
-          <div className={styles.editLogo} onClick={() => handleClick(model)}>
+          <div className={styles.editLogo}>
+            {isAdmin && (
+              <MdOutlineEditNote
+                onClick={() => handleClick(model)}
+                className={styles.pencil}
+              />
+            )}
+            {modelType == AdminModel.PROJECT && (
+              <Image
+                src={(model as Project).projectLogo}
+                width={15}
+                height={15}
+                alt={model.title ? model.title : "logo"}
+                style={{ objectFit: "contain" }}
+              />
+            )}
             <h3>{model.title}</h3>
-            <GrEdit className={styles.pencil} color="white" fontSize="1.5em" />
           </div>
         </li>
       ))}

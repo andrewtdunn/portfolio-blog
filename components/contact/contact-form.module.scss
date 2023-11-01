@@ -5,7 +5,7 @@
   @include loadingSpinner;
   box-sizing: border-box;
   position: absolute;
-  min-height: 450px;
+  min-height: 520px;
   z-index: 30;
   top: 100px;
 
@@ -61,6 +61,11 @@
     background-color: $darkpurple;
     color: white;
     min-width: 100px;
+    min-height: 41px;
+
+    .loadingSpinner {
+      font-size: 26px;
+    }
 
     &:disabled {
       background-color: gray;
@@ -76,7 +81,7 @@
 
   .errorHolder {
     color: $form-red;
-    min-height: 14px;
+    min-height: 18px;
     margin-bottom: 4px;
     font-size: 12px;
   }

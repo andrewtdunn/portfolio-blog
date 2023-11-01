@@ -4,21 +4,35 @@
   color: pink !important;
   li {
     margin-left: 0px;
-  }
-  .editLogo {
-    padding-left: 10px;
-    color: $darkblue !important;
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
 
-    .pencil {
-      color: $bright-green;
-      font-size: large;
+    border-bottom: 1px solid $darkblue;
+    padding: 5px 10px;
 
-      &:hover {
-        cursor: pointer;
-        color: greenyellow;
+    .editLogo {
+      padding-left: 10px;
+      color: $darkblue !important;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding-left: 20px;
+
+      .pencil {
+        font-size: 1.3em;
+
+        &:hover {
+          cursor: pointer;
+          color: greenyellow;
+        }
+      }
+
+      .activeItem {
+        color: $darkblue;
+        opacity: 1;
+      }
+
+      .inactiveItem {
+        opacity: 0.6;
+        color: $darkyellow;
       }
     }
   }

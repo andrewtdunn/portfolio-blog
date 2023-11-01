@@ -13,6 +13,15 @@
   transition: opacity 1s ease-out;
   cursor: pointer;
 
+  .loginCTA {
+    color: greenyellow;
+    text-decoration: underline;
+    &:hover {
+      cursor: pointer;
+      color: $form-green;
+    }
+  }
+
   .userName {
     color: $darkblue;
   }
