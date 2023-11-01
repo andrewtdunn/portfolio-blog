@@ -14,6 +14,7 @@ import {
   Grid,
   Icon,
   ScrollView,
+  SelectField,
   SwitchField,
   Text,
   TextField,
@@ -201,6 +202,7 @@ export default function ProjectUpdateForm(props) {
     vimeoId: "",
     completionData: "",
     isActive: false,
+    status: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [image, setImage] = React.useState(initialValues.image);
@@ -221,6 +223,7 @@ export default function ProjectUpdateForm(props) {
     initialValues.completionData
   );
   const [isActive, setIsActive] = React.useState(initialValues.isActive);
+  const [status, setStatus] = React.useState(initialValues.status);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = projectRecord
@@ -239,6 +242,7 @@ export default function ProjectUpdateForm(props) {
     setVimeoId(cleanValues.vimeoId);
     setCompletionData(cleanValues.completionData);
     setIsActive(cleanValues.isActive);
+    setStatus(cleanValues.status);
     setErrors({});
   };
   const [projectRecord, setProjectRecord] = React.useState(projectModelProp);
@@ -268,6 +272,7 @@ export default function ProjectUpdateForm(props) {
     vimeoId: [],
     completionData: [],
     isActive: [],
+    status: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -306,6 +311,7 @@ export default function ProjectUpdateForm(props) {
           vimeoId,
           completionData,
           isActive,
+          status,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -372,6 +378,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -406,6 +413,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -440,6 +448,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -474,6 +483,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.tagline ?? value;
@@ -508,6 +518,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.projectLogo ?? value;
@@ -538,6 +549,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             values = result?.details ?? values;
@@ -593,6 +605,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             values = result?.slides ?? values;
@@ -652,6 +665,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.showcaseType ?? value;
@@ -686,6 +700,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId: value,
               completionData,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.vimeoId ?? value;
@@ -721,6 +736,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData: value,
               isActive,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.completionData ?? value;
@@ -755,6 +771,7 @@ export default function ProjectUpdateForm(props) {
               vimeoId,
               completionData,
               isActive: value,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.isActive ?? value;
@@ -769,6 +786,52 @@ export default function ProjectUpdateForm(props) {
         hasError={errors.isActive?.hasError}
         {...getOverrideProps(overrides, "isActive")}
       ></SwitchField>
+      <SelectField
+        label="Status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={status}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              image,
+              description,
+              tagline,
+              projectLogo,
+              details,
+              slides,
+              showcaseType,
+              vimeoId,
+              completionData,
+              isActive,
+              status: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.status ?? value;
+          }
+          if (errors.status?.hasError) {
+            runValidationTasks("status", value);
+          }
+          setStatus(value);
+        }}
+        onBlur={() => runValidationTasks("status", status)}
+        errorMessage={errors.status?.errorMessage}
+        hasError={errors.status?.hasError}
+        {...getOverrideProps(overrides, "status")}
+      >
+        <option
+          children="Active"
+          value="ACTIVE"
+          {...getOverrideProps(overrides, "statusoption0")}
+        ></option>
+        <option
+          children="Inactive"
+          value="INACTIVE"
+          {...getOverrideProps(overrides, "statusoption1")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

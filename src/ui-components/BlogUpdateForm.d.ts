@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 import { Blog } from "../models";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
@@ -34,6 +34,7 @@ export declare type BlogUpdateFormInputValues = {
     display?: boolean;
     slides?: string[];
     videoId?: string;
+    status?: string;
 };
 export declare type BlogUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -47,6 +48,7 @@ export declare type BlogUpdateFormValidationValues = {
     display?: ValidationFunction<boolean>;
     slides?: ValidationFunction<string>;
     videoId?: ValidationFunction<string>;
+    status?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type BlogUpdateFormOverridesProps = {
@@ -62,6 +64,7 @@ export declare type BlogUpdateFormOverridesProps = {
     display?: PrimitiveOverrideProps<SwitchFieldProps>;
     slides?: PrimitiveOverrideProps<TextFieldProps>;
     videoId?: PrimitiveOverrideProps<TextFieldProps>;
+    status?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type BlogUpdateFormProps = React.PropsWithChildren<{
     overrides?: BlogUpdateFormOverridesProps | undefined | null;

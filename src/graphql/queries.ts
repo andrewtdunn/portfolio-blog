@@ -94,6 +94,7 @@ export const getProject = /* GraphQL */ `query GetProject($id: ID!) {
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -125,6 +126,7 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       vimeoId
       completionData
       isActive
+      status
       createdAt
       updatedAt
       _version
@@ -166,6 +168,7 @@ export const syncProjects = /* GraphQL */ `query SyncProjects(
       vimeoId
       completionData
       isActive
+      status
       createdAt
       updatedAt
       _version
@@ -196,6 +199,7 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version
@@ -224,6 +228,7 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
       display
       slides
       videoId
+      status
       createdAt
       updatedAt
       _version
@@ -262,6 +267,7 @@ export const syncBlogs = /* GraphQL */ `query SyncBlogs(
       display
       slides
       videoId
+      status
       createdAt
       updatedAt
       _version

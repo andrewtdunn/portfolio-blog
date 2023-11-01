@@ -5,7 +5,7 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -33,6 +33,7 @@ export declare type ProjectCreateFormInputValues = {
     vimeoId?: string;
     completionData?: string;
     isActive?: boolean;
+    status?: string;
 };
 export declare type ProjectCreateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -46,6 +47,7 @@ export declare type ProjectCreateFormValidationValues = {
     vimeoId?: ValidationFunction<string>;
     completionData?: ValidationFunction<string>;
     isActive?: ValidationFunction<boolean>;
+    status?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ProjectCreateFormOverridesProps = {
@@ -61,6 +63,7 @@ export declare type ProjectCreateFormOverridesProps = {
     vimeoId?: PrimitiveOverrideProps<TextFieldProps>;
     completionData?: PrimitiveOverrideProps<TextFieldProps>;
     isActive?: PrimitiveOverrideProps<SwitchFieldProps>;
+    status?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type ProjectCreateFormProps = React.PropsWithChildren<{
     overrides?: ProjectCreateFormOverridesProps | undefined | null;

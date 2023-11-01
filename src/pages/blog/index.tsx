@@ -2,7 +2,7 @@ import styles from "./blog.module.scss";
 import Header from "../../../components/layout/header";
 import Head from "next/head";
 import { DataStore } from "@aws-amplify/datastore";
-import { Blog } from "../../../src/models";
+import { Blog, ItemStatus } from "../../../src/models";
 import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
@@ -36,7 +36,9 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const SSR = withSSRContext();
   try {
-    const models = await SSR.DataStore.query(Blog);
+    const models = await DataStore.query(Blog, (c) =>
+      c.status!.eq(ItemStatus.ACTIVE)
+    );
     return {
       props: {
         blogs: JSON.parse(JSON.stringify(models)),

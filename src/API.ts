@@ -98,8 +98,15 @@ export type CreateProjectInput = {
   vimeoId?: string | null,
   completionData?: string | null,
   isActive?: boolean | null,
+  status: ItemStatus,
   _version?: number | null,
 };
+
+export enum ItemStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
+
 
 export type ModelProjectConditionInput = {
   title?: ModelStringInput | null,
@@ -113,10 +120,16 @@ export type ModelProjectConditionInput = {
   vimeoId?: ModelStringInput | null,
   completionData?: ModelStringInput | null,
   isActive?: ModelBooleanInput | null,
+  status?: ModelItemStatusInput | null,
   and?: Array< ModelProjectConditionInput | null > | null,
   or?: Array< ModelProjectConditionInput | null > | null,
   not?: ModelProjectConditionInput | null,
   _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelItemStatusInput = {
+  eq?: ItemStatus | null,
+  ne?: ItemStatus | null,
 };
 
 export type Project = {
@@ -133,6 +146,7 @@ export type Project = {
   vimeoId?: string | null,
   completionData?: string | null,
   isActive?: boolean | null,
+  status: ItemStatus,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -153,6 +167,7 @@ export type UpdateProjectInput = {
   vimeoId?: string | null,
   completionData?: string | null,
   isActive?: boolean | null,
+  status?: ItemStatus | null,
   _version?: number | null,
 };
 
@@ -174,6 +189,7 @@ export type CreateBlogInput = {
   display?: boolean | null,
   slides?: Array< string | null > | null,
   videoId?: string | null,
+  status: ItemStatus,
   _version?: number | null,
 };
 
@@ -189,6 +205,7 @@ export type ModelBlogConditionInput = {
   display?: ModelBooleanInput | null,
   slides?: ModelStringInput | null,
   videoId?: ModelStringInput | null,
+  status?: ModelItemStatusInput | null,
   and?: Array< ModelBlogConditionInput | null > | null,
   or?: Array< ModelBlogConditionInput | null > | null,
   not?: ModelBlogConditionInput | null,
@@ -209,6 +226,7 @@ export type Blog = {
   display?: boolean | null,
   slides?: Array< string | null > | null,
   videoId?: string | null,
+  status: ItemStatus,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -229,6 +247,7 @@ export type UpdateBlogInput = {
   display?: boolean | null,
   slides?: Array< string | null > | null,
   videoId?: string | null,
+  status?: ItemStatus | null,
   _version?: number | null,
 };
 
@@ -421,12 +440,12 @@ export type Bio = {
   image?: string | null,
   intro: string,
   introClosing: string,
-  AWSCertifications?: ModelAgencyConnection | null,
-  MiscCertifications?: ModelAgencyConnection | null,
+  AWSCertifications?: ModelAWSCertificationConnection | null,
+  MiscCertifications?: ModelMiscCertificationConnection | null,
   Agencies?: ModelAgencyConnection | null,
   signatureImage?: string | null,
   mainUser?: boolean | null,
-  Schools?: ModelAgencyConnection | null,
+  Schools?: ModelSchoolConnection | null,
   createdAt: string,
   updatedAt: string,
   _version: number,
@@ -434,9 +453,44 @@ export type Bio = {
   _lastChangedAt: number,
 };
 
+export type ModelAWSCertificationConnection = {
+  __typename: "ModelAWSCertificationConnection",
+  items:  Array<AWSCertification | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type AWSCertification = {
+  __typename: "AWSCertification",
+  id: string,
+  name: string,
+  link: string,
+  image: string,
+  bioID: string,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export type ModelMiscCertificationConnection = {
+  __typename: "ModelMiscCertificationConnection",
+  items:  Array<MiscCertification | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
 export type ModelAgencyConnection = {
   __typename: "ModelAgencyConnection",
   items:  Array<Agency | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
+export type ModelSchoolConnection = {
+  __typename: "ModelSchoolConnection",
+  items:  Array<School | null >,
   nextToken?: string | null,
   startedAt?: number | null,
 };
@@ -474,20 +528,6 @@ export type ModelAWSCertificationConditionInput = {
   or?: Array< ModelAWSCertificationConditionInput | null > | null,
   not?: ModelAWSCertificationConditionInput | null,
   _deleted?: ModelBooleanInput | null,
-};
-
-export type AWSCertification = {
-  __typename: "AWSCertification",
-  id: string,
-  name: string,
-  link: string,
-  image: string,
-  bioID: string,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
 };
 
 export type UpdateAWSCertificationInput = {
@@ -533,6 +573,7 @@ export type ModelProjectFilterInput = {
   vimeoId?: ModelStringInput | null,
   completionData?: ModelStringInput | null,
   isActive?: ModelBooleanInput | null,
+  status?: ModelItemStatusInput | null,
   and?: Array< ModelProjectFilterInput | null > | null,
   or?: Array< ModelProjectFilterInput | null > | null,
   not?: ModelProjectFilterInput | null,
@@ -559,6 +600,7 @@ export type ModelBlogFilterInput = {
   display?: ModelBooleanInput | null,
   slides?: ModelStringInput | null,
   videoId?: ModelStringInput | null,
+  status?: ModelItemStatusInput | null,
   and?: Array< ModelBlogFilterInput | null > | null,
   or?: Array< ModelBlogFilterInput | null > | null,
   not?: ModelBlogFilterInput | null,
@@ -601,13 +643,6 @@ export type ModelSchoolFilterInput = {
   _deleted?: ModelBooleanInput | null,
 };
 
-export type ModelSchoolConnection = {
-  __typename: "ModelSchoolConnection",
-  items:  Array<School | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
-};
-
 export type ModelMiscCertificationFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
@@ -618,13 +653,6 @@ export type ModelMiscCertificationFilterInput = {
   or?: Array< ModelMiscCertificationFilterInput | null > | null,
   not?: ModelMiscCertificationFilterInput | null,
   _deleted?: ModelBooleanInput | null,
-};
-
-export type ModelMiscCertificationConnection = {
-  __typename: "ModelMiscCertificationConnection",
-  items:  Array<MiscCertification | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelBioFilterInput = {
@@ -657,13 +685,6 @@ export type ModelAWSCertificationFilterInput = {
   or?: Array< ModelAWSCertificationFilterInput | null > | null,
   not?: ModelAWSCertificationFilterInput | null,
   _deleted?: ModelBooleanInput | null,
-};
-
-export type ModelAWSCertificationConnection = {
-  __typename: "ModelAWSCertificationConnection",
-  items:  Array<AWSCertification | null >,
-  nextToken?: string | null,
-  startedAt?: number | null,
 };
 
 export type ModelSubscriptionBadReceptionFilterInput = {
@@ -717,6 +738,7 @@ export type ModelSubscriptionProjectFilterInput = {
   vimeoId?: ModelSubscriptionStringInput | null,
   completionData?: ModelSubscriptionStringInput | null,
   isActive?: ModelSubscriptionBooleanInput | null,
+  status?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   or?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
@@ -740,6 +762,7 @@ export type ModelSubscriptionBlogFilterInput = {
   display?: ModelSubscriptionBooleanInput | null,
   slides?: ModelSubscriptionStringInput | null,
   videoId?: ModelSubscriptionStringInput | null,
+  status?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   or?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
@@ -874,6 +897,7 @@ export type CreateProjectMutation = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -902,6 +926,7 @@ export type UpdateProjectMutation = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -930,6 +955,7 @@ export type DeleteProjectMutation = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -958,6 +984,7 @@ export type CreateBlogMutation = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -986,6 +1013,7 @@ export type UpdateBlogMutation = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1014,6 +1042,7 @@ export type DeleteBlogMutation = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1221,12 +1250,12 @@ export type CreateBioMutation = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1238,7 +1267,7 @@ export type CreateBioMutation = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1263,12 +1292,12 @@ export type UpdateBioMutation = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1280,7 +1309,7 @@ export type UpdateBioMutation = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1305,12 +1334,12 @@ export type DeleteBioMutation = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1322,7 +1351,7 @@ export type DeleteBioMutation = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1482,6 +1511,7 @@ export type GetProjectQuery = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1513,6 +1543,7 @@ export type ListProjectsQuery = {
       vimeoId?: string | null,
       completionData?: string | null,
       isActive?: boolean | null,
+      status: ItemStatus,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1548,6 +1579,7 @@ export type SyncProjectsQuery = {
       vimeoId?: string | null,
       completionData?: string | null,
       isActive?: boolean | null,
+      status: ItemStatus,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1578,6 +1610,7 @@ export type GetBlogQuery = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1609,6 +1642,7 @@ export type ListBlogsQuery = {
       display?: boolean | null,
       slides?: Array< string | null > | null,
       videoId?: string | null,
+      status: ItemStatus,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1644,6 +1678,7 @@ export type SyncBlogsQuery = {
       display?: boolean | null,
       slides?: Array< string | null > | null,
       videoId?: string | null,
+      status: ItemStatus,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1975,12 +2010,12 @@ export type GetBioQuery = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -1992,7 +2027,7 @@ export type GetBioQuery = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -2235,6 +2270,7 @@ export type OnCreateProjectSubscription = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2262,6 +2298,7 @@ export type OnUpdateProjectSubscription = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2289,6 +2326,7 @@ export type OnDeleteProjectSubscription = {
     vimeoId?: string | null,
     completionData?: string | null,
     isActive?: boolean | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2316,6 +2354,7 @@ export type OnCreateBlogSubscription = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2343,6 +2382,7 @@ export type OnUpdateBlogSubscription = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2370,6 +2410,7 @@ export type OnDeleteBlogSubscription = {
     display?: boolean | null,
     slides?: Array< string | null > | null,
     videoId?: string | null,
+    status: ItemStatus,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2567,12 +2608,12 @@ export type OnCreateBioSubscription = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -2584,7 +2625,7 @@ export type OnCreateBioSubscription = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -2608,12 +2649,12 @@ export type OnUpdateBioSubscription = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -2625,7 +2666,7 @@ export type OnUpdateBioSubscription = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -2649,12 +2690,12 @@ export type OnDeleteBioSubscription = {
     intro: string,
     introClosing: string,
     AWSCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelAWSCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
     MiscCertifications?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelMiscCertificationConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,
@@ -2666,7 +2707,7 @@ export type OnDeleteBioSubscription = {
     signatureImage?: string | null,
     mainUser?: boolean | null,
     Schools?:  {
-      __typename: "ModelAgencyConnection",
+      __typename: "ModelSchoolConnection",
       nextToken?: string | null,
       startedAt?: number | null,
     } | null,

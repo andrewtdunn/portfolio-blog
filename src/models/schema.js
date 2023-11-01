@@ -160,6 +160,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": {
+                        "enum": "ItemStatus"
+                    },
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -300,6 +309,15 @@ export const schema = {
                     "isArray": false,
                     "type": "String",
                     "isRequired": false,
+                    "attributes": []
+                },
+                "status": {
+                    "name": "status",
+                    "isArray": false,
+                    "type": {
+                        "enum": "ItemStatus"
+                    },
+                    "isRequired": true,
                     "attributes": []
                 },
                 "createdAt": {
@@ -917,8 +935,16 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "ItemStatus": {
+            "name": "ItemStatus",
+            "values": [
+                "ACTIVE",
+                "INACTIVE"
+            ]
+        }
+    },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "4a1c16d2e356db0552cb2a2c7013bafd"
+    "version": "2226f027ad6dbbf7c9193ed2a41ae0b7"
 };

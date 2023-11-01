@@ -2,7 +2,10 @@ import { ModelInit, MutableModel, __modelMeta__, ManagedIdentifier } from "@aws-
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled, AsyncCollection } from "@aws-amplify/datastore";
 
-
+export enum ItemStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE"
+}
 
 
 
@@ -51,6 +54,7 @@ type EagerProject = {
   readonly vimeoId?: string | null;
   readonly completionData?: string | null;
   readonly isActive?: boolean | null;
+  readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -72,6 +76,7 @@ type LazyProject = {
   readonly vimeoId?: string | null;
   readonly completionData?: string | null;
   readonly isActive?: boolean | null;
+  readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -99,6 +104,7 @@ type EagerBlog = {
   readonly display?: boolean | null;
   readonly slides?: (string | null)[] | null;
   readonly videoId?: string | null;
+  readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -120,6 +126,7 @@ type LazyBlog = {
   readonly display?: boolean | null;
   readonly slides?: (string | null)[] | null;
   readonly videoId?: string | null;
+  readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

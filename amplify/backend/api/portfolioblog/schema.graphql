@@ -38,6 +38,12 @@ type Project
   vimeoId: String
   completionData: AWSDate
   isActive: Boolean
+  status: ItemStatus!
+}
+
+enum ItemStatus {
+  ACTIVE
+  INACTIVE
 }
 
 type Blog
@@ -64,6 +70,7 @@ type Blog
   display: Boolean
   slides: [String]
   videoId: String
+  status: ItemStatus!
 }
 
 type Agency

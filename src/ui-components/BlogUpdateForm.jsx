@@ -14,6 +14,7 @@ import {
   Grid,
   Icon,
   ScrollView,
+  SelectField,
   SwitchField,
   Text,
   TextField,
@@ -201,6 +202,7 @@ export default function BlogUpdateForm(props) {
     display: false,
     slides: [],
     videoId: "",
+    status: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [text, setText] = React.useState(initialValues.text);
@@ -219,6 +221,7 @@ export default function BlogUpdateForm(props) {
   const [display, setDisplay] = React.useState(initialValues.display);
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [videoId, setVideoId] = React.useState(initialValues.videoId);
+  const [status, setStatus] = React.useState(initialValues.status);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = blogRecord
@@ -236,6 +239,7 @@ export default function BlogUpdateForm(props) {
     setSlides(cleanValues.slides ?? []);
     setCurrentSlidesValue("");
     setVideoId(cleanValues.videoId);
+    setStatus(cleanValues.status);
     setErrors({});
   };
   const [blogRecord, setBlogRecord] = React.useState(blogModelProp);
@@ -263,6 +267,7 @@ export default function BlogUpdateForm(props) {
     display: [],
     slides: [],
     videoId: [],
+    status: [{ type: "Required" }],
   };
   const runValidationTasks = async (
     fieldName,
@@ -301,6 +306,7 @@ export default function BlogUpdateForm(props) {
           display,
           slides,
           videoId,
+          status,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -367,6 +373,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -401,6 +408,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -435,6 +443,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -469,6 +478,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.heroAlignment ?? value;
@@ -503,6 +513,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.heroSize ?? value;
@@ -537,6 +548,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.isTwoColumn ?? value;
@@ -571,6 +583,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.dropCap ?? value;
@@ -606,6 +619,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.publishDate ?? value;
@@ -640,6 +654,7 @@ export default function BlogUpdateForm(props) {
               display: value,
               slides,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.display ?? value;
@@ -670,6 +685,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides: values,
               videoId,
+              status,
             };
             const result = onChange(modelFields);
             values = result?.slides ?? values;
@@ -729,6 +745,7 @@ export default function BlogUpdateForm(props) {
               display,
               slides,
               videoId: value,
+              status,
             };
             const result = onChange(modelFields);
             value = result?.videoId ?? value;
@@ -743,6 +760,52 @@ export default function BlogUpdateForm(props) {
         hasError={errors.videoId?.hasError}
         {...getOverrideProps(overrides, "videoId")}
       ></TextField>
+      <SelectField
+        label="Status"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={status}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              text,
+              image,
+              heroAlignment,
+              heroSize,
+              isTwoColumn,
+              dropCap,
+              publishDate,
+              display,
+              slides,
+              videoId,
+              status: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.status ?? value;
+          }
+          if (errors.status?.hasError) {
+            runValidationTasks("status", value);
+          }
+          setStatus(value);
+        }}
+        onBlur={() => runValidationTasks("status", status)}
+        errorMessage={errors.status?.errorMessage}
+        hasError={errors.status?.hasError}
+        {...getOverrideProps(overrides, "status")}
+      >
+        <option
+          children="Active"
+          value="ACTIVE"
+          {...getOverrideProps(overrides, "statusoption0")}
+        ></option>
+        <option
+          children="Inactive"
+          value="INACTIVE"
+          {...getOverrideProps(overrides, "statusoption1")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

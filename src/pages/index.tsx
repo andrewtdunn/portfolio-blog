@@ -5,6 +5,7 @@ import Head from "next/head";
 import { DataStore } from "@aws-amplify/datastore";
 import { BadReception, Project } from "../../src/models";
 import { withSSRContext } from "aws-amplify";
+import { ItemStatus } from "@/API";
 
 const HomePage = ({
   projects,
@@ -25,7 +26,9 @@ const HomePage = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
-    const models = await DataStore.query(Project);
+    const models = await DataStore.query(Project, (c) =>
+      c.status!.eq(ItemStatus.ACTIVE)
+    );
     const videoList = await DataStore.query(BadReception);
 
     return {

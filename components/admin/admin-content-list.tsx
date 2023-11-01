@@ -1,4 +1,4 @@
-import { Blog, Project } from "@/models";
+import { Blog, ItemStatus, Project } from "@/models";
 import { DataStore } from "aws-amplify";
 import { GetServerSideProps } from "next";
 import { AdminModel } from "../../type-definitions/enums";
@@ -66,6 +66,13 @@ const ContentList = ({
       {models.map((model, index) => (
         <li key={index}>
           <div className={styles.editLogo}>
+            <MdReport
+              className={
+                model.status == ItemStatus.ACTIVE
+                  ? styles.activeItem
+                  : styles.inactiveItem
+              }
+            />
             {isAdmin && (
               <MdOutlineEditNote
                 onClick={() => handleClick(model)}

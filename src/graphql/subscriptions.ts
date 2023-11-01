@@ -76,6 +76,7 @@ export const onCreateProject = /* GraphQL */ `subscription OnCreateProject($filt
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -102,6 +103,7 @@ export const onUpdateProject = /* GraphQL */ `subscription OnUpdateProject($filt
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -128,6 +130,7 @@ export const onDeleteProject = /* GraphQL */ `subscription OnDeleteProject($filt
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -154,6 +157,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog($filter: Mo
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version
@@ -180,6 +184,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog($filter: Mo
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version
@@ -206,6 +211,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog($filter: Mo
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version

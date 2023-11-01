@@ -82,6 +82,7 @@ export const createProject = /* GraphQL */ `mutation CreateProject(
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -111,6 +112,7 @@ export const updateProject = /* GraphQL */ `mutation UpdateProject(
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -140,6 +142,7 @@ export const deleteProject = /* GraphQL */ `mutation DeleteProject(
     vimeoId
     completionData
     isActive
+    status
     createdAt
     updatedAt
     _version
@@ -169,6 +172,7 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version
@@ -198,6 +202,7 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version
@@ -227,6 +232,7 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
     display
     slides
     videoId
+    status
     createdAt
     updatedAt
     _version
