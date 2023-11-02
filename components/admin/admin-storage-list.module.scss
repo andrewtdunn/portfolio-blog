@@ -1,0 +1,12 @@
+@import "../../styles/base";
+
+.StorageList {
+  li {
+    border-bottom: 1px solid $darkblue;
+    color: $darkblue;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+  }
+}

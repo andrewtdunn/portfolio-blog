@@ -19,5 +19,11 @@ export type AmplifyDependentResourcesAttributes = {
     "userPoolGroups": {
       "adminGroupRole": "string"
     }
+  },
+  "storage": {
+    "atd2005portfoliostorage": {
+      "BucketName": "string",
+      "Region": "string"
+    }
   }
 }

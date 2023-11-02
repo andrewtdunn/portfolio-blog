@@ -3,7 +3,7 @@ import { DataStore } from "aws-amplify";
 import { GetServerSideProps } from "next";
 import { AdminModel } from "../../type-definitions/enums";
 import { useContext, useEffect, useState } from "react";
-import { MdOutlineEditNote, MdReport } from "react-icons/md";
+import { MdOutlineEditNote, MdStarRate } from "react-icons/md";
 import styles from "./admin-content-list.module.scss";
 import ProjectUpdateForm from "@/ui-components/ProjectUpdateForm";
 import BlogUpdateForm from "@/ui-components/BlogUpdateForm";
@@ -66,7 +66,7 @@ const ContentList = ({
       {models.map((model, index) => (
         <li key={index}>
           <div className={styles.editLogo}>
-            <MdReport
+            <MdStarRate
               className={
                 model.status == ItemStatus.ACTIVE
                   ? styles.activeItem

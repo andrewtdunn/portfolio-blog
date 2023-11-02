@@ -18,6 +18,13 @@
       },
       "api": {
         "portfolioblog": {}
+      },
+      "storage": {
+        "portfolioblog89868039": {
+          "bucketName": "atd2005-media-static-bucket-dev",
+          "region": "us-east-1"
+        },
+        "atd2005portfoliostorage": {}
       }
     }
   }

@@ -8,6 +8,8 @@ import ProjectCreateForm from "@/ui-components/ProjectCreateForm";
 import styles from "./admin-content-form.module.scss";
 import ContentList from "./admin-content-list";
 import AuthContext from "../../store/auth-context";
+import StorageList from "./admin-storage-list";
+import StorageForm from "./admin-storage-form";
 
 const AdminContentForm = () => {
   const adminCtx = useContext(AdminContext);
@@ -40,13 +42,17 @@ const AdminContentForm = () => {
               soundCtx?.buttonNoise();
             }}
           />
-        ) : (
+        ) : adminCtx.modelType == AdminModel.BLOG ? (
           <BlogCreateForm
             onSuccess={() => {
               soundCtx?.buttonNoise();
             }}
           />
+        ) : (
+          <StorageForm />
         )
+      ) : isAdmin && adminCtx?.modelType == AdminModel.STORAGE ? (
+        <StorageList />
       ) : (
         <ContentList isAdmin={isAdmin} modelType={adminCtx?.modelType!} />
       )}

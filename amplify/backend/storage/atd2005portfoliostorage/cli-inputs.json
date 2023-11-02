@@ -1,0 +1,19 @@
+{
+  "resourceName": "atd2005portfoliostorage",
+  "policyUUID": "9f50f60d",
+  "bucketName": "atd2005-portfoliostorage",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "READ"
+  ],
+  "groupAccess": {
+    "admin": [
+      "CREATE_AND_UPDATE",
+      "READ",
+      "DELETE"
+    ]
+  }
+}

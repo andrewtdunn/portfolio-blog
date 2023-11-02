@@ -77,5 +77,45 @@
       "providerPlugin": "awscloudformation",
       "service": "Cognito-UserPool-Groups"
     }
+  },
+  "parameters": {
+    "AMPLIFY_storage_portfolioblog89868039_bucketName": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "portfolioblog89868039"
+        }
+      ]
+    },
+    "AMPLIFY_storage_portfolioblog89868039_region": {
+      "usedBy": [
+        {
+          "category": "storage",
+          "resourceName": "portfolioblog89868039"
+        }
+      ]
+    }
+  },
+  "storage": {
+    "atd2005portfoliostorage": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "portfolioblog"
+        },
+        {
+          "attributes": [
+            "adminGroupRole"
+          ],
+          "category": "auth",
+          "resourceName": "userPoolGroups"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "S3"
+    }
   }
 }

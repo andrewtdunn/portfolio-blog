@@ -1,11 +1,14 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../../portfolio_relaunch"
-		}
-	],
-	"settings": {}
+  "folders": [
+    {
+      "path": "."
+    },
+    {
+      "path": "../../portfolio_relaunch"
+    },
+    {
+      "path": "../../pandasombrero/services/backend"
+    }
+  ],
+  "settings": {}
 }

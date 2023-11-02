@@ -6,7 +6,13 @@ import { AdminForm, AdminModel } from "../../type-definitions/enums";
 import { SoundContext } from "../../store/sound-context";
 import AuthContext from "../../store/auth-context";
 
-const ModalButtonGroup = ({ modelType }: { modelType: AdminModel }) => {
+const ModalButtonGroup = ({
+  modelType,
+  addS = true,
+}: {
+  modelType: AdminModel;
+  addS?: boolean;
+}) => {
   const adminCtx = useContext(AdminContext);
   const soundCtx = useContext(SoundContext);
   const authCtx = useContext(AuthContext);
@@ -36,13 +42,18 @@ const ModalButtonGroup = ({ modelType }: { modelType: AdminModel }) => {
   };
   return (
     <div className={styles.ModalButtonGroup}>
-      <h2>{modelType.toString().toUpperCase()}</h2>
-      <button
-        onClick={() => {
-          listCallback();
-          buttonNoise(1);
-        }}
-      >{`List ${modelType}s`}</button>
+      {(modelType != AdminModel.STORAGE || isAdmin) && (
+        <>
+          <h2>{modelType.toString().toUpperCase()}</h2>
+          <button
+            onClick={() => {
+              listCallback();
+              buttonNoise(1);
+            }}
+          >{`List ${modelType}${addS ? "s" : ""}`}</button>
+        </>
+      )}
+
       {isAdmin && (
         <button
           onClick={() => {
