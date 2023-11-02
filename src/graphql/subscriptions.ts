@@ -75,7 +75,6 @@ export const onCreateProject = /* GraphQL */ `subscription OnCreateProject($filt
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt
@@ -102,7 +101,6 @@ export const onUpdateProject = /* GraphQL */ `subscription OnUpdateProject($filt
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt
@@ -129,7 +127,6 @@ export const onDeleteProject = /* GraphQL */ `subscription OnDeleteProject($filt
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt

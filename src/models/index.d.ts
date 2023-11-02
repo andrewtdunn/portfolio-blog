@@ -53,7 +53,6 @@ type EagerProject = {
   readonly showcaseType: string;
   readonly vimeoId?: string | null;
   readonly completionData?: string | null;
-  readonly isActive?: boolean | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -75,7 +74,6 @@ type LazyProject = {
   readonly showcaseType: string;
   readonly vimeoId?: string | null;
   readonly completionData?: string | null;
-  readonly isActive?: boolean | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;

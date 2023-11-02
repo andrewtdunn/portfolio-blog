@@ -93,7 +93,6 @@ export const getProject = /* GraphQL */ `query GetProject($id: ID!) {
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt
@@ -125,7 +124,6 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       showcaseType
       vimeoId
       completionData
-      isActive
       status
       createdAt
       updatedAt
@@ -167,7 +165,6 @@ export const syncProjects = /* GraphQL */ `query SyncProjects(
       showcaseType
       vimeoId
       completionData
-      isActive
       status
       createdAt
       updatedAt

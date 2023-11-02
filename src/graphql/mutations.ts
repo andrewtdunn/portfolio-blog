@@ -81,7 +81,6 @@ export const createProject = /* GraphQL */ `mutation CreateProject(
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt
@@ -111,7 +110,6 @@ export const updateProject = /* GraphQL */ `mutation UpdateProject(
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt
@@ -141,7 +139,6 @@ export const deleteProject = /* GraphQL */ `mutation DeleteProject(
     showcaseType
     vimeoId
     completionData
-    isActive
     status
     createdAt
     updatedAt

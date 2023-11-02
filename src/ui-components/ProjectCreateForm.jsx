@@ -15,7 +15,6 @@ import {
   Icon,
   ScrollView,
   SelectField,
-  SwitchField,
   Text,
   TextField,
   useTheme,
@@ -200,7 +199,6 @@ export default function ProjectCreateForm(props) {
     showcaseType: "",
     vimeoId: "",
     completionData: "",
-    isActive: false,
     status: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
@@ -221,7 +219,6 @@ export default function ProjectCreateForm(props) {
   const [completionData, setCompletionData] = React.useState(
     initialValues.completionData
   );
-  const [isActive, setIsActive] = React.useState(initialValues.isActive);
   const [status, setStatus] = React.useState(initialValues.status);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -237,7 +234,6 @@ export default function ProjectCreateForm(props) {
     setShowcaseType(initialValues.showcaseType);
     setVimeoId(initialValues.vimeoId);
     setCompletionData(initialValues.completionData);
-    setIsActive(initialValues.isActive);
     setStatus(initialValues.status);
     setErrors({});
   };
@@ -256,7 +252,6 @@ export default function ProjectCreateForm(props) {
     showcaseType: [{ type: "Required" }],
     vimeoId: [],
     completionData: [],
-    isActive: [],
     status: [{ type: "Required" }],
   };
   const runValidationTasks = async (
@@ -295,7 +290,6 @@ export default function ProjectCreateForm(props) {
           showcaseType,
           vimeoId,
           completionData,
-          isActive,
           status,
         };
         const validationResponses = await Promise.all(
@@ -361,7 +355,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -396,7 +389,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -431,7 +423,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -466,7 +457,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -501,7 +491,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -532,7 +521,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -588,7 +576,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -648,7 +635,6 @@ export default function ProjectCreateForm(props) {
               showcaseType: value,
               vimeoId,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -683,7 +669,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId: value,
               completionData,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -719,7 +704,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData: value,
-              isActive,
               status,
             };
             const result = onChange(modelFields);
@@ -735,41 +719,6 @@ export default function ProjectCreateForm(props) {
         hasError={errors.completionData?.hasError}
         {...getOverrideProps(overrides, "completionData")}
       ></TextField>
-      <SwitchField
-        label="Is active"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={isActive}
-        onChange={(e) => {
-          let value = e.target.checked;
-          if (onChange) {
-            const modelFields = {
-              title,
-              image,
-              description,
-              tagline,
-              projectLogo,
-              details,
-              slides,
-              showcaseType,
-              vimeoId,
-              completionData,
-              isActive: value,
-              status,
-            };
-            const result = onChange(modelFields);
-            value = result?.isActive ?? value;
-          }
-          if (errors.isActive?.hasError) {
-            runValidationTasks("isActive", value);
-          }
-          setIsActive(value);
-        }}
-        onBlur={() => runValidationTasks("isActive", isActive)}
-        errorMessage={errors.isActive?.errorMessage}
-        hasError={errors.isActive?.hasError}
-        {...getOverrideProps(overrides, "isActive")}
-      ></SwitchField>
       <SelectField
         label="Status"
         placeholder="Please select an option"
@@ -789,7 +738,6 @@ export default function ProjectCreateForm(props) {
               showcaseType,
               vimeoId,
               completionData,
-              isActive,
               status: value,
             };
             const result = onChange(modelFields);

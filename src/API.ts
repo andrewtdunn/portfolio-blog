@@ -97,7 +97,6 @@ export type CreateProjectInput = {
   showcaseType: string,
   vimeoId?: string | null,
   completionData?: string | null,
-  isActive?: boolean | null,
   status: ItemStatus,
   _version?: number | null,
 };
@@ -119,7 +118,6 @@ export type ModelProjectConditionInput = {
   showcaseType?: ModelStringInput | null,
   vimeoId?: ModelStringInput | null,
   completionData?: ModelStringInput | null,
-  isActive?: ModelBooleanInput | null,
   status?: ModelItemStatusInput | null,
   and?: Array< ModelProjectConditionInput | null > | null,
   or?: Array< ModelProjectConditionInput | null > | null,
@@ -145,7 +143,6 @@ export type Project = {
   showcaseType: string,
   vimeoId?: string | null,
   completionData?: string | null,
-  isActive?: boolean | null,
   status: ItemStatus,
   createdAt: string,
   updatedAt: string,
@@ -166,7 +163,6 @@ export type UpdateProjectInput = {
   showcaseType?: string | null,
   vimeoId?: string | null,
   completionData?: string | null,
-  isActive?: boolean | null,
   status?: ItemStatus | null,
   _version?: number | null,
 };
@@ -572,7 +568,6 @@ export type ModelProjectFilterInput = {
   showcaseType?: ModelStringInput | null,
   vimeoId?: ModelStringInput | null,
   completionData?: ModelStringInput | null,
-  isActive?: ModelBooleanInput | null,
   status?: ModelItemStatusInput | null,
   and?: Array< ModelProjectFilterInput | null > | null,
   or?: Array< ModelProjectFilterInput | null > | null,
@@ -737,16 +732,10 @@ export type ModelSubscriptionProjectFilterInput = {
   showcaseType?: ModelSubscriptionStringInput | null,
   vimeoId?: ModelSubscriptionStringInput | null,
   completionData?: ModelSubscriptionStringInput | null,
-  isActive?: ModelSubscriptionBooleanInput | null,
   status?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   or?: Array< ModelSubscriptionProjectFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
-};
-
-export type ModelSubscriptionBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
 };
 
 export type ModelSubscriptionBlogFilterInput = {
@@ -766,6 +755,11 @@ export type ModelSubscriptionBlogFilterInput = {
   and?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   or?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
+};
+
+export type ModelSubscriptionBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
 };
 
 export type ModelSubscriptionAgencyFilterInput = {
@@ -896,7 +890,6 @@ export type CreateProjectMutation = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,
@@ -925,7 +918,6 @@ export type UpdateProjectMutation = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,
@@ -954,7 +946,6 @@ export type DeleteProjectMutation = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,
@@ -1510,7 +1501,6 @@ export type GetProjectQuery = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,
@@ -1542,7 +1532,6 @@ export type ListProjectsQuery = {
       showcaseType: string,
       vimeoId?: string | null,
       completionData?: string | null,
-      isActive?: boolean | null,
       status: ItemStatus,
       createdAt: string,
       updatedAt: string,
@@ -1578,7 +1567,6 @@ export type SyncProjectsQuery = {
       showcaseType: string,
       vimeoId?: string | null,
       completionData?: string | null,
-      isActive?: boolean | null,
       status: ItemStatus,
       createdAt: string,
       updatedAt: string,
@@ -2269,7 +2257,6 @@ export type OnCreateProjectSubscription = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,
@@ -2297,7 +2284,6 @@ export type OnUpdateProjectSubscription = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,
@@ -2325,7 +2311,6 @@ export type OnDeleteProjectSubscription = {
     showcaseType: string,
     vimeoId?: string | null,
     completionData?: string | null,
-    isActive?: boolean | null,
     status: ItemStatus,
     createdAt: string,
     updatedAt: string,

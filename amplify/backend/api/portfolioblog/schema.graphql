@@ -37,7 +37,6 @@ type Project
   showcaseType: String!
   vimeoId: String
   completionData: AWSDate
-  isActive: Boolean
   status: ItemStatus!
 }
 
