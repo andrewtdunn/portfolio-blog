@@ -631,7 +631,7 @@ export default function BlogCreateForm(props) {
             });
           }}
           processFile={processFile}
-          accessLevel={"private"}
+          accessLevel={"public"}
           acceptedFileTypes={[]}
           isResumable={false}
           showThumbnails={true}

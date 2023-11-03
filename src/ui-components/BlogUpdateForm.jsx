@@ -653,8 +653,8 @@ export default function BlogUpdateForm(props) {
               });
             }}
             processFile={processFile}
-            accessLevel={"private"}
-            acceptedFileTypes={[]}
+            accessLevel={"public"}
+            acceptedFileTypes={["image/*"]}
             isResumable={false}
             showThumbnails={true}
             {...getOverrideProps(overrides, "slides")}

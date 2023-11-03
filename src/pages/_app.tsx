@@ -10,7 +10,7 @@ import awsExports from "@/aws-exports";
 import { AuthProvider } from "../../store/auth-context";
 import { SlideshowProvider } from "../../store/slideshow-context";
 import "@aws-amplify/ui-react/styles.css";
-import { ThemeProvider } from "@aws-amplify/ui-react";
+import { ThemeProvider, createTheme } from "@aws-amplify/ui-react";
 import studioTheme from "../ui-components/studioTheme";
 import { AdminProvider } from "../../store/admin-context";
 

@@ -55,10 +55,61 @@ const ContentList = ({
         <ProjectUpdateForm
           project={currModel as Project}
           onSuccess={resetForm}
+          onSubmit={(fields) => {
+            // Example function to trim all string inputs
+            const updatedFields = {};
+            Object.keys(fields).forEach((key) => {
+              // @ts-ignore
+              if (typeof fields[key] === "string") {
+                // @ts-ignore
+                updatedFields[key] = fields[key].trim();
+              } else {
+                // @ts-ignore
+                updatedFields[key] = fields[key];
+              }
+              if (key == "slides" && fields[key]) {
+                let uniq = fields[key]!.filter(function (item, pos) {
+                  return fields[key]!.indexOf(item) == pos;
+                });
+                // @ts-ignore
+                updatedFields[key] = uniq;
+              }
+            });
+
+            return updatedFields;
+          }}
         />
       );
     } else if (modelType == AdminModel.BLOG && isAdmin) {
-      return <BlogUpdateForm blog={currModel as Blog} onSuccess={resetForm} />;
+      return (
+        <BlogUpdateForm
+          blog={currModel as Blog}
+          onSuccess={resetForm}
+          onSubmit={(fields) => {
+            // Example function to trim all string inputs
+            const updatedFields = {};
+            Object.keys(fields).forEach((key) => {
+              // @ts-ignore
+              if (typeof fields[key] === "string") {
+                // @ts-ignore
+                updatedFields[key] = fields[key].trim();
+              } else {
+                // @ts-ignore
+                updatedFields[key] = fields[key];
+              }
+              if (key == "slides" && fields[key]) {
+                let uniq = fields[key]!.filter(function (item, pos) {
+                  return fields[key]!.indexOf(item) == pos;
+                });
+                // @ts-ignore
+                updatedFields[key] = uniq;
+              }
+            });
+
+            return updatedFields;
+          }}
+        />
+      );
     }
   }
   return (

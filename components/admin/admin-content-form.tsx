@@ -41,11 +41,57 @@ const AdminContentForm = () => {
             onSuccess={() => {
               soundCtx?.buttonNoise();
             }}
+            onSubmit={(fields) => {
+              // Example function to trim all string inputs
+              const updatedFields = {};
+              Object.keys(fields).forEach((key) => {
+                // @ts-ignore
+                if (typeof fields[key] === "string") {
+                  // @ts-ignore
+                  updatedFields[key] = fields[key].trim();
+                } else {
+                  // @ts-ignore
+                  updatedFields[key] = fields[key];
+                }
+                if (key == "slides" && fields[key]) {
+                  let uniq = fields[key]!.filter(function (item, pos) {
+                    return fields[key]!.indexOf(item) == pos;
+                  });
+                  // @ts-ignore
+                  updatedFields[key] = uniq;
+                }
+              });
+
+              return updatedFields;
+            }}
           />
         ) : adminCtx.modelType == AdminModel.BLOG ? (
           <BlogCreateForm
             onSuccess={() => {
               soundCtx?.buttonNoise();
+            }}
+            onSubmit={(fields) => {
+              // Example function to trim all string inputs
+              const updatedFields = {};
+              Object.keys(fields).forEach((key) => {
+                // @ts-ignore
+                if (typeof fields[key] === "string") {
+                  // @ts-ignore
+                  updatedFields[key] = fields[key].trim();
+                } else {
+                  // @ts-ignore
+                  updatedFields[key] = fields[key];
+                }
+                if (key == "slides" && fields[key]) {
+                  let uniq = fields[key]!.filter(function (item, pos) {
+                    return fields[key]!.indexOf(item) == pos;
+                  });
+                  // @ts-ignore
+                  updatedFields[key] = uniq;
+                }
+              });
+
+              return updatedFields;
             }}
           />
         ) : (

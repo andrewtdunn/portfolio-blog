@@ -3,11 +3,12 @@ import styles from "./blog-post.module.scss";
 import PostText from "./blog-text";
 import { albertusFont } from "../bio/bio-post";
 import { Blog, HeroAlignment } from "@/models";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import CrossFadingImages from "../utils/crossfader";
 import { BlogImageType } from "./blog-image";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
+import { Storage } from "aws-amplify";
 
 type BlogProps = {
   post: Blog;
@@ -31,17 +32,40 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
 
   const slideWidth = 664;
   const slideHeight = 300;
+  const [slideImages, setSlideImages] = useState<string[]>([]);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      console.log("slides", slides);
+      const s3Images = await Promise.all(
+        slides!.map(
+          async (slide) => await Storage.get(slide!, { level: "public" })
+        )
+      );
+      // dedupe s3 images
+      let uniq = s3Images.filter(function (item, pos) {
+        return s3Images.indexOf(item) == pos;
+      });
+      setSlideImages(uniq);
+    };
+
+    if (slides && slides.length) {
+      console.log("slides", slides);
+      fetchImages();
+    }
+  }, [slides]);
+
   return (
     <div className={styles.Post}>
       <article>
         {title && <h1 className={albertusFont.className}>{title}</h1>}
         <hr />
-        {slides && slides.length > 0 && (
+        {slideImages && slideImages.length > 0 && (
           <div className={styles.fader}>
             <CrossFadingImages
               width={slideWidth}
               height={slideHeight}
-              slides={slides as string[]}
+              slides={slideImages}
               time={3000}
               fromBlog={true}
             />

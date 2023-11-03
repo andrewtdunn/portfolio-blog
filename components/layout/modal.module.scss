@@ -89,11 +89,13 @@
       font-size: 1.3em;
     }
 
-    input {
+    input,
+    textarea {
       background-color: aliceblue;
     }
 
-    button {
+    button,
+    select {
       background-color: rgb(248, 177, 84);
     }
 
