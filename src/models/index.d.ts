@@ -7,6 +7,19 @@ export enum ItemStatus {
   INACTIVE = "INACTIVE"
 }
 
+export enum HeroAlignment {
+  TOP = "TOP",
+  BOTTOM = "BOTTOM",
+  LEFT = "LEFT",
+  RIGHT = "RIGHT"
+}
+
+export enum HeroSize {
+  THUMB = "THUMB",
+  FULL = "FULL",
+  ACTUA = "ACTUA"
+}
+
 
 
 type EagerBadReception = {
@@ -94,12 +107,11 @@ type EagerBlog = {
   readonly title?: string | null;
   readonly text?: string | null;
   readonly image?: string | null;
-  readonly heroAlignment?: string | null;
-  readonly heroSize?: string | null;
+  readonly heroAlignment?: HeroAlignment | keyof typeof HeroAlignment | null;
+  readonly heroSize?: HeroSize | keyof typeof HeroSize | null;
   readonly isTwoColumn?: boolean | null;
   readonly dropCap?: boolean | null;
   readonly publishDate?: string | null;
-  readonly display?: boolean | null;
   readonly slides?: (string | null)[] | null;
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
@@ -116,12 +128,11 @@ type LazyBlog = {
   readonly title?: string | null;
   readonly text?: string | null;
   readonly image?: string | null;
-  readonly heroAlignment?: string | null;
-  readonly heroSize?: string | null;
+  readonly heroAlignment?: HeroAlignment | keyof typeof HeroAlignment | null;
+  readonly heroSize?: HeroSize | keyof typeof HeroSize | null;
   readonly isTwoColumn?: boolean | null;
   readonly dropCap?: boolean | null;
   readonly publishDate?: string | null;
-  readonly display?: boolean | null;
   readonly slides?: (string | null)[] | null;
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;

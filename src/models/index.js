@@ -7,6 +7,19 @@ const ItemStatus = {
   "INACTIVE": "INACTIVE"
 };
 
+const HeroAlignment = {
+  "TOP": "TOP",
+  "BOTTOM": "BOTTOM",
+  "LEFT": "LEFT",
+  "RIGHT": "RIGHT"
+};
+
+const HeroSize = {
+  "THUMB": "THUMB",
+  "FULL": "FULL",
+  "ACTUA": "ACTUA"
+};
+
 const { BadReception, Project, Blog, Agency, School, MiscCertification, Bio, AWSCertification } = initSchema(schema);
 
 export {
@@ -18,5 +31,7 @@ export {
   MiscCertification,
   Bio,
   AWSCertification,
-  ItemStatus
+  ItemStatus,
+  HeroAlignment,
+  HeroSize
 };

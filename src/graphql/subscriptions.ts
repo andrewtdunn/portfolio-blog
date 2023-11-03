@@ -151,7 +151,6 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog($filter: Mo
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status
@@ -178,7 +177,6 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog($filter: Mo
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status
@@ -205,7 +203,6 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog($filter: Mo
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status

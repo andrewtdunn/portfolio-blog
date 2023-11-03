@@ -2,7 +2,7 @@ import BlogImage from "./blog-image";
 import styles from "./blog-post.module.scss";
 import PostText from "./blog-text";
 import { albertusFont } from "../bio/bio-post";
-import { Blog } from "@/models";
+import { Blog, HeroAlignment } from "@/models";
 import { FC } from "react";
 import CrossFadingImages from "../utils/crossfader";
 import { BlogImageType } from "./blog-image";
@@ -47,7 +47,7 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
             />
           </div>
         )}
-        {image && heroAlignment != "BOTTOM" && (
+        {image && heroAlignment != HeroAlignment.BOTTOM && (
           <BlogImage
             image={image}
             title={title!}
@@ -61,7 +61,7 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
           <PostText text={text} dropCap={dropCap!} twoColumn={isTwoColumn!} />
         )}
 
-        {image && heroAlignment == "BOTTOM" && (
+        {image && heroAlignment == HeroAlignment.BOTTOM && (
           <BlogImage
             image={image}
             title={title!}

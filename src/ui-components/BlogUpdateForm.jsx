@@ -7,177 +7,24 @@
 /* eslint-disable */
 import * as React from "react";
 import {
-  Badge,
   Button,
-  Divider,
   Flex,
   Grid,
-  Icon,
-  ScrollView,
   SelectField,
   SwitchField,
-  Text,
+  TextAreaField,
   TextField,
-  useTheme,
 } from "@aws-amplify/ui-react";
+import { StorageManager } from "@aws-amplify/ui-react-storage";
 import { Blog } from "../models";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import {
+  fetchByPath,
+  getOverrideProps,
+  processFile,
+  validateField,
+} from "./utils";
+import { Field } from "@aws-amplify/ui-react/internal";
 import { DataStore } from "aws-amplify";
-function ArrayField({
-  items = [],
-  onChange,
-  label,
-  inputFieldRef,
-  children,
-  hasError,
-  setFieldValue,
-  currentFieldValue,
-  defaultFieldValue,
-  lengthLimit,
-  getBadgeText,
-  runValidationTasks,
-  errorMessage,
-}) {
-  const labelElement = <Text>{label}</Text>;
-  const {
-    tokens: {
-      components: {
-        fieldmessages: { error: errorStyles },
-      },
-    },
-  } = useTheme();
-  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
-  const [isEditing, setIsEditing] = React.useState();
-  React.useEffect(() => {
-    if (isEditing) {
-      inputFieldRef?.current?.focus();
-    }
-  }, [isEditing]);
-  const removeItem = async (removeIndex) => {
-    const newItems = items.filter((value, index) => index !== removeIndex);
-    await onChange(newItems);
-    setSelectedBadgeIndex(undefined);
-  };
-  const addItem = async () => {
-    const { hasError } = runValidationTasks();
-    if (
-      currentFieldValue !== undefined &&
-      currentFieldValue !== null &&
-      currentFieldValue !== "" &&
-      !hasError
-    ) {
-      const newItems = [...items];
-      if (selectedBadgeIndex !== undefined) {
-        newItems[selectedBadgeIndex] = currentFieldValue;
-        setSelectedBadgeIndex(undefined);
-      } else {
-        newItems.push(currentFieldValue);
-      }
-      await onChange(newItems);
-      setIsEditing(false);
-    }
-  };
-  const arraySection = (
-    <React.Fragment>
-      {!!items?.length && (
-        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
-          {items.map((value, index) => {
-            return (
-              <Badge
-                key={index}
-                style={{
-                  cursor: "pointer",
-                  alignItems: "center",
-                  marginRight: 3,
-                  marginTop: 3,
-                  backgroundColor:
-                    index === selectedBadgeIndex ? "#B8CEF9" : "",
-                }}
-                onClick={() => {
-                  setSelectedBadgeIndex(index);
-                  setFieldValue(items[index]);
-                  setIsEditing(true);
-                }}
-              >
-                {getBadgeText ? getBadgeText(value) : value.toString()}
-                <Icon
-                  style={{
-                    cursor: "pointer",
-                    paddingLeft: 3,
-                    width: 20,
-                    height: 20,
-                  }}
-                  viewBox={{ width: 20, height: 20 }}
-                  paths={[
-                    {
-                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
-                      stroke: "black",
-                    },
-                  ]}
-                  ariaLabel="button"
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeItem(index);
-                  }}
-                />
-              </Badge>
-            );
-          })}
-        </ScrollView>
-      )}
-      <Divider orientation="horizontal" marginTop={5} />
-    </React.Fragment>
-  );
-  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
-    return (
-      <React.Fragment>
-        {labelElement}
-        {arraySection}
-      </React.Fragment>
-    );
-  }
-  return (
-    <React.Fragment>
-      {labelElement}
-      {isEditing && children}
-      {!isEditing ? (
-        <>
-          <Button
-            onClick={() => {
-              setIsEditing(true);
-            }}
-          >
-            Add item
-          </Button>
-          {errorMessage && hasError && (
-            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
-              {errorMessage}
-            </Text>
-          )}
-        </>
-      ) : (
-        <Flex justifyContent="flex-end">
-          {(currentFieldValue || isEditing) && (
-            <Button
-              children="Cancel"
-              type="button"
-              size="small"
-              onClick={() => {
-                setFieldValue(defaultFieldValue);
-                setIsEditing(false);
-                setSelectedBadgeIndex(undefined);
-              }}
-            ></Button>
-          )}
-          <Button size="small" variation="link" onClick={addItem}>
-            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
-          </Button>
-        </Flex>
-      )}
-      {arraySection}
-    </React.Fragment>
-  );
-}
 export default function BlogUpdateForm(props) {
   const {
     id: idProp,
@@ -193,13 +40,13 @@ export default function BlogUpdateForm(props) {
   const initialValues = {
     title: "",
     text: "",
-    image: "",
+    image: undefined,
     heroAlignment: "",
     heroSize: "",
     isTwoColumn: false,
     dropCap: false,
     publishDate: "",
-    display: false,
+    display: "",
     slides: [],
     videoId: "",
     status: "",
@@ -237,7 +84,6 @@ export default function BlogUpdateForm(props) {
     setPublishDate(cleanValues.publishDate);
     setDisplay(cleanValues.display);
     setSlides(cleanValues.slides ?? []);
-    setCurrentSlidesValue("");
     setVideoId(cleanValues.videoId);
     setStatus(cleanValues.status);
     setErrors({});
@@ -253,8 +99,6 @@ export default function BlogUpdateForm(props) {
     queryData();
   }, [idProp, blogModelProp]);
   React.useEffect(resetStateValues, [blogRecord]);
-  const [currentSlidesValue, setCurrentSlidesValue] = React.useState("");
-  const slidesRef = React.createRef();
   const validations = {
     title: [],
     text: [],
@@ -336,9 +180,22 @@ export default function BlogUpdateForm(props) {
               modelFields[key] = null;
             }
           });
+          const modelFieldsToSave = {
+            title: modelFields.title,
+            text: modelFields.text,
+            image: modelFields.image,
+            heroAlignment: modelFields.heroAlignment,
+            heroSize: modelFields.heroSize,
+            isTwoColumn: modelFields.isTwoColumn,
+            dropCap: modelFields.dropCap,
+            publishDate: modelFields.publishDate,
+            slides: modelFields.slides,
+            videoId: modelFields.videoId,
+            status: modelFields.status,
+          };
           await DataStore.save(
             Blog.copyOf(blogRecord, (updated) => {
-              Object.assign(updated, modelFields);
+              Object.assign(updated, modelFieldsToSave);
             })
           );
           if (onSuccess) {
@@ -388,7 +245,7 @@ export default function BlogUpdateForm(props) {
         hasError={errors.title?.hasError}
         {...getOverrideProps(overrides, "title")}
       ></TextField>
-      <TextField
+      <TextAreaField
         label="Text"
         isRequired={false}
         isReadOnly={false}
@@ -422,46 +279,79 @@ export default function BlogUpdateForm(props) {
         errorMessage={errors.text?.errorMessage}
         hasError={errors.text?.hasError}
         {...getOverrideProps(overrides, "text")}
-      ></TextField>
-      <TextField
-        label="Image"
-        isRequired={false}
-        isReadOnly={false}
-        value={image}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              text,
-              image: value,
-              heroAlignment,
-              heroSize,
-              isTwoColumn,
-              dropCap,
-              publishDate,
-              display,
-              slides,
-              videoId,
-              status,
-            };
-            const result = onChange(modelFields);
-            value = result?.image ?? value;
-          }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
-          }
-          setImage(value);
-        }}
-        onBlur={() => runValidationTasks("image", image)}
+      ></TextAreaField>
+      <Field
         errorMessage={errors.image?.errorMessage}
         hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
-      ></TextField>
-      <TextField
-        label="Hero alignment"
+        label={"Image"}
         isRequired={false}
         isReadOnly={false}
+      >
+        {blogRecord && (
+          <StorageManager
+            defaultFiles={[{ key: blogRecord.image }]}
+            onUploadSuccess={({ key }) => {
+              setImage((prev) => {
+                let value = key;
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    text,
+                    image: value,
+                    heroAlignment,
+                    heroSize,
+                    isTwoColumn,
+                    dropCap,
+                    publishDate,
+                    display,
+                    slides,
+                    videoId,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.image ?? value;
+                }
+                return value;
+              });
+            }}
+            onFileRemove={({ key }) => {
+              setImage((prev) => {
+                let value = initialValues?.image;
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    text,
+                    image: value,
+                    heroAlignment,
+                    heroSize,
+                    isTwoColumn,
+                    dropCap,
+                    publishDate,
+                    display,
+                    slides,
+                    videoId,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.image ?? value;
+                }
+                return value;
+              });
+            }}
+            processFile={processFile}
+            accessLevel={"public"}
+            acceptedFileTypes={[]}
+            isResumable={false}
+            showThumbnails={true}
+            maxFileCount={1}
+            {...getOverrideProps(overrides, "image")}
+          ></StorageManager>
+        )}
+      </Field>
+      <SelectField
+        label="Hero alignment"
+        placeholder="Please select an option"
+        isDisabled={false}
         value={heroAlignment}
         onChange={(e) => {
           let { value } = e.target;
@@ -492,11 +382,32 @@ export default function BlogUpdateForm(props) {
         errorMessage={errors.heroAlignment?.errorMessage}
         hasError={errors.heroAlignment?.hasError}
         {...getOverrideProps(overrides, "heroAlignment")}
-      ></TextField>
-      <TextField
+      >
+        <option
+          children="Top"
+          value="TOP"
+          {...getOverrideProps(overrides, "heroAlignmentoption0")}
+        ></option>
+        <option
+          children="Bottom"
+          value="BOTTOM"
+          {...getOverrideProps(overrides, "heroAlignmentoption1")}
+        ></option>
+        <option
+          children="Left"
+          value="LEFT"
+          {...getOverrideProps(overrides, "heroAlignmentoption2")}
+        ></option>
+        <option
+          children="Right"
+          value="RIGHT"
+          {...getOverrideProps(overrides, "heroAlignmentoption3")}
+        ></option>
+      </SelectField>
+      <SelectField
         label="Hero size"
-        isRequired={false}
-        isReadOnly={false}
+        placeholder="Please select an option"
+        isDisabled={false}
         value={heroSize}
         onChange={(e) => {
           let { value } = e.target;
@@ -527,7 +438,23 @@ export default function BlogUpdateForm(props) {
         errorMessage={errors.heroSize?.errorMessage}
         hasError={errors.heroSize?.hasError}
         {...getOverrideProps(overrides, "heroSize")}
-      ></TextField>
+      >
+        <option
+          children="Thumb"
+          value="THUMB"
+          {...getOverrideProps(overrides, "heroSizeoption0")}
+        ></option>
+        <option
+          children="Full"
+          value="FULL"
+          {...getOverrideProps(overrides, "heroSizeoption1")}
+        ></option>
+        <option
+          children="Actua"
+          value="ACTUA"
+          {...getOverrideProps(overrides, "heroSizeoption2")}
+        ></option>
+      </SelectField>
       <SwitchField
         label="Is two column"
         defaultChecked={false}
@@ -634,13 +561,11 @@ export default function BlogUpdateForm(props) {
         hasError={errors.publishDate?.hasError}
         {...getOverrideProps(overrides, "publishDate")}
       ></TextField>
-      <SwitchField
-        label="Display"
-        defaultChecked={false}
-        isDisabled={false}
-        isChecked={display}
+      <TextField
+        label="Label"
+        value={display}
         onChange={(e) => {
-          let value = e.target.checked;
+          let { value } = e.target;
           if (onChange) {
             const modelFields = {
               title,
@@ -668,63 +593,74 @@ export default function BlogUpdateForm(props) {
         errorMessage={errors.display?.errorMessage}
         hasError={errors.display?.hasError}
         {...getOverrideProps(overrides, "display")}
-      ></SwitchField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              title,
-              text,
-              image,
-              heroAlignment,
-              heroSize,
-              isTwoColumn,
-              dropCap,
-              publishDate,
-              display,
-              slides: values,
-              videoId,
-              status,
-            };
-            const result = onChange(modelFields);
-            values = result?.slides ?? values;
-          }
-          setSlides(values);
-          setCurrentSlidesValue("");
-        }}
-        currentFieldValue={currentSlidesValue}
+      ></TextField>
+      <Field
+        errorMessage={errors.slides?.errorMessage}
+        hasError={errors.slides?.hasError}
         label={"Slides"}
-        items={slides}
-        hasError={errors?.slides?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("slides", currentSlidesValue)
-        }
-        errorMessage={errors?.slides?.errorMessage}
-        setFieldValue={setCurrentSlidesValue}
-        inputFieldRef={slidesRef}
-        defaultFieldValue={""}
+        isRequired={false}
+        isReadOnly={false}
       >
-        <TextField
-          label="Slides"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentSlidesValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.slides?.hasError) {
-              runValidationTasks("slides", value);
-            }
-            setCurrentSlidesValue(value);
-          }}
-          onBlur={() => runValidationTasks("slides", currentSlidesValue)}
-          errorMessage={errors.slides?.errorMessage}
-          hasError={errors.slides?.hasError}
-          ref={slidesRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "slides")}
-        ></TextField>
-      </ArrayField>
+        {blogRecord && (
+          <StorageManager
+            defaultFiles={blogRecord.slides.map((key) => ({ key }))}
+            onUploadSuccess={({ key }) => {
+              setSlides((prev) => {
+                let value = [...prev, key];
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    text,
+                    image,
+                    heroAlignment,
+                    heroSize,
+                    isTwoColumn,
+                    dropCap,
+                    publishDate,
+                    display,
+                    slides: value,
+                    videoId,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.slides ?? value;
+                }
+                return value;
+              });
+            }}
+            onFileRemove={({ key }) => {
+              setSlides((prev) => {
+                let value = prev.filter((f) => f !== key);
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    text,
+                    image,
+                    heroAlignment,
+                    heroSize,
+                    isTwoColumn,
+                    dropCap,
+                    publishDate,
+                    display,
+                    slides: value,
+                    videoId,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.slides ?? value;
+                }
+                return value;
+              });
+            }}
+            processFile={processFile}
+            accessLevel={"private"}
+            acceptedFileTypes={[]}
+            isResumable={false}
+            showThumbnails={true}
+            {...getOverrideProps(overrides, "slides")}
+          ></StorageManager>
+        )}
+      </Field>
       <TextField
         label="Video id"
         isRequired={false}

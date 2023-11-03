@@ -5,7 +5,8 @@
  **************************************************************************/
 
 import * as React from "react";
-import { GridProps, SelectFieldProps, SwitchFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { GridProps, SelectFieldProps, SwitchFieldProps, TextAreaFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { StorageManagerProps } from "@aws-amplify/ui-react-storage";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -30,7 +31,7 @@ export declare type BlogCreateFormInputValues = {
     isTwoColumn?: boolean;
     dropCap?: boolean;
     publishDate?: string;
-    display?: boolean;
+    display?: string;
     slides?: string[];
     videoId?: string;
     status?: string;
@@ -44,7 +45,7 @@ export declare type BlogCreateFormValidationValues = {
     isTwoColumn?: ValidationFunction<boolean>;
     dropCap?: ValidationFunction<boolean>;
     publishDate?: ValidationFunction<string>;
-    display?: ValidationFunction<boolean>;
+    display?: ValidationFunction<string>;
     slides?: ValidationFunction<string>;
     videoId?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
@@ -53,15 +54,15 @@ export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes
 export declare type BlogCreateFormOverridesProps = {
     BlogCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
-    text?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
-    heroAlignment?: PrimitiveOverrideProps<TextFieldProps>;
-    heroSize?: PrimitiveOverrideProps<TextFieldProps>;
+    text?: PrimitiveOverrideProps<TextAreaFieldProps>;
+    image?: PrimitiveOverrideProps<StorageManagerProps>;
+    heroAlignment?: PrimitiveOverrideProps<SelectFieldProps>;
+    heroSize?: PrimitiveOverrideProps<SelectFieldProps>;
     isTwoColumn?: PrimitiveOverrideProps<SwitchFieldProps>;
     dropCap?: PrimitiveOverrideProps<SwitchFieldProps>;
     publishDate?: PrimitiveOverrideProps<TextFieldProps>;
-    display?: PrimitiveOverrideProps<SwitchFieldProps>;
-    slides?: PrimitiveOverrideProps<TextFieldProps>;
+    display?: PrimitiveOverrideProps<TextFieldProps>;
+    slides?: PrimitiveOverrideProps<StorageManagerProps>;
     videoId?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;

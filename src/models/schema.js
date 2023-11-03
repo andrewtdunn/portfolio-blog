@@ -250,14 +250,18 @@ export const schema = {
                 "heroAlignment": {
                     "name": "heroAlignment",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "HeroAlignment"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
                 "heroSize": {
                     "name": "heroSize",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "HeroSize"
+                    },
                     "isRequired": false,
                     "attributes": []
                 },
@@ -279,13 +283,6 @@ export const schema = {
                     "name": "publishDate",
                     "isArray": false,
                     "type": "AWSDate",
-                    "isRequired": false,
-                    "attributes": []
-                },
-                "display": {
-                    "name": "display",
-                    "isArray": false,
-                    "type": "Boolean",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -935,9 +932,26 @@ export const schema = {
                 "ACTIVE",
                 "INACTIVE"
             ]
+        },
+        "HeroAlignment": {
+            "name": "HeroAlignment",
+            "values": [
+                "TOP",
+                "BOTTOM",
+                "LEFT",
+                "RIGHT"
+            ]
+        },
+        "HeroSize": {
+            "name": "HeroSize",
+            "values": [
+                "THUMB",
+                "FULL",
+                "ACTUA"
+            ]
         }
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "6e7f711ef5da2646549593135810a5cd"
+    "version": "d40872beaf43935cd2c7bc2740135f45"
 };

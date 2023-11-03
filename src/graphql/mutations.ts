@@ -166,7 +166,6 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status
@@ -196,7 +195,6 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status
@@ -226,7 +224,6 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status

@@ -61,15 +61,27 @@ type Blog
   title: String
   text: String
   image: String
-  heroAlignment: String
-  heroSize: String
+  heroAlignment: HeroAlignment
+  heroSize: HeroSize
   isTwoColumn: Boolean
   dropCap: Boolean
   publishDate: AWSDate
-  display: Boolean
   slides: [String]
   videoId: String
   status: ItemStatus!
+}
+
+enum HeroAlignment {
+  TOP
+  BOTTOM
+  LEFT
+  RIGHT
+}
+
+enum HeroSize {
+  THUMB
+  FULL
+  ACTUA
 }
 
 type Agency

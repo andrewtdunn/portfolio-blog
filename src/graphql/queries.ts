@@ -193,7 +193,6 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
     isTwoColumn
     dropCap
     publishDate
-    display
     slides
     videoId
     status
@@ -222,7 +221,6 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
       isTwoColumn
       dropCap
       publishDate
-      display
       slides
       videoId
       status
@@ -261,7 +259,6 @@ export const syncBlogs = /* GraphQL */ `query SyncBlogs(
       isTwoColumn
       dropCap
       publishDate
-      display
       slides
       videoId
       status
