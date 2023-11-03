@@ -11,9 +11,19 @@
       padding-left: 10px;
       color: $darkblue !important;
       display: flex;
-      align-items: center;
+      align-items: baseline;
       gap: 5px;
       padding-left: 20px;
+      justify-content: space-between;
+
+      .titleCell {
+        display: flex;
+        align-items: center;
+      }
+
+      .dateCell {
+        padding-right: 40px;
+      }
 
       .pencil {
         font-size: 1.3em;

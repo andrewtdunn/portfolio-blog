@@ -6,9 +6,36 @@ import { Blog, ItemStatus } from "../../../src/models";
 import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
-import { withSSRContext } from "aws-amplify";
+import { withSSRContext, Predicates } from "aws-amplify";
+import { useEffect, useState } from "react";
+
+const PAGE_LENGTH = 50;
 
 const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
+  const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
+  const [pageNum, setPageNum] = useState<number>(0);
+
+  // useEffect(() => {
+  //   if (pageNum == 0) {
+  //     return;
+  //   }
+  //   console.log("call next", pageNum);
+  //   const fetchNextPage = async () => {
+  //     console.log("call next page", pageNum);
+  //     const models = await DataStore.query(
+  //       Blog,
+  //       (c) => c.status!.eq(ItemStatus.ACTIVE),
+  //       {
+  //         sort: (s) => s.publishDate("DESCENDING"),
+  //         page: pageNum,
+  //         limit: PAGE_LENGTH,
+  //       }
+  //     );
+  //     setBlogPosts((prev) => [...prev, ...models]);
+  //   };
+  //   fetchNextPage();
+  // }, [pageNum]);
+
   return (
     <div className={styles.Blog}>
       <Head>
@@ -22,9 +49,19 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
       <Fader />
       <div className={styles.blogHolder}>
         <div className={styles.innerContainer}>
-          {blogs.map((post, i) => {
+          {blogPosts.map((post, i) => {
             return (
-              <BlogPost key={`${i}-${post.id}`} post={post} priority={i == 0} />
+              <BlogPost
+                key={`${i}-${post.id}`}
+                post={post}
+                priority={i == 0}
+                isLast={i === blogPosts.length - 1}
+                newLimit={() => {
+                  let nextPageNum = pageNum + 1;
+                  setPageNum(nextPageNum + 1);
+                  console.log(pageNum);
+                }}
+              />
             );
           })}
         </div>
@@ -36,8 +73,10 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const SSR = withSSRContext();
   try {
-    const models = await DataStore.query(Blog, (c) =>
-      c.status!.eq(ItemStatus.ACTIVE)
+    const models = await DataStore.query(
+      Blog,
+      (c) => c.status!.eq(ItemStatus.ACTIVE),
+      { sort: (s) => s.publishDate("DESCENDING"), page: 0, limit: PAGE_LENGTH }
     );
     return {
       props: {
