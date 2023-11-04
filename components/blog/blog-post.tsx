@@ -13,11 +13,9 @@ import { Storage } from "aws-amplify";
 type BlogProps = {
   post: Blog;
   priority: boolean;
-  isLast: boolean;
-  newLimit: () => void;
 };
 
-const BlogPost: FC<BlogProps> = ({ post, priority, isLast, newLimit }) => {
+const BlogPost: FC<BlogProps> = ({ post, priority }) => {
   const {
     id,
     title,
@@ -36,10 +34,9 @@ const BlogPost: FC<BlogProps> = ({ post, priority, isLast, newLimit }) => {
   const slideWidth = 664;
   const slideHeight = 300;
   const [slideImages, setSlideImages] = useState<string[]>([]);
-  const blogRef = useRef(null);
 
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchSlideImages = async () => {
       console.log("slides", slides);
       const s3Images = await Promise.all(
         slides!.map(
@@ -55,25 +52,9 @@ const BlogPost: FC<BlogProps> = ({ post, priority, isLast, newLimit }) => {
 
     if (slides && slides.length) {
       console.log("slides", slides);
-      fetchImages();
+      fetchSlideImages();
     }
   }, [slides]);
-
-  useEffect(() => {
-    console.log("initializing observer");
-
-    const observer = new IntersectionObserver(([entry]) => {
-      console.log(entry);
-      if (isLast && entry.isIntersecting) {
-        console.log("intersection");
-        observer.unobserve(entry.target);
-        newLimit();
-      }
-    });
-    if (blogRef.current) {
-      observer.observe(blogRef.current);
-    }
-  }, [isLast, newLimit]);
 
   // human readable date
   const [year, month, day] = publishDate?.split("-")!;
@@ -81,10 +62,9 @@ const BlogPost: FC<BlogProps> = ({ post, priority, isLast, newLimit }) => {
   const dateString = date.toDateString();
 
   return (
-    <div className={styles.Post} ref={blogRef}>
+    <div className={styles.Post}>
       <article>
         {title && <h1 className={albertusFont.className}>{title}</h1>}
-        {isLast && <h2>IS LAST</h2>}
         <hr />
         {slideImages && slideImages.length > 0 && (
           <div className={styles.fader}>

@@ -7,34 +7,40 @@ import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
 import { withSSRContext, Predicates } from "aws-amplify";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
 
-const PAGE_LENGTH = 50;
+const PAGE_LENGTH = 5;
 
 const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
-  const [pageNum, setPageNum] = useState<number>(0);
+  const [pageNum, setPageNum] = useState<number>(1);
+
+  const fetchNextPage = async () => {
+    setPageNum((prev) => prev + 1);
+    console.log("call next page", pageNum);
+    const models = await DataStore.query(
+      Blog,
+      (c) => c.status!.eq(ItemStatus.ACTIVE),
+      {
+        sort: (s) => s.publishDate("DESCENDING"),
+        page: pageNum,
+        limit: PAGE_LENGTH,
+      }
+    );
+    setBlogPosts((prev) => [...prev, ...models]);
+  };
 
   // useEffect(() => {
   //   if (pageNum == 0) {
   //     return;
   //   }
   //   console.log("call next", pageNum);
-  //   const fetchNextPage = async () => {
-  //     console.log("call next page", pageNum);
-  //     const models = await DataStore.query(
-  //       Blog,
-  //       (c) => c.status!.eq(ItemStatus.ACTIVE),
-  //       {
-  //         sort: (s) => s.publishDate("DESCENDING"),
-  //         page: pageNum,
-  //         limit: PAGE_LENGTH,
-  //       }
-  //     );
-  //     setBlogPosts((prev) => [...prev, ...models]);
-  //   };
+  //
   //   fetchNextPage();
   // }, [pageNum]);
+
+  console.log("number of blogs", blogPosts.length);
 
   return (
     <div className={styles.Blog}>
@@ -47,23 +53,30 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
         subheader="Tous Les Jours C'est Pas La Même"
       />
       <Fader />
-      <div className={styles.blogHolder}>
+      <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
-          {blogPosts.map((post, i) => {
-            return (
-              <BlogPost
-                key={`${i}-${post.id}`}
-                post={post}
-                priority={i == 0}
-                isLast={i === blogPosts.length - 1}
-                newLimit={() => {
-                  let nextPageNum = pageNum + 1;
-                  setPageNum(nextPageNum + 1);
-                  console.log(pageNum);
-                }}
-              />
-            );
-          })}
+          <InfiniteScroll
+            dataLength={blogPosts.length} //This is important field to render the next data
+            next={fetchNextPage}
+            hasMore={true}
+            scrollableTarget="blogHolder"
+            loader={<h4>Loading...</h4>}
+            endMessage={
+              <p style={{ textAlign: "center" }}>
+                <b>Yay! You have seen it all</b>
+              </p>
+            }
+          >
+            {blogPosts.map((post, i) => {
+              return (
+                <BlogPost
+                  key={`${i}-${post.id}`}
+                  post={post}
+                  priority={i == 0}
+                />
+              );
+            })}
+          </InfiniteScroll>
         </div>
       </div>
     </div>
