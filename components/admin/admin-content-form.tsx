@@ -69,6 +69,7 @@ const AdminContentForm = () => {
           <BlogCreateForm
             onSuccess={() => {
               soundCtx?.buttonNoise();
+              adminCtx?.setFormType(AdminForm.LIST);
             }}
             onSubmit={(fields) => {
               // Example function to trim all string inputs

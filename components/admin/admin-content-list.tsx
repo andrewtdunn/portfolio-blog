@@ -11,6 +11,7 @@ import { SoundContext } from "../../store/sound-context";
 import AdminContext from "../../store/admin-context";
 import Image from "next/image";
 import { Pagination, usePagination } from "@aws-amplify/ui-react";
+import { modelWorldMatrix } from "three/examples/jsm/nodes/Nodes.js";
 
 const PAGELIMIT: number = 10;
 
@@ -25,6 +26,7 @@ const ContentList = ({
 }) => {
   const [models, setModels] = useState<Blog[] | Project[] | []>([]);
   const [currModel, setCurrModel] = useState<Project | Blog | null>(null);
+  const [numPages, setNumPage] = useState<number>(10);
   const soundCtx = useContext(SoundContext);
   const adminCtx = useContext(AdminContext);
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
@@ -95,6 +97,20 @@ const ContentList = ({
     }
   }, [modelType, adminCtx, currentPageIndex]);
 
+  useEffect(() => {
+    const getNumberOfPages = async () => {
+      let models;
+      if (modelType == AdminModel.BLOG) {
+        models = await DataStore.query(Blog);
+      } else {
+        models = await DataStore.query(Project);
+      }
+      setNumPage(Math.ceil(models.length / PAGELIMIT));
+    };
+
+    getNumberOfPages();
+  }, [modelType]);
+
   if (adminCtx?.editing && currModel) {
     if (modelType == AdminModel.PROJECT && isAdmin) {
       return (
@@ -162,7 +178,7 @@ const ContentList = ({
     <>
       <Pagination
         currentPage={currentPageIndex}
-        totalPages={totalPages}
+        totalPages={numPages}
         onNext={handleNextPage}
         onPrevious={handlePreviousPage}
         onChange={handleOnChange}

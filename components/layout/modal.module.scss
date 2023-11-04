@@ -22,8 +22,9 @@
     }
   }
 
-  .userName {
-    color: $darkblue;
+  .userName,
+  .amplify-pagination__item-ellipsis {
+    color: $darkblue !important;
   }
 
   &.show {
