@@ -45,7 +45,6 @@ export default function BlogCreateForm(props) {
     isTwoColumn: false,
     dropCap: false,
     publishDate: "",
-    display: "",
     slides: [],
     videoId: "",
     status: "",
@@ -64,7 +63,6 @@ export default function BlogCreateForm(props) {
   const [publishDate, setPublishDate] = React.useState(
     initialValues.publishDate
   );
-  const [display, setDisplay] = React.useState(initialValues.display);
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [videoId, setVideoId] = React.useState(initialValues.videoId);
   const [status, setStatus] = React.useState(initialValues.status);
@@ -78,7 +76,6 @@ export default function BlogCreateForm(props) {
     setIsTwoColumn(initialValues.isTwoColumn);
     setDropCap(initialValues.dropCap);
     setPublishDate(initialValues.publishDate);
-    setDisplay(initialValues.display);
     setSlides(initialValues.slides);
     setVideoId(initialValues.videoId);
     setStatus(initialValues.status);
@@ -93,7 +90,6 @@ export default function BlogCreateForm(props) {
     isTwoColumn: [],
     dropCap: [],
     publishDate: [],
-    display: [],
     slides: [],
     videoId: [],
     status: [{ type: "Required" }],
@@ -132,7 +128,6 @@ export default function BlogCreateForm(props) {
           isTwoColumn,
           dropCap,
           publishDate,
-          display,
           slides,
           videoId,
           status,
@@ -165,20 +160,7 @@ export default function BlogCreateForm(props) {
               modelFields[key] = null;
             }
           });
-          const modelFieldsToSave = {
-            title: modelFields.title,
-            text: modelFields.text,
-            image: modelFields.image,
-            heroAlignment: modelFields.heroAlignment,
-            heroSize: modelFields.heroSize,
-            isTwoColumn: modelFields.isTwoColumn,
-            dropCap: modelFields.dropCap,
-            publishDate: modelFields.publishDate,
-            slides: modelFields.slides,
-            videoId: modelFields.videoId,
-            status: modelFields.status,
-          };
-          await DataStore.save(new Blog(modelFieldsToSave));
+          await DataStore.save(new Blog(modelFields));
           if (onSuccess) {
             onSuccess(modelFields);
           }
@@ -211,7 +193,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId,
               status,
@@ -245,7 +226,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId,
               status,
@@ -284,7 +264,6 @@ export default function BlogCreateForm(props) {
                   isTwoColumn,
                   dropCap,
                   publishDate,
-                  display,
                   slides,
                   videoId,
                   status,
@@ -308,7 +287,6 @@ export default function BlogCreateForm(props) {
                   isTwoColumn,
                   dropCap,
                   publishDate,
-                  display,
                   slides,
                   videoId,
                   status,
@@ -345,7 +323,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId,
               status,
@@ -401,7 +378,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId,
               status,
@@ -452,7 +428,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn: value,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId,
               status,
@@ -487,7 +462,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap: value,
               publishDate,
-              display,
               slides,
               videoId,
               status,
@@ -523,7 +497,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate: value,
-              display,
               slides,
               videoId,
               status,
@@ -540,39 +513,6 @@ export default function BlogCreateForm(props) {
         errorMessage={errors.publishDate?.errorMessage}
         hasError={errors.publishDate?.hasError}
         {...getOverrideProps(overrides, "publishDate")}
-      ></TextField>
-      <TextField
-        label="Label"
-        value={display}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              text,
-              image,
-              heroAlignment,
-              heroSize,
-              isTwoColumn,
-              dropCap,
-              publishDate,
-              display: value,
-              slides,
-              videoId,
-              status,
-            };
-            const result = onChange(modelFields);
-            value = result?.display ?? value;
-          }
-          if (errors.display?.hasError) {
-            runValidationTasks("display", value);
-          }
-          setDisplay(value);
-        }}
-        onBlur={() => runValidationTasks("display", display)}
-        errorMessage={errors.display?.errorMessage}
-        hasError={errors.display?.hasError}
-        {...getOverrideProps(overrides, "display")}
       ></TextField>
       <Field
         errorMessage={errors.slides?.errorMessage}
@@ -595,7 +535,6 @@ export default function BlogCreateForm(props) {
                   isTwoColumn,
                   dropCap,
                   publishDate,
-                  display,
                   slides: value,
                   videoId,
                   status,
@@ -619,7 +558,6 @@ export default function BlogCreateForm(props) {
                   isTwoColumn,
                   dropCap,
                   publishDate,
-                  display,
                   slides: value,
                   videoId,
                   status,
@@ -656,7 +594,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId: value,
               status,
@@ -691,7 +628,6 @@ export default function BlogCreateForm(props) {
               isTwoColumn,
               dropCap,
               publishDate,
-              display,
               slides,
               videoId,
               status: value,

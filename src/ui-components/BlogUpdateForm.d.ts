@@ -32,7 +32,6 @@ export declare type BlogUpdateFormInputValues = {
     isTwoColumn?: boolean;
     dropCap?: boolean;
     publishDate?: string;
-    display?: string;
     slides?: string[];
     videoId?: string;
     status?: string;
@@ -46,7 +45,6 @@ export declare type BlogUpdateFormValidationValues = {
     isTwoColumn?: ValidationFunction<boolean>;
     dropCap?: ValidationFunction<boolean>;
     publishDate?: ValidationFunction<string>;
-    display?: ValidationFunction<string>;
     slides?: ValidationFunction<string>;
     videoId?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
@@ -62,7 +60,6 @@ export declare type BlogUpdateFormOverridesProps = {
     isTwoColumn?: PrimitiveOverrideProps<SwitchFieldProps>;
     dropCap?: PrimitiveOverrideProps<SwitchFieldProps>;
     publishDate?: PrimitiveOverrideProps<TextFieldProps>;
-    display?: PrimitiveOverrideProps<TextFieldProps>;
     slides?: PrimitiveOverrideProps<StorageManagerProps>;
     videoId?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;

@@ -3,6 +3,7 @@ import styles from "./blog-image.module.scss";
 import { useEffect, useState } from "react";
 import { Storage } from "@aws-amplify/storage";
 import { HeroAlignment, HeroSize } from "@/models";
+import "@aws-amplify/ui-react/styles.css";
 
 export type BlogImageType = {
   image: string;
@@ -43,6 +44,13 @@ const BlogImage = ({
         }`}
         priority={priority}
       />
+      {/* <StorageImage
+        alt={title}
+        imgKey={image}
+        accessLevel="public"
+        // fallbackSrc="/fallback_cat.jpg"
+        // onStorageGetError={(error) => console.error(error)}
+      /> */}
     </div>
   );
 };

@@ -18,6 +18,11 @@
     position: absolute;
     top: 100px;
 
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border-top: 10px solid rgba(2, 2, 2, 0.1);
+
     .inner {
       padding-bottom: 50px;
       z-index: 1000;
