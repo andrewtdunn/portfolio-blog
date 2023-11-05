@@ -29,6 +29,10 @@
   display: block;
   margin-top: 100px;
   @include rotate(3);
+  @include for-phone-only {
+    margin-right: 20px;
+    text-align: right;
+  }
   .nametag {
     font-size: 1.8em;
     color: $tapeBlue;
@@ -43,7 +47,6 @@
     @include for-phone-only {
       @include rotate(-3);
       max-width: $sideMenuWidth;
-      float: right;
     }
   }
 }
