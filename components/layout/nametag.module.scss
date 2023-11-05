@@ -23,7 +23,7 @@
 
   h2 {
     position: absolute;
-    color: rgba(0, 0, 0, 0.45);
+    color: rgba(255, 255, 255, 0.45);
     left: 4px;
     top: 1px;
     &.home {
@@ -57,9 +57,9 @@
       margin-bottom: 5px;
       font-size: 2rem;
       padding: 12px 3px 2px;
-      border: 1px solid rgba(0, 0, 0, 0.45);
+      border: 1px solid rgba(255, 255, 255, 0.45);
       border-radius: 5px;
-      color: rgba(0, 0, 0, 0.45);
+      color: rgba(255, 255, 255, 0.45);
 
       &.home {
         color: rgba(255, 255, 255, 0.45);
