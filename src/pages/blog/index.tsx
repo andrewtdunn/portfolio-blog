@@ -18,7 +18,7 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
 
   const fetchNextPage = async () => {
     setPageNum((prev) => prev + 1);
-    console.log("call next page", pageNum);
+    //console.log("call next page", pageNum);
     const models = await DataStore.query(
       Blog,
       (c) => c.status!.eq(ItemStatus.ACTIVE),
@@ -40,7 +40,7 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
   //   fetchNextPage();
   // }, [pageNum]);
 
-  console.log("number of blogs", blogPosts.length);
+  //console.log("number of blogs", blogPosts.length);
 
   return (
     <div className={styles.Blog}>

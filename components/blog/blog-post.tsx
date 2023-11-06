@@ -33,29 +33,11 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
 
   const slideWidth = 664;
   const slideHeight = 300;
-  const [slideImages, setSlideImages] = useState<string[] | null>(null);
 
-  useEffect(() => {
-    if (!slides || slides.length == 0) {
-      return setSlideImages([]);
-    }
-    const fetchSlideImages = async () => {
-      const s3Images = await Promise.all(
-        slides!.map(
-          async (slide) => await Storage.get(slide!, { level: "public" })
-        )
-      );
-      // dedupe s3 images
-      let uniq = s3Images.filter(function (item, pos) {
-        return s3Images.indexOf(item) == pos;
-      });
-      setSlideImages(uniq);
-    };
-
-    if (slides) {
-      fetchSlideImages();
-    }
-  }, [slides]);
+  const slideImages = slides?.map(
+    (slide) => `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${slide}`
+  );
+  const uniqSlides = [...new Set(slideImages)];
 
   // human readable date
   const [year, month, day] = publishDate?.split("-")!;
@@ -67,12 +49,12 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
       <article>
         {title && <h1 className={albertusFont.className}>{title}</h1>}
         <hr />
-        {slideImages && slideImages.length > 0 && (
+        {uniqSlides && uniqSlides.length > 0 && (
           <div className={styles.fader}>
             <CrossFadingImages
               width={slideWidth}
               height={slideHeight}
-              slides={slideImages}
+              slides={uniqSlides}
               time={3000}
               fromBlog={true}
             />
