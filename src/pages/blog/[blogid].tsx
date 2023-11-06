@@ -7,7 +7,14 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
 
-const BlogPage = ({ blog }: { blog: Blog }) => {
+const BlogPage = ({
+  blogs,
+  blogIndex,
+}: {
+  blogs: Blog[];
+  blogIndex: number;
+}) => {
+  const blog = blogs[blogIndex];
   return (
     <div className={styles.Blog}>
       <Head>
@@ -30,22 +37,28 @@ const BlogPage = ({ blog }: { blog: Blog }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const blogid = context.params!.blogid?.toString();
-  try {
-    const model = await DataStore.query(Blog, blogid!);
+  const models = await DataStore.query(Blog, (c) =>
+    c.status!.eq(ItemStatus.ACTIVE)
+  );
 
-    return {
-      props: {
-        blog: JSON.parse(JSON.stringify(model)),
-      },
-      revalidate: 10,
-    };
-  } catch (err) {
-    console.log("error", err);
-    return {
-      props: {},
-    };
+  const blogs = await JSON.parse(JSON.stringify(models));
+  const blogid = context.params!.blogid;
+
+  let blogIndex: number;
+
+  for (let i = 0; i < blogs.length; i += 1) {
+    if (blogs[i].id == blogid) {
+      blogIndex = i;
+      break;
+    }
   }
+
+  return {
+    props: {
+      blogs: JSON.parse(JSON.stringify(blogs)),
+      blogIndex: blogIndex!,
+    },
+  };
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
