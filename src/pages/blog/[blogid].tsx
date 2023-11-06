@@ -13,7 +13,10 @@ const BlogPage = ({ blog }: { blog: Blog }) => {
     <div className={styles.Blog}>
       <Head>
         <title>⚡︎ ATD | Blog</title>
-        <meta name="description" content={blog.title ? blog.title : "none"} />
+        <meta
+          name="description"
+          content={blog.title ? blog.title.replace(/[^\w\s!?]/g, "") : "none"}
+        />
       </Head>
       <Header
         includeBanner={false}
@@ -23,7 +26,7 @@ const BlogPage = ({ blog }: { blog: Blog }) => {
       <Fader />
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.inner}>
-          <BlogPost post={blog} priority={true} />
+          <BlogPost post={blog} priority={false} />
         </div>
       </div>
     </div>

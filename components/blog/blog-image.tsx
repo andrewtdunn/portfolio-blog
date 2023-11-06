@@ -32,18 +32,20 @@ const BlogImage = ({
   }, [image]);
   return (
     <div className={styles.BlogImage}>
-      <Image
-        src={webImage}
-        alt={title}
-        width={500}
-        height={500}
-        className={`${styles.image} ${
-          heroSize == HeroSize.THUMB && styles.thumb
-        } ${heroAlignment == HeroAlignment.LEFT && styles.left}  ${
-          heroAlignment == HeroAlignment.RIGHT && styles.right
-        }`}
-        priority={priority}
-      />
+      {webImage && (
+        <Image
+          src={webImage}
+          alt={title}
+          width={500}
+          height={500}
+          className={`${styles.image} ${
+            heroSize == HeroSize.THUMB && styles.thumb
+          } ${heroAlignment == HeroAlignment.LEFT && styles.left}  ${
+            heroAlignment == HeroAlignment.RIGHT && styles.right
+          }`}
+          priority={priority}
+        />
+      )}
       {/* <StorageImage
         alt={title}
         imgKey={image}
