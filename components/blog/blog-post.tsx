@@ -37,7 +37,10 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
   const slideImages = slides?.map(
     (slide) => `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${slide}`
   );
-  const uniqSlides = [...new Set(slideImages)];
+  var uniqSlides = slideImages!.reduce(function (a: any, b: any) {
+    if (a.indexOf(b) < 0) a.push(b);
+    return a;
+  }, []);
 
   // human readable date
   const [year, month, day] = publishDate?.split("-")!;
