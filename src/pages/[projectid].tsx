@@ -6,7 +6,7 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import { DataStore } from "@aws-amplify/datastore";
 import Head from "next/head";
 
-import { BadReception, Project } from "@/models";
+import { BadReception, ItemStatus, Project } from "@/models";
 import HeadsUpDisplay from "../../components/home-page/heads-up-display";
 import SlideshowContext from "../../store/slideshow-context";
 
@@ -43,7 +43,9 @@ const ProjectPage = ({
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const models = await DataStore.query(Project);
+  const models = await DataStore.query(Project, (c) =>
+    c.status!.eq(ItemStatus.ACTIVE)
+  );
   const projects = await JSON.parse(JSON.stringify(models));
   const videoList = await DataStore.query(BadReception);
 
