@@ -75,7 +75,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: blogIds,
-    fallback: "blocking",
+    fallback: true,
   };
 };
 
