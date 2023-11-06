@@ -6,7 +6,6 @@ import { Blog, ItemStatus } from "../../models";
 import { GetStaticProps, GetStaticPaths } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
-import { withSSRContext } from "aws-amplify";
 
 const BlogPage = ({ blog }: { blog: Blog }) => {
   return (
@@ -31,7 +30,6 @@ const BlogPage = ({ blog }: { blog: Blog }) => {
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const SSR = withSSRContext();
   const blogid = context.params!.blogid?.toString();
   try {
     const model = await DataStore.query(Blog, blogid!);
