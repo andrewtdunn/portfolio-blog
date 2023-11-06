@@ -66,6 +66,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       videoList: JSON.parse(JSON.stringify(videoList)),
       projectIndex: projectIndex!,
     },
+    revalidate: 10,
   };
 };
 
@@ -81,7 +82,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: projectIds,
-    fallback: true,
+    fallback: "blocking",
   };
 };
 

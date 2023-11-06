@@ -58,6 +58,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
       blogs: JSON.parse(JSON.stringify(blogs)),
       blogIndex: blogIndex!,
     },
+    revalidate: 10,
   };
 };
 
@@ -75,7 +76,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths: blogIds,
-    fallback: true,
+    fallback: "blocking",
   };
 };
 
