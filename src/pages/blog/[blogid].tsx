@@ -44,13 +44,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const blogs = await JSON.parse(JSON.stringify(models));
   const blogid = context.params!.blogid;
 
-  let blogIndex: number;
+  let blogIndex: number | undefined;
 
   for (let i = 0; i < blogs.length; i += 1) {
     if (blogs[i].id == blogid) {
       blogIndex = i;
       break;
     }
+  }
+
+  if (blogIndex == undefined) {
+    return {
+      notFound: true,
+    };
   }
 
   return {

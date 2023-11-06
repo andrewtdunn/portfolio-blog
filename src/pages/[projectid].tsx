@@ -51,13 +51,19 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const projectid = context.params!.projectid;
 
-  let projectIndex: number;
+  let projectIndex: number | undefined;
 
   for (let i = 0; i < projects.length; i += 1) {
     if (projects[i].id == projectid) {
       projectIndex = i;
       break;
     }
+  }
+
+  if (projectIndex == undefined) {
+    return {
+      notFound: true,
+    };
   }
 
   return {
