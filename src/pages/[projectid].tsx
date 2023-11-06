@@ -70,7 +70,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const models = await DataStore.query(Project);
+  const models = await DataStore.query(Project, (c) =>
+    c.status!.eq(ItemStatus.ACTIVE)
+  );
   const projects = await JSON.parse(JSON.stringify(models));
 
   const projectIds = projects.map((project: Project) => ({
