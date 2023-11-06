@@ -40,29 +40,21 @@
         font-size: 250%;
       }
     }
+    @include for-tablet-portrait-up {
+      &.two_column {
+        -moz-column-count: 2;
+        -moz-column-gap: 1em;
+        -webkit-column-count: 2;
+        -webkit-column-gap: 1em;
+        column-count: 2;
+        column-gap: 1em;
+        text-align: justify;
 
-    &.two_column {
-      -moz-column-count: 2;
-      -moz-column-gap: 1em;
-      -webkit-column-count: 2;
-      -webkit-column-gap: 1em;
-      column-count: 2;
-      column-gap: 1em;
-      text-align: justify;
-
-      //&:first-line {
-      //  font-variant: small-caps;
-      //  line-height: 150%;
-      //  font-size: 18px;
-      //}
-
-      @include for-phone-only {
-        -moz-column-count: 1;
-        -moz-column-gap: 0;
-        -webkit-column-count: 1;
-        -webkit-column-gap: 0;
-        column-count: 1;
-        column-gap: 0;
+        //&:first-line {
+        //  font-variant: small-caps;
+        //  line-height: 150%;
+        //  font-size: 18px;
+        //}
       }
     }
 
