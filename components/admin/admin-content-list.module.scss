@@ -18,11 +18,39 @@
 
       .titleCell {
         display: flex;
-        align-items: center;
+        align-items: baseline;
+        justify-content: center;
+        gap: 10px;
+
+        .pencil,
+        .activeItem,
+        .inactiveItem,
+        .link {
+          font-size: 1.4em;
+          margin-bottom: 0px;
+          padding-bottom: 0px;
+        }
+        a {
+          margin-bottom: 0px;
+          padding-bottom: 0px;
+        }
+        .link {
+          margin-bottom: -5px;
+          &:hover {
+            color: $bright-green;
+          }
+          &:visited {
+            color: $darkblue;
+          }
+        }
       }
 
       .dateCell {
         padding-right: 40px;
+      }
+
+      .link {
+        cursor: pointer;
       }
 
       .pencil {

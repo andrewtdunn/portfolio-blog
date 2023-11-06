@@ -3,7 +3,7 @@ import { DataStore, Predicates, SortDirection } from "aws-amplify";
 import { GetServerSideProps } from "next";
 import { AdminModel } from "../../type-definitions/enums";
 import { useContext, useEffect, useState } from "react";
-import { MdOutlineEditNote, MdStarRate } from "react-icons/md";
+import { MdOutlineEditNote, MdStarRate, MdLink } from "react-icons/md";
 import styles from "./admin-content-list.module.scss";
 import ProjectUpdateForm from "@/ui-components/ProjectUpdateForm";
 import BlogUpdateForm from "@/ui-components/BlogUpdateForm";
@@ -12,6 +12,8 @@ import AdminContext from "../../store/admin-context";
 import Image from "next/image";
 import { Pagination, usePagination } from "@aws-amplify/ui-react";
 import { modelWorldMatrix } from "three/examples/jsm/nodes/Nodes.js";
+import Link from "next/link";
+import NavigationContext from "../../store/nav-context";
 
 const PAGELIMIT: number = 10;
 
@@ -29,6 +31,7 @@ const ContentList = ({
   const [numPages, setNumPage] = useState<number>(10);
   const soundCtx = useContext(SoundContext);
   const adminCtx = useContext(AdminContext);
+  const navCtx = useContext(NavigationContext);
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
 
   const getPage = async () => {
@@ -174,6 +177,10 @@ const ContentList = ({
       );
     }
   }
+
+  const gotoLink = (id: string) => {
+    console.log("gotoLink", id);
+  };
   return (
     <>
       <Pagination
@@ -201,6 +208,20 @@ const ContentList = ({
                     className={styles.pencil}
                   />
                 )}
+
+                <Link
+                  href={`${modelType == AdminModel.PROJECT ? "/" : "/blog"}/${
+                    model.id
+                  }`}
+                  key={index}
+                  className={styles.link}
+                  onClick={() => {
+                    navCtx.closeModal();
+                    navCtx.closeNav();
+                  }}
+                >
+                  <MdLink className={styles.link} />
+                </Link>
                 {modelType == AdminModel.PROJECT && (
                   <Image
                     src={(model as Project).projectLogo}

@@ -33,11 +33,13 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
 
   const slideWidth = 664;
   const slideHeight = 300;
-  const [slideImages, setSlideImages] = useState<string[]>([]);
+  const [slideImages, setSlideImages] = useState<string[] | null>(null);
 
   useEffect(() => {
+    if (!slides || slides.length == 0) {
+      return setSlideImages([]);
+    }
     const fetchSlideImages = async () => {
-      console.log("slides", slides);
       const s3Images = await Promise.all(
         slides!.map(
           async (slide) => await Storage.get(slide!, { level: "public" })
@@ -50,8 +52,7 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
       setSlideImages(uniq);
     };
 
-    if (slides && slides.length) {
-      console.log("slides", slides);
+    if (slides) {
       fetchSlideImages();
     }
   }, [slides]);
