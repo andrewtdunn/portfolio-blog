@@ -60,11 +60,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
-  if (projectIndex == undefined) {
-    return {
-      notFound: true,
-    };
-  }
+  // if (projectIndex == undefined) {
+  //   return {
+  //     notFound: true,
+  //   };
+  // }
 
   return {
     props: {
