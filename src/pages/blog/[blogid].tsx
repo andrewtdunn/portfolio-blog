@@ -53,11 +53,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
-  // if (blogIndex == undefined) {
-  //   return {
-  //     notFound: true,
-  //   };
-  // }
+  if (blogIndex == undefined) {
+    return {
+      notFound: true,
+    };
+  }
 
   return {
     props: {
