@@ -21,6 +21,10 @@
     }
   }
 
+  .clear {
+    clear: both;
+  }
+
   .fader {
     margin-bottom: 10px;
     box-sizing: border-box;
@@ -31,9 +35,7 @@
   &.fadedOut {
     opacity: 0;
   }
-  .clear {
-    clear: both;
-  }
+
   .faderHolder {
     height: 300px;
     width: 100%;
@@ -104,6 +106,7 @@
     margin-top: 0px;
     margin-bottom: 10px;
     text-align: left;
+    clear: both;
   }
 
   .postFooter {
