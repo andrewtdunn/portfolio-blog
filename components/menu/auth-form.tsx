@@ -78,9 +78,6 @@ const AuthForm = () => {
         let userName = await currUser.getUsername();
         setUsername(userName);
         setSignedIn(true);
-        setTimeout(() => {
-          navCtx.closeNav();
-        }, 1000);
       } else {
         console.log("user not detected");
       }
