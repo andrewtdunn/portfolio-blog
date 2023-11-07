@@ -34,13 +34,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   console.log("blogid", blogid);
   const model = await DataStore.query(Blog, blogid);
 
-  const blog = await JSON.parse(JSON.stringify(model));
-
-  if (blog == undefined) {
+  if (model?.status == ItemStatus.INACTIVE) {
     return {
       notFound: true,
     };
   }
+
+  const blog = await JSON.parse(JSON.stringify(model));
 
   return {
     props: {
