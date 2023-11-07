@@ -17,7 +17,8 @@ export enum HeroAlignment {
 export enum HeroSize {
   THUMB = "THUMB",
   FULL = "FULL",
-  ACTUA = "ACTUA"
+  ACTUA = "ACTUA",
+  HALF = "HALF"
 }
 
 

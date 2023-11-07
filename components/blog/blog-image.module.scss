@@ -43,6 +43,12 @@
 
     &.actual {
       width: auto;
+      height: auto;
+    }
+
+    &.half {
+      width: 40%;
+      height: auto;
     }
   }
 }

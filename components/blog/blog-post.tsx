@@ -51,7 +51,7 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
     <div className={styles.Post}>
       <article>
         {title && <h1 className={albertusFont.className}>{title}</h1>}
-        <hr />
+        {title && <hr />}
         {uniqSlides && uniqSlides.length > 0 && (
           <div className={styles.fader}>
             <CrossFadingImages

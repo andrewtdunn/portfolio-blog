@@ -196,6 +196,7 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version
@@ -224,6 +225,7 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
       slides
       videoId
       status
+      imported_mysql_id
       createdAt
       updatedAt
       _version
@@ -262,6 +264,7 @@ export const syncBlogs = /* GraphQL */ `query SyncBlogs(
       slides
       videoId
       status
+      imported_mysql_id
       createdAt
       updatedAt
       _version

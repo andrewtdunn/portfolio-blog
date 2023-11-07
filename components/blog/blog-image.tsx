@@ -32,9 +32,11 @@ const BlogImage = ({
         height={500}
         className={`${styles.image} ${
           heroSize == HeroSize.THUMB && styles.thumb
-        } ${heroSize == HeroSize.ACTUA && styles.actual} ${
-          heroAlignment == HeroAlignment.LEFT && styles.left
-        }  ${heroAlignment == HeroAlignment.RIGHT && styles.right}`}
+        } ${heroSize == HeroSize.ACTUA && styles.actual}
+          ${heroSize == HeroSize.HALF && styles.half}
+         ${heroAlignment == HeroAlignment.LEFT && styles.left}  ${
+          heroAlignment == HeroAlignment.RIGHT && styles.right
+        }`}
         priority={priority}
       />
     </div>

@@ -15,7 +15,7 @@ import { modelWorldMatrix } from "three/examples/jsm/nodes/Nodes.js";
 import Link from "next/link";
 import NavigationContext from "../../store/nav-context";
 
-const PAGELIMIT: number = 10;
+const PAGELIMIT: number = 9;
 
 const ContentList = ({
   modelType,
@@ -231,7 +231,31 @@ const ContentList = ({
                     style={{ objectFit: "contain" }}
                   />
                 )}
-                <h3>{model.title ? model.title : "<untitled>"}</h3>
+                {modelType == AdminModel.BLOG &&
+                  ((model as Blog).image ? (
+                    <Image
+                      src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${(
+                        model as Blog
+                      ).image!}`}
+                      width={40}
+                      height={40}
+                      alt={model.title ? model.title : "logo"}
+                      style={{
+                        objectFit: "contain",
+                        backgroundColor: "rgb(200,200,200)",
+                        border: "1px solid rgb(100,100, 100)",
+                      }}
+                    />
+                  ) : (
+                    <div className={styles.thumbHolder}>NO IMAGE</div>
+                  ))}
+                <h3>
+                  {model.title ? (
+                    model.title
+                  ) : (
+                    <span className={styles.untitled}>untitled</span>
+                  )}
+                </h3>
               </div>
               {modelType == AdminModel.BLOG && (
                 <div className={styles.dateCell}>

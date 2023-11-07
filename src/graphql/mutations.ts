@@ -169,6 +169,7 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version
@@ -198,6 +199,7 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version
@@ -227,6 +229,7 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version

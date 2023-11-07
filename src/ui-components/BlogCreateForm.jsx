@@ -423,6 +423,11 @@ export default function BlogCreateForm(props) {
           value="ACTUA"
           {...getOverrideProps(overrides, "heroSizeoption2")}
         ></option>
+        <option
+          children="Half"
+          value="HALF"
+          {...getOverrideProps(overrides, "heroSizeoption3")}
+        ></option>
       </SelectField>
       <SwitchField
         label="Two Column Text "

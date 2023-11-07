@@ -17,7 +17,8 @@ const HeroAlignment = {
 const HeroSize = {
   "THUMB": "THUMB",
   "FULL": "FULL",
-  "ACTUA": "ACTUA"
+  "ACTUA": "ACTUA",
+  "HALF": "HALF"
 };
 
 const { BadReception, Project, Blog, Agency, School, MiscCertification, Bio, AWSCertification } = initSchema(schema);

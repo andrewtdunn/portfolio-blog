@@ -154,6 +154,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog($filter: Mo
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version
@@ -180,6 +181,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog($filter: Mo
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version
@@ -206,6 +208,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog($filter: Mo
     slides
     videoId
     status
+    imported_mysql_id
     createdAt
     updatedAt
     _version

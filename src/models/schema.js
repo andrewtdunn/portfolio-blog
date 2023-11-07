@@ -954,7 +954,8 @@ export const schema = {
             "values": [
                 "THUMB",
                 "FULL",
-                "ACTUA"
+                "ACTUA",
+                "HALF"
             ]
         }
     },
