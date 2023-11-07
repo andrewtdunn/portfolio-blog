@@ -23,7 +23,7 @@
 
 </style>
 
-# Andrew T. Dunn | Portfolio
+# Andrew T. Dunn | Portfolio | Blog
 
 ## Mobile
 
