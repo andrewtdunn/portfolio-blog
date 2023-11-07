@@ -36,7 +36,6 @@ type Blog @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [r
   slides: [String]
   videoId: String
   status: ItemStatus!
-  imported_text: String
   imported_mysql_id: String
 }
 

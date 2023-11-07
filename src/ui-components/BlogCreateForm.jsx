@@ -48,7 +48,6 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: "",
     status: "",
-    imported_text: "",
     imported_mysql_id: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
@@ -68,9 +67,6 @@ export default function BlogCreateForm(props) {
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [videoId, setVideoId] = React.useState(initialValues.videoId);
   const [status, setStatus] = React.useState(initialValues.status);
-  const [imported_text, setImported_text] = React.useState(
-    initialValues.imported_text
-  );
   const [imported_mysql_id, setImported_mysql_id] = React.useState(
     initialValues.imported_mysql_id
   );
@@ -87,7 +83,6 @@ export default function BlogCreateForm(props) {
     setSlides(initialValues.slides);
     setVideoId(initialValues.videoId);
     setStatus(initialValues.status);
-    setImported_text(initialValues.imported_text);
     setImported_mysql_id(initialValues.imported_mysql_id);
     setErrors({});
   };
@@ -103,7 +98,6 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: [],
     status: [{ type: "Required" }],
-    imported_text: [],
     imported_mysql_id: [],
   };
   const runValidationTasks = async (
@@ -143,7 +137,6 @@ export default function BlogCreateForm(props) {
           slides,
           videoId,
           status,
-          imported_text,
           imported_mysql_id,
         };
         const validationResponses = await Promise.all(
@@ -210,7 +203,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -245,7 +237,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -285,7 +276,6 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
-                  imported_text,
                   imported_mysql_id,
                 };
                 const result = onChange(modelFields);
@@ -310,7 +300,6 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
-                  imported_text,
                   imported_mysql_id,
                 };
                 const result = onChange(modelFields);
@@ -348,7 +337,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -405,7 +393,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -457,7 +444,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -493,7 +479,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -530,7 +515,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -570,7 +554,6 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
-                  imported_text,
                   imported_mysql_id,
                 };
                 const result = onChange(modelFields);
@@ -595,7 +578,6 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
-                  imported_text,
                   imported_mysql_id,
                 };
                 const result = onChange(modelFields);
@@ -633,7 +615,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId: value,
               status,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -669,7 +650,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status: value,
-              imported_text,
               imported_mysql_id,
             };
             const result = onChange(modelFields);
@@ -697,42 +677,6 @@ export default function BlogCreateForm(props) {
         ></option>
       </SelectField>
       <TextField
-        label="Imported text"
-        isRequired={false}
-        isReadOnly={false}
-        value={imported_text}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              text,
-              image,
-              heroAlignment,
-              heroSize,
-              isTwoColumn,
-              dropCap,
-              publishDate,
-              slides,
-              videoId,
-              status,
-              imported_text: value,
-              imported_mysql_id,
-            };
-            const result = onChange(modelFields);
-            value = result?.imported_text ?? value;
-          }
-          if (errors.imported_text?.hasError) {
-            runValidationTasks("imported_text", value);
-          }
-          setImported_text(value);
-        }}
-        onBlur={() => runValidationTasks("imported_text", imported_text)}
-        errorMessage={errors.imported_text?.errorMessage}
-        hasError={errors.imported_text?.hasError}
-        {...getOverrideProps(overrides, "imported_text")}
-      ></TextField>
-      <TextField
         label="Imported mysql id"
         isRequired={false}
         isReadOnly={false}
@@ -752,7 +696,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_text,
               imported_mysql_id: value,
             };
             const result = onChange(modelFields);

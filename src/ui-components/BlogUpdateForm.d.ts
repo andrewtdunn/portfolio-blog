@@ -35,7 +35,6 @@ export declare type BlogUpdateFormInputValues = {
     slides?: string[];
     videoId?: string;
     status?: string;
-    imported_text?: string;
     imported_mysql_id?: string;
 };
 export declare type BlogUpdateFormValidationValues = {
@@ -50,7 +49,6 @@ export declare type BlogUpdateFormValidationValues = {
     slides?: ValidationFunction<string>;
     videoId?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
-    imported_text?: ValidationFunction<string>;
     imported_mysql_id?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -67,7 +65,6 @@ export declare type BlogUpdateFormOverridesProps = {
     slides?: PrimitiveOverrideProps<StorageManagerProps>;
     videoId?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
-    imported_text?: PrimitiveOverrideProps<TextFieldProps>;
     imported_mysql_id?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type BlogUpdateFormProps = React.PropsWithChildren<{

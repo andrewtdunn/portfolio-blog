@@ -21,10 +21,7 @@ const BlogImage = ({
   publishDate,
 }: BlogImageType) => {
   const [year, month, date] = publishDate.split("-");
-  const photoUrl =
-    parseInt(year) > 2019
-      ? process.env.NEXT_PUBLIC_CLOUDFRONT_URL
-      : process.env.NEXT_PUBLIC_LEGACY_CLOUDFRONT_URL;
+  const photoUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
 
   return (
     <div className={styles.BlogImage}>

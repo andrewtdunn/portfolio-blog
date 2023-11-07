@@ -115,7 +115,6 @@ type EagerBlog = {
   readonly slides?: (string | null)[] | null;
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
-  readonly imported_text?: string | null;
   readonly imported_mysql_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
@@ -138,7 +137,6 @@ type LazyBlog = {
   readonly slides?: (string | null)[] | null;
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
-  readonly imported_text?: string | null;
   readonly imported_mysql_id?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
