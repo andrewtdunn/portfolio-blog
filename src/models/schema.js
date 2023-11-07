@@ -310,6 +310,20 @@ export const schema = {
                     "isRequired": true,
                     "attributes": []
                 },
+                "imported_text": {
+                    "name": "imported_text",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "imported_mysql_id": {
+                    "name": "imported_mysql_id",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -953,5 +967,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "d40872beaf43935cd2c7bc2740135f45"
+    "version": "7f26a39fb4dcbb802ac74935527a25ee"
 };

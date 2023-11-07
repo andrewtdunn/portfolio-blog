@@ -9,6 +9,7 @@ export type BlogImageType = {
   heroSize?: HeroSize;
   title: string;
   priority: boolean;
+  publishDate: string;
 };
 
 const BlogImage = ({
@@ -17,11 +18,18 @@ const BlogImage = ({
   heroSize,
   title,
   priority,
+  publishDate,
 }: BlogImageType) => {
+  const [year, month, date] = publishDate.split("-");
+  const photoUrl =
+    parseInt(year) > 2019
+      ? process.env.NEXT_PUBLIC_CLOUDFRONT_URL
+      : process.env.NEXT_PUBLIC_LEGACY_CLOUDFRONT_URL;
+
   return (
     <div className={styles.BlogImage}>
       <Image
-        src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${image}`}
+        src={`${photoUrl}/${image}`}
         alt={title}
         width={500}
         height={500}

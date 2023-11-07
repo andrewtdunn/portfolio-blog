@@ -70,6 +70,7 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
             heroSize={heroSize as BlogImageType["heroSize"]}
             heroAlignment={heroAlignment as BlogImageType["heroAlignment"]}
             priority={priority}
+            publishDate={publishDate!}
           />
         )}
 
@@ -84,6 +85,7 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
             heroSize={heroSize as BlogImageType["heroSize"]}
             heroAlignment={heroAlignment as BlogImageType["heroAlignment"]}
             priority={priority}
+            publishDate={publishDate!}
           />
         )}
         {videoId && (
