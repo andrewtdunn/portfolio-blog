@@ -9,12 +9,14 @@ import SignUpForm from "./signup-form";
 import VerifyForm from "./verify-form";
 import { SoundContext } from "../../store/sound-context";
 import { AuthContextType } from "../../@types/auth";
+import NavigationContext from "../../store/nav-context";
 
 const AuthForm = () => {
   const [showSignUp, setShowSignUp] = useState(false);
   const [showVerify, setShowVerify] = useState(false);
   const authCtx: AuthContextType | null = useContext(AuthContext);
   const soundCtx = useContext(SoundContext);
+  const navCtx = useContext(NavigationContext);
   const [username, setUsername] = useState<string>("");
   const [signedIn, setSignedIn] = useState(false);
 
@@ -76,6 +78,9 @@ const AuthForm = () => {
         let userName = await currUser.getUsername();
         setUsername(userName);
         setSignedIn(true);
+        setTimeout(() => {
+          navCtx.closeNav();
+        }, 1000);
       } else {
         console.log("user not detected");
       }
