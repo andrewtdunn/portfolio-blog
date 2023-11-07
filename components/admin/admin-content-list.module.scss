@@ -1,8 +1,39 @@
 @import "../../styles/base";
 
+.listAdmin {
+  color: black;
+  text-transform: uppercase;
+  display: flex;
+  padding: 10px;
+  justify-content: space-between;
+  align-content: center;
+
+  .hiddenPagination {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .searchForm {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    input {
+      font-family: Arial, Helvetica, sans-serif;
+    }
+    button {
+      text-transform: uppercase;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    input {
+      text-align: right;
+    }
+  }
+}
+
 .AdminContentList {
   border-top: 1px solid $darkblue;
-  margin-top: 10px;
+
   li {
     margin-left: 0px;
 

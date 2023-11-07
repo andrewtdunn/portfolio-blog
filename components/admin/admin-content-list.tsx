@@ -33,8 +33,14 @@ const ContentList = ({
   const adminCtx = useContext(AdminContext);
   const navCtx = useContext(NavigationContext);
   const [currentPageIndex, setCurrentPageIndex] = useState(1);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [filteredModels, setFileteredModels] = useState(models);
 
   const getPage = async () => {
+    if (searchTerm) {
+      return;
+    }
     let newModelType = modelType == AdminModel.BLOG ? Blog : Project;
     const models = await DataStore.query(Blog, Predicates.ALL, {
       sort: (s) => s.publishDate(SortDirection.DESCENDING),
@@ -84,11 +90,21 @@ const ContentList = ({
         const projects = await DataStore.query(Project);
         setModels(projects);
       } else {
-        const blogs = await DataStore.query(Blog, Predicates.ALL, {
-          sort: (s) => s.publishDate(SortDirection.DESCENDING),
-          page: currentPageIndex - 1,
-          limit: PAGELIMIT,
-        });
+        const blogs = await DataStore.query(
+          Blog,
+          searchTerm
+            ? (c) =>
+                c.or((c) => [
+                  c.title.contains(searchTerm),
+                  c.text.contains(searchTerm),
+                ])
+            : Predicates.ALL,
+          {
+            sort: (s) => s.publishDate(SortDirection.DESCENDING),
+            page: currentPageIndex - 1,
+            limit: PAGELIMIT,
+          }
+        );
         // const blogs = await DataStore.query(Blog, Predicates.ALL, {
         //   sort: (s) => s.publishDate(SortDirection.DESCENDING),
         // });
@@ -98,7 +114,7 @@ const ContentList = ({
     if (!adminCtx?.editing) {
       getModels();
     }
-  }, [modelType, adminCtx, currentPageIndex]);
+  }, [modelType, adminCtx, currentPageIndex, searchTerm]);
 
   useEffect(() => {
     const getNumberOfPages = async () => {
@@ -181,15 +197,34 @@ const ContentList = ({
   const gotoLink = (id: string) => {
     console.log("gotoLink", id);
   };
+
+  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
+    setSearchTerm(e.currentTarget.value);
+  };
   return (
     <>
-      <Pagination
-        currentPage={currentPageIndex}
-        totalPages={numPages}
-        onNext={handleNextPage}
-        onPrevious={handlePreviousPage}
-        onChange={handleOnChange}
-      />
+      <div className={styles.listAdmin}>
+        <div>{modelType}s</div>
+        <Pagination
+          currentPage={currentPageIndex}
+          totalPages={numPages}
+          onNext={handleNextPage}
+          onPrevious={handlePreviousPage}
+          onChange={handleOnChange}
+          className={searchTerm && styles.hiddenPagination}
+        />
+        <div className={styles.searchForm}>
+          <input value={searchTerm} onChange={handleSearchChange} />
+          <button
+            onClick={() => {
+              setSearchTerm("");
+            }}
+          >
+            clear
+          </button>
+        </div>
+      </div>
+
       <ul className={styles.AdminContentList}>
         {models.map((model, index) => (
           <li key={index}>

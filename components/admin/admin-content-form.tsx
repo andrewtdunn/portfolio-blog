@@ -29,12 +29,12 @@ const AdminContentForm = () => {
 
   return (
     <div className={styles.AdminContentForm}>
-      {isAdmin && (
+      {/* {isAdmin && (
         <h1>
           {adminCtx?.editing ? "UPDATE" : adminCtx?.formType}{" "}
           {adminCtx?.modelType}
         </h1>
-      )}
+      )} */}
       {adminCtx && isAdmin && adminCtx.formType == AdminForm.CREATE ? (
         adminCtx?.modelType == AdminModel.PROJECT ? (
           <ProjectCreateForm
