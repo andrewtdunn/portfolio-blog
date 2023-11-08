@@ -8,7 +8,25 @@
   background-color: black;
   opacity: 0.5;
   transition: opacity 0.7s ease-in-out;
+
   &.dark {
     opacity: 0.7;
+  }
+
+  &.backgroundCrack {
+    //background-image: url("/images/burning_ad_green.png");
+
+    // background-attachment: fixed;
+    // background-repeat: no-repeat;
+    // background-position: 0px 0px;
+    // background-blend-mode: darken;
+
+    background-image: url("/images/broken_glass.png");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: top 30px right 200px;
+    background-blend-mode: hard-light;
+
+    // box-shadow: inset 0px 0px 20px 10px rgba(0, 0, 0, 0.3);
   }
 }

@@ -9,16 +9,20 @@ import Fader from "../../../components/utils/fader";
 import { withSSRContext, Predicates } from "aws-amplify";
 import { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import YearFilter from "../../../components/blog/year-filter";
 
 const PAGE_LENGTH = 5;
+const START_YEAR = 2008;
 
-const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
+const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
   const [pageNum, setPageNum] = useState<number>(1);
+  const [currYear, setCurrYear] = useState<string>(year);
 
   const fetchNextPage = async () => {
     setPageNum((prev) => prev + 1);
-    //console.log("call next page", pageNum);
+    console.log("call next page", pageNum);
+
     const models = await DataStore.query(
       Blog,
       (c) => c.status!.eq(ItemStatus.ACTIVE),
@@ -28,19 +32,19 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
         limit: PAGE_LENGTH,
       }
     );
+    let cy =
+      blogPosts[blogPosts.length - PAGE_LENGTH].publishDate?.split("-")[0];
+    console.log("new models", models);
+    console.log("new models", cy);
+    console.log("- - - - - ");
+    if (cy) {
+      setCurrYear(cy!);
+    }
+
     setBlogPosts((prev) => [...prev, ...models]);
   };
 
-  // useEffect(() => {
-  //   if (pageNum == 0) {
-  //     return;
-  //   }
-  //   console.log("call next", pageNum);
-  //
-  //   fetchNextPage();
-  // }, [pageNum]);
-
-  //console.log("number of blogs", blogPosts.length);
+  const endYear = blogs[blogs.length - 1].publishDate?.split("-")[0];
 
   return (
     <div className={styles.Blog}>
@@ -52,7 +56,12 @@ const BlogPage = ({ blogs }: { blogs: Blog[] }) => {
         dark={true}
         subheader="Tous Les Jours C'est Pas La Même"
       />
-      <Fader />
+      <Fader hasCrack={true} />
+      <YearFilter
+        startYear={parseInt(START_YEAR.toString())}
+        endYear={year}
+        currYear={currYear}
+      />
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
           <InfiniteScroll
@@ -91,8 +100,11 @@ export const getStaticProps: GetStaticProps = async () => {
       (c) => c.status!.eq(ItemStatus.ACTIVE),
       { sort: (s) => s.publishDate("DESCENDING"), page: 0, limit: PAGE_LENGTH }
     );
+    const date = new Date();
+    const year = date.getFullYear();
     return {
       props: {
+        year,
         blogs: JSON.parse(JSON.stringify(models)),
       },
       revalidate: 10,
