@@ -7,9 +7,10 @@ import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
 import { withSSRContext, Predicates } from "aws-amplify";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import YearFilter from "../../../components/blog/year-filter";
+import { albertusFont } from "../../../components/bio/bio-post";
 
 const PAGE_LENGTH = 5;
 const START_YEAR = "2008";
@@ -19,32 +20,58 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
   const [pageNum, setPageNum] = useState<number>(1);
   const [currYear, setCurrYear] = useState<string>(year);
 
+  //const currYearRef = useRef(currYear);
+  const prevYearRef = useRef<string>(currYear);
+  const currYearRef = useRef<string>(currYear);
+
   const fetchNextPage = async () => {
+    // console.log(
+    //   `fetchPageNum prev: ${prevYearRef.current.valueOf()} curr: ${currYear}`
+    // );
+
     setPageNum((prev) => prev + 1);
-    console.log("call next page", pageNum);
-
-    const models = await DataStore.query(
-      Blog,
-      (c) => c.status!.eq(ItemStatus.ACTIVE),
-      {
-        sort: (s) => s.publishDate("DESCENDING"),
-        page: pageNum,
-        limit: PAGE_LENGTH,
-      }
-    );
-    let cy =
-      blogPosts[blogPosts.length - PAGE_LENGTH].publishDate?.split("-")[0];
-    console.log("new models", models);
-    console.log("new models", cy);
-    console.log("- - - - - ");
-    if (cy) {
-      setCurrYear(cy!);
-    }
-
-    setBlogPosts((prev) => [...prev, ...models]);
   };
 
-  const endYear = blogs[blogs.length - 1].publishDate?.split("-")[0];
+  const yearSelection = (year: string) => {
+    //console.log("yearSelection", year);
+    setCurrYear(year);
+    setPageNum(0);
+    setBlogPosts([]);
+  };
+
+  useEffect(() => {
+    const getModels = async () => {
+      //console.log("query - ", currYear, pageNum);
+      const models = await DataStore.query(
+        Blog,
+        (c) =>
+          c.and((c) => [
+            c.status!.eq(ItemStatus.ACTIVE),
+            c.publishDate.contains(currYear),
+          ]),
+        {
+          sort: (s) => s.publishDate("DESCENDING"),
+          page: pageNum,
+          limit: PAGE_LENGTH,
+        }
+      );
+      // console.log(
+      //   `PrevYear: ${prevYearRef.current.valueOf()} - CurrYear: ${currYear}  Models Requested: ${PAGE_LENGTH} - Models Received ${
+      //     models.length
+      //   } - pageNum: ${pageNum}`
+      // );
+
+      prevYearRef.current = currYearRef.current.valueOf();
+
+      if (models.length == 0) {
+        setCurrYear((prev) => (parseInt(prev) - 1).toString());
+        setPageNum(0);
+      }
+
+      setBlogPosts((prev) => [...prev, ...models]);
+    };
+    getModels();
+  }, [pageNum, currYear]);
 
   return (
     <div className={styles.Blog}>
@@ -57,18 +84,43 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
         subheader="Tous Les Jours C'est Pas La Même"
       />
       <Fader hasCrack={true} />
-      <YearFilter startYear={START_YEAR} endYear={year} currYear={currYear} />
+      <YearFilter
+        startYear={START_YEAR}
+        endYear={year}
+        currYear={currYear}
+        callback={yearSelection}
+      />
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
           <InfiniteScroll
             dataLength={blogPosts.length} //This is important field to render the next data
             next={fetchNextPage}
-            hasMore={true}
+            hasMore={parseInt(currYear) > 2007}
             scrollableTarget="blogHolder"
-            loader={<h4>Loading...</h4>}
+            loader={
+              <h4
+                style={{
+                  textAlign: "center",
+                  paddingBottom: "200px",
+                  color: "rgb(200,200,200)",
+                  fontSize: "2em",
+                }}
+                className={albertusFont.className}
+              >
+                Loading...
+              </h4>
+            }
             endMessage={
-              <p style={{ textAlign: "center" }}>
-                <b>Yay! You have seen it all</b>
+              <p
+                style={{
+                  textAlign: "center",
+                  paddingBottom: "200px",
+                  color: "rgb(200,200,200)",
+                  fontSize: "2em",
+                }}
+                className={albertusFont.className}
+              >
+                <b>THAT&apos;S ALL FOLKS !!!</b>
               </p>
             }
           >
@@ -78,6 +130,7 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
                   key={`${i}-${post.id}`}
                   post={post}
                   priority={i == 0}
+                  backLink={false}
                 />
               );
             })}
@@ -91,13 +144,18 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
 export const getStaticProps: GetStaticProps = async () => {
   const SSR = withSSRContext();
   try {
+    const date = new Date();
+    const year = date.getFullYear().toString();
     const models = await DataStore.query(
       Blog,
-      (c) => c.status!.eq(ItemStatus.ACTIVE),
+      (c) =>
+        c.and((c) => [
+          c.status!.eq(ItemStatus.ACTIVE),
+          c.publishDate.contains(year),
+        ]),
       { sort: (s) => s.publishDate("DESCENDING"), page: 0, limit: PAGE_LENGTH }
     );
-    const date = new Date();
-    const year = date.getFullYear();
+
     return {
       props: {
         year,

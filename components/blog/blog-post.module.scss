@@ -5,6 +5,16 @@
   font-size: 14px;
   transition: opacity 0.25s ease-in;
 
+  .backLink {
+    color: darkgreen;
+    float: right;
+    font-size: 1.2em;
+    text-decoration: none;
+    &:hover {
+      color: $bright-green;
+    }
+  }
+
   h1 {
     font-size: 28px;
     font-weight: normal;

@@ -9,13 +9,15 @@ import { BlogImageType } from "./blog-image";
 import LiteYouTubeEmbed from "react-lite-youtube-embed";
 import "react-lite-youtube-embed/dist/LiteYouTubeEmbed.css";
 import { Storage } from "aws-amplify";
+import Link from "next/link";
 
 type BlogProps = {
   post: Blog;
   priority: boolean;
+  backLink: boolean;
 };
 
-const BlogPost: FC<BlogProps> = ({ post, priority }) => {
+const BlogPost: FC<BlogProps> = ({ post, priority, backLink }) => {
   const {
     id,
     title,
@@ -49,6 +51,14 @@ const BlogPost: FC<BlogProps> = ({ post, priority }) => {
 
   return (
     <div className={styles.Post}>
+      {backLink && (
+        <Link
+          href="/blog"
+          className={`${albertusFont.className} ${styles.backLink}`}
+        >
+          All Posts
+        </Link>
+      )}
       <article>
         {title && <h1 className={albertusFont.className}>{title}</h1>}
         {title && <hr />}

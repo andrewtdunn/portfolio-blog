@@ -6,8 +6,11 @@ import { Blog, ItemStatus } from "../../models";
 import { GetStaticProps, GetStaticPaths } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
+import YearFilter from "../../../components/blog/year-filter";
 
-const BlogPage = ({ blog }: { blog: Blog }) => {
+const START_YEAR = "2008";
+
+const BlogPage = ({ blog, year }: { blog: Blog; year: string }) => {
   return (
     <div className={styles.Blog}>
       <Head>
@@ -22,7 +25,7 @@ const BlogPage = ({ blog }: { blog: Blog }) => {
       <Fader />
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.inner}>
-          <BlogPost post={blog} priority={true} />
+          <BlogPost post={blog} priority={true} backLink={true} />
         </div>
       </div>
     </div>
@@ -42,9 +45,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
 
   const blog = await JSON.parse(JSON.stringify(model));
 
+  const date = new Date();
+  const year = date.getFullYear();
+
   return {
     props: {
       blog,
+      year,
     },
     revalidate: 10,
   };
