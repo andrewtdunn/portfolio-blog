@@ -12,7 +12,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import YearFilter from "../../../components/blog/year-filter";
 
 const PAGE_LENGTH = 5;
-const START_YEAR = 2008;
+const START_YEAR = "2008";
 
 const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
@@ -57,11 +57,7 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
         subheader="Tous Les Jours C'est Pas La Même"
       />
       <Fader hasCrack={true} />
-      <YearFilter
-        startYear={parseInt(START_YEAR.toString())}
-        endYear={year}
-        currYear={currYear}
-      />
+      <YearFilter startYear={START_YEAR} endYear={year} currYear={currYear} />
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
           <InfiniteScroll
