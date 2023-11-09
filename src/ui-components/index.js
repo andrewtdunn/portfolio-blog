@@ -10,6 +10,8 @@ export { default as BioCreateForm } from "./BioCreateForm";
 export { default as BioUpdateForm } from "./BioUpdateForm";
 export { default as BlogCreateForm } from "./BlogCreateForm";
 export { default as BlogUpdateForm } from "./BlogUpdateForm";
+export { default as CommentCreateForm } from "./CommentCreateForm";
+export { default as CommentUpdateForm } from "./CommentUpdateForm";
 export { default as ProjectCreateForm } from "./ProjectCreateForm";
 export { default as ProjectUpdateForm } from "./ProjectUpdateForm";
 export { default as studioTheme } from "./studioTheme";

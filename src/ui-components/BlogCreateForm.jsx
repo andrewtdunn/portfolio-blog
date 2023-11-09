@@ -48,7 +48,6 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: "",
     status: "",
-    imported_mysql_id: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [text, setText] = React.useState(initialValues.text);
@@ -67,9 +66,6 @@ export default function BlogCreateForm(props) {
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [videoId, setVideoId] = React.useState(initialValues.videoId);
   const [status, setStatus] = React.useState(initialValues.status);
-  const [imported_mysql_id, setImported_mysql_id] = React.useState(
-    initialValues.imported_mysql_id
-  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -83,7 +79,6 @@ export default function BlogCreateForm(props) {
     setSlides(initialValues.slides);
     setVideoId(initialValues.videoId);
     setStatus(initialValues.status);
-    setImported_mysql_id(initialValues.imported_mysql_id);
     setErrors({});
   };
   const validations = {
@@ -98,7 +93,6 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: [],
     status: [{ type: "Required" }],
-    imported_mysql_id: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -137,7 +131,6 @@ export default function BlogCreateForm(props) {
           slides,
           videoId,
           status,
-          imported_mysql_id,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -203,7 +196,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -237,7 +229,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -276,7 +267,6 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
-                  imported_mysql_id,
                 };
                 const result = onChange(modelFields);
                 value = result?.image ?? value;
@@ -300,7 +290,6 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
-                  imported_mysql_id,
                 };
                 const result = onChange(modelFields);
                 value = result?.image ?? value;
@@ -337,7 +326,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.heroAlignment ?? value;
@@ -393,7 +381,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.heroSize ?? value;
@@ -449,7 +436,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.isTwoColumn ?? value;
@@ -484,7 +470,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.dropCap ?? value;
@@ -520,7 +505,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.publishDate ?? value;
@@ -559,7 +543,6 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
-                  imported_mysql_id,
                 };
                 const result = onChange(modelFields);
                 value = result?.slides ?? value;
@@ -583,7 +566,6 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
-                  imported_mysql_id,
                 };
                 const result = onChange(modelFields);
                 value = result?.slides ?? value;
@@ -620,7 +602,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId: value,
               status,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.videoId ?? value;
@@ -655,7 +636,6 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status: value,
-              imported_mysql_id,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -681,43 +661,6 @@ export default function BlogCreateForm(props) {
           {...getOverrideProps(overrides, "statusoption1")}
         ></option>
       </SelectField>
-      <TextField
-        label="Imported mysql id"
-        isRequired={false}
-        isReadOnly={false}
-        value={imported_mysql_id}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              text,
-              image,
-              heroAlignment,
-              heroSize,
-              isTwoColumn,
-              dropCap,
-              publishDate,
-              slides,
-              videoId,
-              status,
-              imported_mysql_id: value,
-            };
-            const result = onChange(modelFields);
-            value = result?.imported_mysql_id ?? value;
-          }
-          if (errors.imported_mysql_id?.hasError) {
-            runValidationTasks("imported_mysql_id", value);
-          }
-          setImported_mysql_id(value);
-        }}
-        onBlur={() =>
-          runValidationTasks("imported_mysql_id", imported_mysql_id)
-        }
-        errorMessage={errors.imported_mysql_id?.errorMessage}
-        hasError={errors.imported_mysql_id?.hasError}
-        {...getOverrideProps(overrides, "imported_mysql_id")}
-      ></TextField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

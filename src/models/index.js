@@ -21,9 +21,10 @@ const HeroSize = {
   "HALF": "HALF"
 };
 
-const { BadReception, Project, Blog, Agency, School, MiscCertification, Bio, AWSCertification } = initSchema(schema);
+const { Comment, BadReception, Project, Blog, Agency, School, MiscCertification, Bio, AWSCertification } = initSchema(schema);
 
 export {
+  Comment,
   BadReception,
   Project,
   Blog,
