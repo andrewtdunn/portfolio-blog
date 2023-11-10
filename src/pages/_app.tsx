@@ -13,6 +13,7 @@ import "@aws-amplify/ui-react/styles.css";
 import { ThemeProvider, createTheme } from "@aws-amplify/ui-react";
 import studioTheme from "../ui-components/studioTheme";
 import { AdminProvider } from "../../store/admin-context";
+import Script from "next/script";
 
 Amplify.configure({
   ...awsExports,
@@ -33,6 +34,16 @@ export default function App({ Component, pageProps }: AppProps) {
           <AuthProvider>
             <SoundProvider>
               <NavigationContextProvider>
+                <Script src="https://www.googletagmanager.com/gtag/js?id=G-Y3HJ7PJ4TN" />
+                <Script id="google-analytics">
+                  {`
+                      window.dataLayer = window.dataLayer || [];
+                      function gtag(){dataLayer.push(arguments);}
+                      gtag('js', new Date());
+            
+                      gtag('config', 'G-Y3HJ7PJ4TN');
+                    `}
+                </Script>
                 <Head>
                   <title>Andrew T Dunn</title>
                   <meta
