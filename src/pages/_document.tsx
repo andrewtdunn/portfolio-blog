@@ -1,9 +1,21 @@
 import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
     <Html lang="en">
-      <Head></Head>
+      <Head>
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-Y3HJ7PJ4TN" />
+        <Script id="google-analytics">
+          {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+ 
+          gtag('config', 'G-Y3HJ7PJ4TN');
+        `}
+        </Script>
+      </Head>
       <body>
         <Main />
         <NextScript />
