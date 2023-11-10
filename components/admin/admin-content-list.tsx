@@ -245,7 +245,7 @@ const ContentList = ({
                 )}
 
                 <Link
-                  href={`${modelType == AdminModel.PROJECT ? "/" : "/blog"}/${
+                  href={`${modelType == AdminModel.PROJECT ? "" : "/blog"}/${
                     model.id
                   }`}
                   key={index}
@@ -257,17 +257,21 @@ const ContentList = ({
                 >
                   <MdLink className={styles.link} />
                 </Link>
-                {modelType == AdminModel.PROJECT && (
-                  <Image
-                    src={(model as Project).projectLogo}
-                    width={15}
-                    height={15}
-                    alt={model.title ? model.title : "logo"}
-                    style={{ objectFit: "contain" }}
-                  />
-                )}
+                {modelType == AdminModel.PROJECT &&
+                  model.title &&
+                  (model as Project).projectLogo && (
+                    <Image
+                      src={(model as Project).projectLogo}
+                      width={15}
+                      height={15}
+                      alt={model.title ? model.title : "logo"}
+                      style={{ objectFit: "contain" }}
+                    />
+                  )}
                 {modelType == AdminModel.BLOG &&
-                  ((model as Blog).image ? (
+                  ((model as Blog).image &&
+                  (model as Blog).image &&
+                  !(model as Blog).image?.includes("cloudfront") ? (
                     <Image
                       src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${(
                         model as Blog
