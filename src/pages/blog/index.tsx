@@ -40,9 +40,10 @@ const BlogPage = ({
   };
 
   const yearSelection = (selectedYear: string) => {
+    setFeaturedModel(null);
+    setBlogPosts([]);
     setCurrYear(selectedYear);
     setPageNum(0);
-    setBlogPosts([]);
   };
 
   const onSetFeaturedModel = (model: Blog) => {
@@ -112,49 +113,53 @@ const BlogPage = ({
 
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
-          <InfiniteScroll
-            dataLength={blogPosts.length} //This is important field to render the next data
-            next={fetchNextPage}
-            hasMore={parseInt(currYear) > 2007}
-            scrollableTarget="blogHolder"
-            loader={
-              <h4
-                style={{
-                  textAlign: "center",
-                  paddingBottom: "200px",
-                  color: "rgb(200,200,200)",
-                  fontSize: "2em",
-                }}
-                className={albertusFont.className}
-              >
-                Loading...
-              </h4>
-            }
-            endMessage={
-              <p
-                style={{
-                  textAlign: "center",
-                  paddingBottom: "200px",
-                  color: "rgb(200,200,200)",
-                  fontSize: "1.4em",
-                }}
-                className={albertusFont.className}
-              >
-                That&apos;s All Folks!!
-              </p>
-            }
-          >
-            {blogPosts.map((post, i) => {
-              return (
-                <BlogPost
-                  key={`${i}-${post.id}`}
-                  post={post}
-                  priority={i == 0}
-                  backLink={false}
-                />
-              );
-            })}
-          </InfiniteScroll>
+          {featuredModel ? (
+            <BlogPost post={featuredModel} priority={false} backLink={false} />
+          ) : (
+            <InfiniteScroll
+              dataLength={blogPosts.length} //This is important field to render the next data
+              next={fetchNextPage}
+              hasMore={parseInt(currYear) > 2007}
+              scrollableTarget="blogHolder"
+              loader={
+                <h4
+                  style={{
+                    textAlign: "center",
+                    paddingBottom: "200px",
+                    color: "rgb(200,200,200)",
+                    fontSize: "2em",
+                  }}
+                  className={albertusFont.className}
+                >
+                  Loading...
+                </h4>
+              }
+              endMessage={
+                <p
+                  style={{
+                    textAlign: "center",
+                    paddingBottom: "200px",
+                    color: "rgb(200,200,200)",
+                    fontSize: "1.4em",
+                  }}
+                  className={albertusFont.className}
+                >
+                  That&apos;s All Folks!!
+                </p>
+              }
+            >
+              {blogPosts.map((post, i) => {
+                return (
+                  <BlogPost
+                    key={`${i}-${post.id}`}
+                    post={post}
+                    priority={i == 0}
+                    backLink={false}
+                  />
+                );
+              })}
+            </InfiniteScroll>
+          )}
         </div>
       </div>
     </div>
