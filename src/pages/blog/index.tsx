@@ -158,7 +158,6 @@ const BlogPage = ({
                 }}
                 className={albertusFont.className}
                 onClick={() => {
-                  setBlogPosts([]);
                   setFeaturedMode(() => false);
                   setCurrYear(year);
                 }}
