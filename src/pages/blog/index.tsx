@@ -39,9 +39,6 @@ const BlogPage = ({
   const featuredModeRef = useRef(featuredMode);
 
   const fetchNextPage = async () => {
-    // console.log(
-    //   `fetchPageNum prev: ${prevYearRef.current.valueOf()} curr: ${currYear}`
-    // );
     featuredMode = false;
     setPageNum((prev) => prev + 1);
   };
@@ -50,9 +47,6 @@ const BlogPage = ({
     console.log("yearSelection", selectedYear);
     featuredMode = false;
     setBlogPosts([]);
-    setPageNum(0);
-    // featuredModeRef.current = false;
-    // pageNumRef.current = 0;
     setCurrYear(selectedYear);
   };
 
