@@ -7,10 +7,11 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
 import YearFilter from "../../../components/blog/year-filter";
+import Title from "../../../components/utils/title";
 
 const START_YEAR = "2008";
 
-const BlogPage = ({ blog, year }: { blog: Blog; year: string }) => {
+const BlogPage = ({ blog }: { blog: Blog; year: string }) => {
   return (
     <div className={styles.Blog}>
       <Head>
@@ -25,7 +26,11 @@ const BlogPage = ({ blog, year }: { blog: Blog; year: string }) => {
       <Fader />
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.inner}>
-          <BlogPost post={blog} priority={true} backLink={true} />
+          {blog ? (
+            <BlogPost post={blog} priority={true} backLink={true} />
+          ) : (
+            <Title>BLOG POST NOT AVAILABLE</Title>
+          )}
         </div>
       </div>
     </div>
