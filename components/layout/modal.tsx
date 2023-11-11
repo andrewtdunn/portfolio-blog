@@ -58,7 +58,6 @@ const Modal = ({ children }: { children: ReactNode }) => {
               <UserInfo user={user} />
               <ModalButtonGroup modelType={AdminModel.PROJECT} />
               <ModalButtonGroup modelType={AdminModel.BLOG} />
-              <ModalButtonGroup modelType={AdminModel.STORAGE} addS={false} />
             </div>
           )}
         </div>

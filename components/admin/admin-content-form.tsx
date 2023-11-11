@@ -10,6 +10,8 @@ import ContentList from "./admin-content-list";
 import AuthContext from "../../store/auth-context";
 import StorageList from "./admin-storage-list";
 import StorageForm from "./admin-storage-form";
+import AdminProjectList from "./admin-projects-list";
+import AdminBlogsList from "./admin-blogs-list";
 
 const AdminContentForm = () => {
   const adminCtx = useContext(AdminContext);
@@ -100,8 +102,10 @@ const AdminContentForm = () => {
         )
       ) : isAdmin && adminCtx?.modelType == AdminModel.STORAGE ? (
         <StorageList />
+      ) : isAdmin && adminCtx?.modelType == AdminModel.PROJECT ? (
+        <AdminProjectList isAdmin={isAdmin} />
       ) : (
-        <ContentList isAdmin={isAdmin} modelType={adminCtx?.modelType!} />
+        <AdminBlogsList isAdmin={isAdmin} />
       )}
     </div>
   );

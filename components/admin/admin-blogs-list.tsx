@@ -1,6 +1,5 @@
-import { ItemStatus, Project } from "@/models";
+import { ItemStatus, Blog } from "@/models";
 import { DataStore, Predicates, SortDirection } from "aws-amplify";
-import { AdminModel } from "../../type-definitions/enums";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { MdOutlineEditNote, MdStarRate, MdLink } from "react-icons/md";
 import styles from "./admin-content-list.module.scss";
@@ -11,17 +10,18 @@ import Image from "next/image";
 import { Pagination } from "@aws-amplify/ui-react";
 import Link from "next/link";
 import NavigationContext from "../../store/nav-context";
+import BlogUpdateForm from "@/ui-components/BlogUpdateForm";
 
 const PAGELIMIT: number = 9;
 
-const AdminProjectList = ({
+const AdminBlogsList = ({
   isAdmin,
 }: {
   isAdmin: boolean;
   totalPages?: number;
 }) => {
-  const [models, setModels] = useState<Project[] | []>([]);
-  const [currModel, setCurrModel] = useState<Project | null>(null);
+  const [models, setModels] = useState<Blog[] | []>([]);
+  const [currModel, setCurrModel] = useState<Blog | null>(null);
   const [numPages, setNumPage] = useState<number>(0);
   const soundCtx = useContext(SoundContext);
   const adminCtx = useContext(AdminContext);
@@ -32,16 +32,16 @@ const AdminProjectList = ({
   const getPage = useCallback(async () => {
     console.log("getting page", currentPageIndex);
     const models = await DataStore.query(
-      Project,
+      Blog,
       searchTerm
         ? (c) =>
             c.or((c) => [
               c.title.contains(searchTerm),
-              c.description.contains(searchTerm),
+              c.text.contains(searchTerm),
             ])
         : Predicates.ALL,
       {
-        sort: (s) => s.completionData(SortDirection.DESCENDING),
+        sort: (s) => s.publishDate(SortDirection.DESCENDING),
         page: currentPageIndex,
         limit: PAGELIMIT,
       }
@@ -49,7 +49,7 @@ const AdminProjectList = ({
     setModels(models);
   }, [currentPageIndex, searchTerm]);
 
-  const handleToggleEditClick = (model: Project) => {
+  const handleToggleEditClick = (model: Blog) => {
     adminCtx?.setEditing(true);
     setCurrModel(model);
   };
@@ -82,7 +82,7 @@ const AdminProjectList = ({
       console.log("getModels ... ");
       //const models = await DataStore.query(Project);
 
-      const models = await DataStore.query(Project);
+      const models = await DataStore.query(Blog);
       console.log("models", models);
 
       console.log(`there are ${models.length} models`);
@@ -95,8 +95,8 @@ const AdminProjectList = ({
 
   if (adminCtx?.editing && isAdmin && currModel) {
     return (
-      <ProjectUpdateForm
-        project={currModel!}
+      <BlogUpdateForm
+        blog={currModel!}
         onSuccess={resetForm}
         onSubmit={(fields) => {
           // Example function to trim all string inputs
@@ -131,7 +131,7 @@ const AdminProjectList = ({
   return (
     <>
       <div className={styles.listAdmin}>
-        <div>Projects LIST</div>
+        <div>BLOGS LIST</div>
         <Pagination
           currentPage={currentPageIndex + 1}
           totalPages={numPages}
@@ -166,13 +166,13 @@ const AdminProjectList = ({
                 />
                 {isAdmin && (
                   <MdOutlineEditNote
-                    onClick={() => handleToggleEditClick(model as Project)}
+                    onClick={() => handleToggleEditClick(model)}
                     className={styles.pencil}
                   />
                 )}
 
                 <Link
-                  href={`/${model.id}`}
+                  href={`/blog/${model.id}`}
                   key={index}
                   className={styles.link}
                   onClick={() => {
@@ -182,13 +182,20 @@ const AdminProjectList = ({
                 >
                   <MdLink className={styles.link} />
                 </Link>
-                <Image
-                  src={(model as Project).projectLogo}
-                  width={15}
-                  height={15}
-                  alt={model.title ? model.title : "logo"}
-                  style={{ objectFit: "contain" }}
-                />
+                {(model as Blog).image ? (
+                  <Image
+                    src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${(
+                      model as Blog
+                    ).image!}`}
+                    width={45}
+                    height={45}
+                    alt={model.title ? model.title : "logo"}
+                    style={{ objectFit: "contain" }}
+                    className={styles.thumbHolder}
+                  />
+                ) : (
+                  <div className={styles.thumbHolder}>no image</div>
+                )}
                 <h3>
                   {model.title ? (
                     model.title
@@ -199,9 +206,7 @@ const AdminProjectList = ({
               </div>
               <div className={styles.dateCell}>
                 <h4>
-                  {model.completionData
-                    ? model.completionData
-                    : "NO COMPLETION DATE"}
+                  {model.publishDate ? model.publishDate : "NO PUBLISH DATE"}
                 </h4>
               </div>
             </div>
@@ -212,4 +217,4 @@ const AdminProjectList = ({
   );
 };
 
-export default AdminProjectList;
+export default AdminBlogsList;

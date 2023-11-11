@@ -1,7 +1,7 @@
 import { Blog, ItemStatus, Project } from "@/models";
 import { DataStore, Predicates, SortDirection } from "aws-amplify";
 import { GetServerSideProps } from "next";
-import { AdminModel } from "../../type-definitions/enums";
+import { AdminForm, AdminModel } from "../../type-definitions/enums";
 import { useContext, useEffect, useState } from "react";
 import { MdOutlineEditNote, MdStarRate, MdLink } from "react-icons/md";
 import styles from "./admin-content-list.module.scss";
@@ -14,6 +14,7 @@ import { Pagination, usePagination } from "@aws-amplify/ui-react";
 import { modelWorldMatrix } from "three/examples/jsm/nodes/Nodes.js";
 import Link from "next/link";
 import NavigationContext from "../../store/nav-context";
+import AdminProjectList from "./admin-projects-list";
 
 const PAGELIMIT: number = 9;
 
@@ -108,7 +109,8 @@ const ContentList = ({
         // const blogs = await DataStore.query(Blog, Predicates.ALL, {
         //   sort: (s) => s.publishDate(SortDirection.DESCENDING),
         // });
-        setModels(blogs);
+        //setModels(blogs);
+        getPage();
       }
     };
     if (!adminCtx?.editing) {
@@ -203,112 +205,13 @@ const ContentList = ({
   };
   return (
     <>
-      <div className={styles.listAdmin}>
-        <div>{modelType}s</div>
-        <Pagination
-          currentPage={currentPageIndex}
-          totalPages={numPages}
-          onNext={handleNextPage}
-          onPrevious={handlePreviousPage}
-          onChange={handleOnChange}
-          className={searchTerm && styles.hiddenPagination}
-        />
-        <div className={styles.searchForm}>
-          <input value={searchTerm} onChange={handleSearchChange} />
-          <button
-            onClick={() => {
-              setSearchTerm("");
-            }}
-          >
-            clear
-          </button>
-        </div>
-      </div>
-
-      <ul className={styles.AdminContentList}>
-        {models.map((model, index) => (
-          <li key={index}>
-            <div className={styles.editLogo}>
-              <div className={styles.titleCell}>
-                <MdStarRate
-                  className={
-                    model.status == ItemStatus.ACTIVE
-                      ? styles.activeItem
-                      : styles.inactiveItem
-                  }
-                />
-                {isAdmin && (
-                  <MdOutlineEditNote
-                    onClick={() => handleClick(model)}
-                    className={styles.pencil}
-                  />
-                )}
-
-                <Link
-                  href={`${modelType == AdminModel.PROJECT ? "" : "/blog"}/${
-                    model.id
-                  }`}
-                  key={index}
-                  className={styles.link}
-                  onClick={() => {
-                    navCtx.closeModal();
-                    navCtx.closeNav();
-                  }}
-                >
-                  <MdLink className={styles.link} />
-                </Link>
-                {modelType == AdminModel.PROJECT &&
-                  model.title &&
-                  (model as Project).projectLogo && (
-                    <Image
-                      src={(model as Project).projectLogo}
-                      width={15}
-                      height={15}
-                      alt={model.title ? model.title : "logo"}
-                      style={{ objectFit: "contain" }}
-                    />
-                  )}
-                {modelType == AdminModel.BLOG &&
-                  ((model as Blog).image &&
-                  (model as Blog).image &&
-                  !(model as Blog).image?.includes("cloudfront") ? (
-                    <Image
-                      src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${(
-                        model as Blog
-                      ).image!}`}
-                      width={40}
-                      height={40}
-                      alt={model.title ? model.title : "logo"}
-                      style={{
-                        objectFit: "contain",
-                        backgroundColor: "rgb(200,200,200)",
-                        border: "1px solid rgb(100,100, 100)",
-                      }}
-                    />
-                  ) : (
-                    <div className={styles.thumbHolder}>NO IMAGE</div>
-                  ))}
-                <h3>
-                  {model.title ? (
-                    model.title
-                  ) : (
-                    <span className={styles.untitled}>untitled</span>
-                  )}
-                </h3>
-              </div>
-              {modelType == AdminModel.BLOG && (
-                <div className={styles.dateCell}>
-                  <h4>
-                    {(model as Blog).publishDate
-                      ? (model as Blog).publishDate
-                      : "NO PUBLISH DATE"}
-                  </h4>
-                </div>
-              )}
-            </div>
-          </li>
-        ))}
-      </ul>
+      {adminCtx?.modelType == AdminModel.PROJECT && (
+        <>
+          {adminCtx?.formType == AdminForm.CREATE && <p>Project Create</p>}
+          {adminCtx?.formType == AdminForm.LIST && <p>Project List</p>}
+          {adminCtx?.formType == AdminForm.UPDATE && <p>Project Update</p>}
+        </>
+      )}
     </>
   );
 };
