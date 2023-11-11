@@ -51,8 +51,9 @@ const BlogPage = ({
   };
 
   const setFeaturedModel = (model: Blog) => {
-    featuredMode = true;
-    setBlogPosts([model]);
+    console.log("setFeaturedModel", model);
+    // featuredMode = true;
+    // setBlogPosts([model]);
     //setCurrYear(model.publishDate!.split("-")[0]);
   };
 
