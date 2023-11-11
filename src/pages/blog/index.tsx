@@ -40,9 +40,9 @@ const BlogPage = ({
   };
 
   const yearSelection = (selectedYear: string) => {
-    setBlogPosts([]);
     setCurrYear(selectedYear);
     setPageNum(0);
+    setBlogPosts([]);
   };
 
   const onSetFeaturedModel = (model: Blog) => {
@@ -97,7 +97,7 @@ const BlogPage = ({
       />
       {featuredBlogs && (
         <div className={styles.featuredPosts}>
-          <Title>FEATURED POSTS:</Title>
+          <Title>FEATURED POSTS</Title>
           <div className={styles.postButtons}>
             {featuredBlogs.map((blog, index) => (
               <FeaturedPostButton
