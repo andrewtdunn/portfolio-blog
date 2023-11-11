@@ -11,12 +11,13 @@ import Title from "../../../components/utils/title";
 
 const START_YEAR = "2008";
 
-const BlogPage = ({ blog }: { blog: Blog; year: string }) => {
+const BlogPage = ({ blog, year }: { blog?: Blog; year?: string }) => {
   return (
     <div className={styles.Blog}>
       <Head>
         <title>⚡︎ ATD | Blog</title>
-        {blog.title && <meta name="description" content={blog.title} />}
+
+        {blog && blog.title && <meta name="description" content={blog.title} />}
       </Head>
       <Header
         includeBanner={false}
@@ -39,7 +40,6 @@ const BlogPage = ({ blog }: { blog: Blog; year: string }) => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const blogid = context.params!.blogid as string;
-  console.log("blogid", blogid);
   const model = await DataStore.query(Blog, blogid);
 
   if (model?.status == ItemStatus.INACTIVE) {

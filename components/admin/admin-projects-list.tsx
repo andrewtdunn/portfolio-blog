@@ -60,34 +60,34 @@ const AdminProjectList = ({
   };
 
   const handleNextPage = () => {
-    console.log("handleNextPage");
+    //console.log("handleNextPage");
     setCurrentPageIndex(currentPageIndex + 1);
   };
 
   const handlePreviousPage = () => {
-    console.log("handlePreviousPage");
+    //console.log("handlePreviousPage");
     setCurrentPageIndex(currentPageIndex - 1);
   };
 
   const handleOnChange = (newPageIndex: any, prevPageIndex: any) => {
-    console.log(
-      `handleOnChange \n - newPageIndex: ${newPageIndex} \n - prevPageIndex: ${prevPageIndex}`
-    );
+    // console.log(
+    //   `handleOnChange \n - newPageIndex: ${newPageIndex} \n - prevPageIndex: ${prevPageIndex}`
+    // );
     setCurrentPageIndex(newPageIndex - 1);
     getPage();
   };
 
   useEffect(() => {
     const getModels = async () => {
-      console.log("getModels ... ");
+      //console.log("getModels ... ");
       //const models = await DataStore.query(Project);
 
       const models = await DataStore.query(Project);
-      console.log("models", models);
+      //console.log("models", models);
 
-      console.log(`there are ${models.length} models`);
+      //console.log(`there are ${models.length} models`);
       setNumPage(Math.ceil(models.length / PAGELIMIT));
-      console.log(`there are ${numPages} pages`);
+      //console.log(`there are ${numPages} pages`);
       getPage();
     };
     getModels();
