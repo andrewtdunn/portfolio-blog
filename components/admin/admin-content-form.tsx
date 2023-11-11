@@ -102,7 +102,7 @@ const AdminContentForm = () => {
         )
       ) : isAdmin && adminCtx?.modelType == AdminModel.STORAGE ? (
         <StorageList />
-      ) : isAdmin && adminCtx?.modelType == AdminModel.PROJECT ? (
+      ) : adminCtx?.modelType == AdminModel.PROJECT ? (
         <AdminProjectList isAdmin={isAdmin} />
       ) : (
         <AdminBlogsList isAdmin={isAdmin} />
