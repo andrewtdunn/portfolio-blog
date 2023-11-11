@@ -53,14 +53,10 @@ const BlogPage = ({
   const setFeaturedModel = (model: Blog) => {
     featuredMode = true;
     setBlogPosts([model]);
-    setPageNum(0);
-    setCurrYear(model.publishDate!.split("-")[0]);
+    //setCurrYear(model.publishDate!.split("-")[0]);
   };
 
   useEffect(() => {
-    if (featuredMode) {
-      return;
-    }
     const getModels = async () => {
       console.log("query - ", currYear, pageNum);
       const models = await DataStore.query(
@@ -88,7 +84,12 @@ const BlogPage = ({
         setCurrYear((prev) => (parseInt(prev) - 1).toString());
         setPageNum(0);
       }
-      setBlogPosts((prev) => [...prev, ...models]);
+      if (featuredMode) {
+        setBlogPosts(models);
+        featuredMode = false;
+      } else {
+        setBlogPosts((prev) => [...prev, ...models]);
+      }
     };
     getModels();
   }, [pageNum, currYear]);
