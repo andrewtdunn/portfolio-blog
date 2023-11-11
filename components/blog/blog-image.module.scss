@@ -44,6 +44,16 @@
     &.actual {
       width: auto;
       height: auto;
+      display: block;
+      margin: 0 auto;
+      margin-bottom: 10px;
+      max-width: 100%;
+      &.left {
+        padding-right: 10px;
+      }
+      &.right {
+        padding-left: 10px;
+      }
     }
 
     &.half {
