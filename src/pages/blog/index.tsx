@@ -17,6 +17,11 @@ import Title from "../../../components/utils/title";
 const PAGE_LENGTH = 5;
 const START_YEAR = "2008";
 
+type YearPageType = {
+  year: number;
+  page: number;
+};
+
 const BlogPage = ({
   blogs,
   featuredBlogs,
@@ -27,23 +32,21 @@ const BlogPage = ({
   year: string;
 }) => {
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
-  const [pageNum, setPageNum] = useState<number>(1);
-  const [currYear, setCurrYear] = useState<string>(year);
   const [featuredModel, setFeaturedModel] = useState<Blog | null>(null);
 
-  //const currYearRef = useRef(currYear);
-  const prevYearRef = useRef<string>(currYear);
-  const currYearRef = useRef<string>(currYear);
+  const [yearPage, setYearPage] = useState<YearPageType>({
+    year: parseInt(year),
+    page: 0,
+  });
 
   const fetchNextPage = async () => {
-    setPageNum((prev) => prev + 1);
+    setYearPage((prev) => ({ ...prev, page: prev.page + 1 }));
   };
 
   const yearSelection = (selectedYear: string) => {
     setFeaturedModel(null);
     setBlogPosts([]);
-    setCurrYear(selectedYear);
-    setPageNum(0);
+    setYearPage({ year: parseInt(selectedYear), page: 0 });
   };
 
   const onSetFeaturedModel = (model: Blog) => {
@@ -58,26 +61,23 @@ const BlogPage = ({
         (c) =>
           c.and((c) => [
             c.status!.eq(ItemStatus.ACTIVE),
-            c.publishDate.contains(currYear),
+            c.publishDate.contains(yearPage.year.toString()),
           ]),
         {
           sort: (s) => s.publishDate("DESCENDING"),
-          page: pageNum,
+          page: yearPage.page,
           limit: PAGE_LENGTH,
         }
       );
 
-      prevYearRef.current = currYearRef.current.valueOf();
-
       if (models.length == 0) {
-        setCurrYear((prev) => (parseInt(prev) - 1).toString());
-        setPageNum(0);
+        setYearPage((prev) => ({ year: prev.year - 1, page: 0 }));
       }
 
       setBlogPosts((prev) => [...prev, ...models]);
     };
     getModels();
-  }, [pageNum, currYear]);
+  }, [yearPage]);
 
   return (
     <div className={styles.Blog}>
@@ -93,7 +93,7 @@ const BlogPage = ({
       <YearFilter
         startYear={START_YEAR}
         endYear={year}
-        currYear={currYear}
+        currYear={yearPage.year.toString()}
         callback={yearSelection}
       />
       {featuredBlogs && (
@@ -119,7 +119,7 @@ const BlogPage = ({
             <InfiniteScroll
               dataLength={blogPosts.length} //This is important field to render the next data
               next={fetchNextPage}
-              hasMore={parseInt(currYear) > 2007}
+              hasMore={yearPage.year > parseInt(START_YEAR) - 1}
               scrollableTarget="blogHolder"
               loader={
                 <h4
