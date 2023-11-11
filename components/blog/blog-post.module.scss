@@ -4,6 +4,8 @@
   @include rolling-stone-post;
   font-size: 14px;
   transition: opacity 0.25s ease-in;
+  max-width: 100%;
+  overflow: hidden;
 
   .backLink {
     color: darkgreen;
