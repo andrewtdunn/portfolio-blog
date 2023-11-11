@@ -17,8 +17,6 @@ import Title from "../../../components/utils/title";
 const PAGE_LENGTH = 5;
 const START_YEAR = "2008";
 
-let featuredMode = false;
-
 const BlogPage = ({
   blogs,
   featuredBlogs,
@@ -31,35 +29,29 @@ const BlogPage = ({
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
   const [pageNum, setPageNum] = useState<number>(1);
   const [currYear, setCurrYear] = useState<string>(year);
+  const [featuredModel, setFeaturedModel] = useState<Blog | null>(null);
 
   //const currYearRef = useRef(currYear);
   const prevYearRef = useRef<string>(currYear);
   const currYearRef = useRef<string>(currYear);
 
-  const featuredModeRef = useRef(featuredMode);
-
   const fetchNextPage = async () => {
-    featuredMode = false;
     setPageNum((prev) => prev + 1);
   };
 
   const yearSelection = (selectedYear: string) => {
-    console.log("yearSelection", selectedYear);
-    featuredMode = false;
     setBlogPosts([]);
     setCurrYear(selectedYear);
+    setPageNum(0);
   };
 
-  const setFeaturedModel = (model: Blog) => {
+  const onSetFeaturedModel = (model: Blog) => {
     console.log("setFeaturedModel", model);
-    // featuredMode = true;
-    // setBlogPosts([model]);
-    //setCurrYear(model.publishDate!.split("-")[0]);
+    setFeaturedModel(model);
   };
 
   useEffect(() => {
     const getModels = async () => {
-      console.log("query - ", currYear, pageNum);
       const models = await DataStore.query(
         Blog,
         (c) =>
@@ -73,11 +65,6 @@ const BlogPage = ({
           limit: PAGE_LENGTH,
         }
       );
-      console.log(
-        `PrevYear: ${prevYearRef.current.valueOf()} - CurrYear: ${currYear}  Models Requested: ${PAGE_LENGTH} - Models Received ${
-          models.length
-        } - pageNum: ${pageNum}`
-      );
 
       prevYearRef.current = currYearRef.current.valueOf();
 
@@ -85,12 +72,8 @@ const BlogPage = ({
         setCurrYear((prev) => (parseInt(prev) - 1).toString());
         setPageNum(0);
       }
-      if (featuredMode) {
-        setBlogPosts(models);
-        featuredMode = false;
-      } else {
-        setBlogPosts((prev) => [...prev, ...models]);
-      }
+
+      setBlogPosts((prev) => [...prev, ...models]);
     };
     getModels();
   }, [pageNum, currYear]);
@@ -114,13 +97,13 @@ const BlogPage = ({
       />
       {featuredBlogs && (
         <div className={styles.featuredPosts}>
-          <Title>FEATURED POSTS</Title>
+          <Title>FEATURED POSTS:</Title>
           <div className={styles.postButtons}>
             {featuredBlogs.map((blog, index) => (
               <FeaturedPostButton
                 key={index}
                 model={blog}
-                callback={setFeaturedModel}
+                callback={onSetFeaturedModel}
               />
             ))}
           </div>
@@ -132,7 +115,7 @@ const BlogPage = ({
           <InfiniteScroll
             dataLength={blogPosts.length} //This is important field to render the next data
             next={fetchNextPage}
-            hasMore={parseInt(currYear) > 2007 && !featuredMode}
+            hasMore={parseInt(currYear) > 2007}
             scrollableTarget="blogHolder"
             loader={
               <h4
@@ -154,12 +137,10 @@ const BlogPage = ({
                   paddingBottom: "200px",
                   color: "rgb(200,200,200)",
                   fontSize: "1.4em",
-                  cursor: "pointer",
                 }}
                 className={albertusFont.className}
-                onClick={() => yearSelection(year)}
               >
-                see all posts
+                That&apos;s All Folks!!
               </p>
             }
           >
