@@ -17,6 +17,8 @@ import Title from "../../../components/utils/title";
 const PAGE_LENGTH = 5;
 const START_YEAR = "2008";
 
+let featuredMode = false;
+
 const BlogPage = ({
   blogs,
   featuredBlogs,
@@ -29,30 +31,33 @@ const BlogPage = ({
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
   const [pageNum, setPageNum] = useState<number>(1);
   const [currYear, setCurrYear] = useState<string>(year);
-  const [featuredMode, setFeaturedMode] = useState<boolean>(false);
 
   //const currYearRef = useRef(currYear);
   const prevYearRef = useRef<string>(currYear);
   const currYearRef = useRef<string>(currYear);
 
+  const featuredModeRef = useRef(featuredMode);
+
   const fetchNextPage = async () => {
     // console.log(
     //   `fetchPageNum prev: ${prevYearRef.current.valueOf()} curr: ${currYear}`
     // );
-
+    featuredMode = false;
     setPageNum((prev) => prev + 1);
   };
 
-  const yearSelection = (year: string) => {
-    //console.log("yearSelection", year);
-    setFeaturedMode(false);
-    setCurrYear(year);
-    setPageNum(0);
+  const yearSelection = (selectedYear: string) => {
+    console.log("yearSelection", selectedYear);
+    featuredMode = false;
     setBlogPosts([]);
+    setPageNum(0);
+    // featuredModeRef.current = false;
+    // pageNumRef.current = 0;
+    setCurrYear(selectedYear);
   };
 
   const setFeaturedModel = (model: Blog) => {
-    setFeaturedMode(true);
+    featuredMode = true;
     setBlogPosts([model]);
     setPageNum(0);
     setCurrYear(model.publishDate!.split("-")[0]);
@@ -63,7 +68,7 @@ const BlogPage = ({
       return;
     }
     const getModels = async () => {
-      //console.log("query - ", currYear, pageNum);
+      console.log("query - ", currYear, pageNum);
       const models = await DataStore.query(
         Blog,
         (c) =>
@@ -77,11 +82,11 @@ const BlogPage = ({
           limit: PAGE_LENGTH,
         }
       );
-      // console.log(
-      //   `PrevYear: ${prevYearRef.current.valueOf()} - CurrYear: ${currYear}  Models Requested: ${PAGE_LENGTH} - Models Received ${
-      //     models.length
-      //   } - pageNum: ${pageNum}`
-      // );
+      console.log(
+        `PrevYear: ${prevYearRef.current.valueOf()} - CurrYear: ${currYear}  Models Requested: ${PAGE_LENGTH} - Models Received ${
+          models.length
+        } - pageNum: ${pageNum}`
+      );
 
       prevYearRef.current = currYearRef.current.valueOf();
 
@@ -89,11 +94,10 @@ const BlogPage = ({
         setCurrYear((prev) => (parseInt(prev) - 1).toString());
         setPageNum(0);
       }
-
       setBlogPosts((prev) => [...prev, ...models]);
     };
     getModels();
-  }, [pageNum, currYear, featuredMode]);
+  }, [pageNum, currYear]);
 
   return (
     <div className={styles.Blog}>
@@ -157,10 +161,7 @@ const BlogPage = ({
                   cursor: "pointer",
                 }}
                 className={albertusFont.className}
-                onClick={() => {
-                  setFeaturedMode(() => false);
-                  setCurrYear(year);
-                }}
+                onClick={() => yearSelection(year)}
               >
                 see all posts
               </p>
