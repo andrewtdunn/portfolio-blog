@@ -10,7 +10,7 @@
   width: 300px;
   border: 2px solid $offwhite;
   border-radius: 5px;
-  padding: 2px 5px;
+  padding: 5px 5px;
   background-color: rgba(255, 255, 255, 0.2);
 
   @include for-phone-only {
@@ -24,12 +24,12 @@
 
   h1 {
     color: $offwhite;
-    font-size: 1.5em;
+    font-size: 1.1em;
   }
 
   .buttonImage {
-    object-fit: contain;
-    width: 100px;
-    height: 100px;
+    object-fit: cover;
+    width: 80px;
+    height: 80px;
   }
 }
