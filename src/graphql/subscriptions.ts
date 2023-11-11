@@ -8,6 +8,138 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
+export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
+  $filter: ModelSubscriptionCommentFilterInput
+  $owner: String
+) {
+  onCreateComment(filter: $filter, owner: $owner) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnCreateCommentSubscriptionVariables,
+  APITypes.OnCreateCommentSubscription
+>;
+export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
+  $filter: ModelSubscriptionCommentFilterInput
+  $owner: String
+) {
+  onUpdateComment(filter: $filter, owner: $owner) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnUpdateCommentSubscriptionVariables,
+  APITypes.OnUpdateCommentSubscription
+>;
+export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
+  $filter: ModelSubscriptionCommentFilterInput
+  $owner: String
+) {
+  onDeleteComment(filter: $filter, owner: $owner) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedSubscription<
+  APITypes.OnDeleteCommentSubscriptionVariables,
+  APITypes.OnDeleteCommentSubscription
+>;
 export const onCreateBadReception = /* GraphQL */ `subscription OnCreateBadReception(
   $filter: ModelSubscriptionBadReceptionFilterInput
 ) {
@@ -155,6 +287,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog($filter: Mo
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version
@@ -182,6 +315,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog($filter: Mo
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version
@@ -209,6 +343,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog($filter: Mo
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version

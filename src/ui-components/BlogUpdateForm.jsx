@@ -50,6 +50,7 @@ export default function BlogUpdateForm(props) {
     videoId: "",
     status: "",
     imported_mysql_id: "",
+    featured: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [text, setText] = React.useState(initialValues.text);
@@ -71,6 +72,7 @@ export default function BlogUpdateForm(props) {
   const [imported_mysql_id, setImported_mysql_id] = React.useState(
     initialValues.imported_mysql_id
   );
+  const [featured, setFeatured] = React.useState(initialValues.featured);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = blogRecord
@@ -88,6 +90,7 @@ export default function BlogUpdateForm(props) {
     setVideoId(cleanValues.videoId);
     setStatus(cleanValues.status);
     setImported_mysql_id(cleanValues.imported_mysql_id);
+    setFeatured(cleanValues.featured);
     setErrors({});
   };
   const [blogRecord, setBlogRecord] = React.useState(blogModelProp);
@@ -114,6 +117,7 @@ export default function BlogUpdateForm(props) {
     videoId: [],
     status: [{ type: "Required" }],
     imported_mysql_id: [],
+    featured: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -153,6 +157,7 @@ export default function BlogUpdateForm(props) {
           videoId,
           status,
           imported_mysql_id,
+          featured,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -220,6 +225,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -255,6 +261,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -296,6 +303,7 @@ export default function BlogUpdateForm(props) {
                     videoId,
                     status,
                     imported_mysql_id,
+                    featured,
                   };
                   const result = onChange(modelFields);
                   value = result?.image ?? value;
@@ -320,6 +328,7 @@ export default function BlogUpdateForm(props) {
                     videoId,
                     status,
                     imported_mysql_id,
+                    featured,
                   };
                   const result = onChange(modelFields);
                   value = result?.image ?? value;
@@ -358,6 +367,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.heroAlignment ?? value;
@@ -414,6 +424,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.heroSize ?? value;
@@ -470,6 +481,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.isTwoColumn ?? value;
@@ -505,6 +517,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.dropCap ?? value;
@@ -541,6 +554,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.publishDate ?? value;
@@ -582,6 +596,7 @@ export default function BlogUpdateForm(props) {
                     videoId,
                     status,
                     imported_mysql_id,
+                    featured,
                   };
                   const result = onChange(modelFields);
                   value = result?.slides ?? value;
@@ -606,6 +621,7 @@ export default function BlogUpdateForm(props) {
                     videoId,
                     status,
                     imported_mysql_id,
+                    featured,
                   };
                   const result = onChange(modelFields);
                   value = result?.slides ?? value;
@@ -643,6 +659,7 @@ export default function BlogUpdateForm(props) {
               videoId: value,
               status,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.videoId ?? value;
@@ -678,6 +695,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status: value,
               imported_mysql_id,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -724,6 +742,7 @@ export default function BlogUpdateForm(props) {
               videoId,
               status,
               imported_mysql_id: value,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.imported_mysql_id ?? value;
@@ -740,6 +759,53 @@ export default function BlogUpdateForm(props) {
         hasError={errors.imported_mysql_id?.hasError}
         {...getOverrideProps(overrides, "imported_mysql_id")}
       ></TextField>
+      <SelectField
+        label="Featured"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={featured}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              text,
+              image,
+              heroAlignment,
+              heroSize,
+              isTwoColumn,
+              dropCap,
+              publishDate,
+              slides,
+              videoId,
+              status,
+              imported_mysql_id,
+              featured: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.featured ?? value;
+          }
+          if (errors.featured?.hasError) {
+            runValidationTasks("featured", value);
+          }
+          setFeatured(value);
+        }}
+        onBlur={() => runValidationTasks("featured", featured)}
+        errorMessage={errors.featured?.errorMessage}
+        hasError={errors.featured?.hasError}
+        {...getOverrideProps(overrides, "featured")}
+      >
+        <option
+          children="Featured"
+          value="FEATURED"
+          {...getOverrideProps(overrides, "featuredoption0")}
+        ></option>
+        <option
+          children="Normal"
+          value="NORMAL"
+          {...getOverrideProps(overrides, "featuredoption1")}
+        ></option>
+      </SelectField>
       <Flex
         justifyContent="space-between"
         {...getOverrideProps(overrides, "CTAFlex")}

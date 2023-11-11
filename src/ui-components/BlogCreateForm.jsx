@@ -48,6 +48,7 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: "",
     status: "",
+    featured: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [text, setText] = React.useState(initialValues.text);
@@ -66,6 +67,7 @@ export default function BlogCreateForm(props) {
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [videoId, setVideoId] = React.useState(initialValues.videoId);
   const [status, setStatus] = React.useState(initialValues.status);
+  const [featured, setFeatured] = React.useState(initialValues.featured);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -79,6 +81,7 @@ export default function BlogCreateForm(props) {
     setSlides(initialValues.slides);
     setVideoId(initialValues.videoId);
     setStatus(initialValues.status);
+    setFeatured(initialValues.featured);
     setErrors({});
   };
   const validations = {
@@ -93,6 +96,7 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: [],
     status: [{ type: "Required" }],
+    featured: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -131,6 +135,7 @@ export default function BlogCreateForm(props) {
           slides,
           videoId,
           status,
+          featured,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -196,6 +201,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -229,6 +235,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -267,6 +274,7 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
+                  featured,
                 };
                 const result = onChange(modelFields);
                 value = result?.image ?? value;
@@ -290,6 +298,7 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
+                  featured,
                 };
                 const result = onChange(modelFields);
                 value = result?.image ?? value;
@@ -303,6 +312,7 @@ export default function BlogCreateForm(props) {
           isResumable={false}
           showThumbnails={true}
           maxFileCount={1}
+          maxSize={1000000000}
           {...getOverrideProps(overrides, "image")}
         ></StorageManager>
       </Field>
@@ -326,6 +336,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.heroAlignment ?? value;
@@ -381,6 +392,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.heroSize ?? value;
@@ -436,6 +448,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.isTwoColumn ?? value;
@@ -470,6 +483,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.dropCap ?? value;
@@ -505,6 +519,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.publishDate ?? value;
@@ -543,6 +558,7 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
+                  featured,
                 };
                 const result = onChange(modelFields);
                 value = result?.slides ?? value;
@@ -566,6 +582,7 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
+                  featured,
                 };
                 const result = onChange(modelFields);
                 value = result?.slides ?? value;
@@ -578,7 +595,8 @@ export default function BlogCreateForm(props) {
           acceptedFileTypes={[]}
           isResumable={false}
           showThumbnails={true}
-          maxFileCount={1}
+          maxFileCount={10}
+          maxSize={1000000000}
           {...getOverrideProps(overrides, "slides")}
         ></StorageManager>
       </Field>
@@ -602,6 +620,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId: value,
               status,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.videoId ?? value;
@@ -636,6 +655,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status: value,
+              featured,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -659,6 +679,52 @@ export default function BlogCreateForm(props) {
           children="Inactive"
           value="INACTIVE"
           {...getOverrideProps(overrides, "statusoption1")}
+        ></option>
+      </SelectField>
+      <SelectField
+        label="Featured"
+        placeholder="Please select an option"
+        isDisabled={false}
+        value={featured}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              text,
+              image,
+              heroAlignment,
+              heroSize,
+              isTwoColumn,
+              dropCap,
+              publishDate,
+              slides,
+              videoId,
+              status,
+              featured: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.featured ?? value;
+          }
+          if (errors.featured?.hasError) {
+            runValidationTasks("featured", value);
+          }
+          setFeatured(value);
+        }}
+        onBlur={() => runValidationTasks("featured", featured)}
+        errorMessage={errors.featured?.errorMessage}
+        hasError={errors.featured?.hasError}
+        {...getOverrideProps(overrides, "featured")}
+      >
+        <option
+          children="Featured"
+          value="FEATURED"
+          {...getOverrideProps(overrides, "featuredoption0")}
+        ></option>
+        <option
+          children="Normal"
+          value="NORMAL"
+          {...getOverrideProps(overrides, "featuredoption1")}
         ></option>
       </SelectField>
       <Flex

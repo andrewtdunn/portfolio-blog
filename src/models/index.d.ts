@@ -7,6 +7,11 @@ export enum ItemStatus {
   INACTIVE = "INACTIVE"
 }
 
+export enum FeaturedStatus {
+  FEATURED = "FEATURED",
+  NORMAL = "NORMAL"
+}
+
 export enum HeroAlignment {
   TOP = "TOP",
   BOTTOM = "BOTTOM",
@@ -151,6 +156,7 @@ type EagerBlog = {
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly imported_mysql_id?: string | null;
+  readonly featured?: FeaturedStatus | keyof typeof FeaturedStatus | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -173,6 +179,7 @@ type LazyBlog = {
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly imported_mysql_id?: string | null;
+  readonly featured?: FeaturedStatus | keyof typeof FeaturedStatus | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

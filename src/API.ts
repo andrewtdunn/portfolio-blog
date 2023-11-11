@@ -2,18 +2,22 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateBadReceptionInput = {
+export type CreateCommentInput = {
   id?: string | null,
-  url?: string | null,
+  user?: string | null,
+  comment?: string | null,
   _version?: number | null,
+  commentBlogId?: string | null,
 };
 
-export type ModelBadReceptionConditionInput = {
-  url?: ModelStringInput | null,
-  and?: Array< ModelBadReceptionConditionInput | null > | null,
-  or?: Array< ModelBadReceptionConditionInput | null > | null,
-  not?: ModelBadReceptionConditionInput | null,
+export type ModelCommentConditionInput = {
+  user?: ModelStringInput | null,
+  comment?: ModelStringInput | null,
+  and?: Array< ModelCommentConditionInput | null > | null,
+  or?: Array< ModelCommentConditionInput | null > | null,
+  not?: ModelCommentConditionInput | null,
   _deleted?: ModelBooleanInput | null,
+  commentBlogId?: ModelIDInput | null,
 };
 
 export type ModelStringInput = {
@@ -63,6 +67,115 @@ export type ModelBooleanInput = {
   attributeType?: ModelAttributeTypes | null,
 };
 
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type Comment = {
+  __typename: "Comment",
+  id: string,
+  user?: string | null,
+  comment?: string | null,
+  Blog?: Blog | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+  commentBlogId?: string | null,
+  owner?: string | null,
+};
+
+export type Blog = {
+  __typename: "Blog",
+  id: string,
+  title?: string | null,
+  text?: string | null,
+  image?: string | null,
+  heroAlignment?: HeroAlignment | null,
+  heroSize?: HeroSize | null,
+  isTwoColumn?: boolean | null,
+  dropCap?: boolean | null,
+  publishDate?: string | null,
+  slides?: Array< string | null > | null,
+  videoId?: string | null,
+  status: ItemStatus,
+  imported_mysql_id?: string | null,
+  featured?: FeaturedStatus | null,
+  createdAt: string,
+  updatedAt: string,
+  _version: number,
+  _deleted?: boolean | null,
+  _lastChangedAt: number,
+};
+
+export enum HeroAlignment {
+  TOP = "TOP",
+  BOTTOM = "BOTTOM",
+  LEFT = "LEFT",
+  RIGHT = "RIGHT",
+}
+
+
+export enum HeroSize {
+  THUMB = "THUMB",
+  FULL = "FULL",
+  ACTUA = "ACTUA",
+  HALF = "HALF",
+}
+
+
+export enum ItemStatus {
+  ACTIVE = "ACTIVE",
+  INACTIVE = "INACTIVE",
+}
+
+
+export enum FeaturedStatus {
+  FEATURED = "FEATURED",
+  NORMAL = "NORMAL",
+}
+
+
+export type UpdateCommentInput = {
+  id: string,
+  user?: string | null,
+  comment?: string | null,
+  _version?: number | null,
+  commentBlogId?: string | null,
+};
+
+export type DeleteCommentInput = {
+  id: string,
+  _version?: number | null,
+};
+
+export type CreateBadReceptionInput = {
+  id?: string | null,
+  url?: string | null,
+  _version?: number | null,
+};
+
+export type ModelBadReceptionConditionInput = {
+  url?: ModelStringInput | null,
+  and?: Array< ModelBadReceptionConditionInput | null > | null,
+  or?: Array< ModelBadReceptionConditionInput | null > | null,
+  not?: ModelBadReceptionConditionInput | null,
+  _deleted?: ModelBooleanInput | null,
+};
+
 export type BadReception = {
   __typename: "BadReception",
   id: string,
@@ -100,12 +213,6 @@ export type CreateProjectInput = {
   status: ItemStatus,
   _version?: number | null,
 };
-
-export enum ItemStatus {
-  ACTIVE = "ACTIVE",
-  INACTIVE = "INACTIVE",
-}
-
 
 export type ModelProjectConditionInput = {
   title?: ModelStringInput | null,
@@ -186,24 +293,9 @@ export type CreateBlogInput = {
   videoId?: string | null,
   status: ItemStatus,
   imported_mysql_id?: string | null,
+  featured?: FeaturedStatus | null,
   _version?: number | null,
 };
-
-export enum HeroAlignment {
-  TOP = "TOP",
-  BOTTOM = "BOTTOM",
-  LEFT = "LEFT",
-  RIGHT = "RIGHT",
-}
-
-
-export enum HeroSize {
-  THUMB = "THUMB",
-  FULL = "FULL",
-  ACTUA = "ACTUA",
-  HALF = "HALF",
-}
-
 
 export type ModelBlogConditionInput = {
   title?: ModelStringInput | null,
@@ -218,6 +310,7 @@ export type ModelBlogConditionInput = {
   videoId?: ModelStringInput | null,
   status?: ModelItemStatusInput | null,
   imported_mysql_id?: ModelStringInput | null,
+  featured?: ModelFeaturedStatusInput | null,
   and?: Array< ModelBlogConditionInput | null > | null,
   or?: Array< ModelBlogConditionInput | null > | null,
   not?: ModelBlogConditionInput | null,
@@ -234,26 +327,9 @@ export type ModelHeroSizeInput = {
   ne?: HeroSize | null,
 };
 
-export type Blog = {
-  __typename: "Blog",
-  id: string,
-  title?: string | null,
-  text?: string | null,
-  image?: string | null,
-  heroAlignment?: HeroAlignment | null,
-  heroSize?: HeroSize | null,
-  isTwoColumn?: boolean | null,
-  dropCap?: boolean | null,
-  publishDate?: string | null,
-  slides?: Array< string | null > | null,
-  videoId?: string | null,
-  status: ItemStatus,
-  imported_mysql_id?: string | null,
-  createdAt: string,
-  updatedAt: string,
-  _version: number,
-  _deleted?: boolean | null,
-  _lastChangedAt: number,
+export type ModelFeaturedStatusInput = {
+  eq?: FeaturedStatus | null,
+  ne?: FeaturedStatus | null,
 };
 
 export type UpdateBlogInput = {
@@ -270,6 +346,7 @@ export type UpdateBlogInput = {
   videoId?: string | null,
   status?: ItemStatus | null,
   imported_mysql_id?: string | null,
+  featured?: FeaturedStatus | null,
   _version?: number | null,
 };
 
@@ -294,22 +371,6 @@ export type ModelAgencyConditionInput = {
   or?: Array< ModelAgencyConditionInput | null > | null,
   not?: ModelAgencyConditionInput | null,
   _deleted?: ModelBooleanInput | null,
-};
-
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
 };
 
 export type Agency = {
@@ -566,6 +627,24 @@ export type DeleteAWSCertificationInput = {
   _version?: number | null,
 };
 
+export type ModelCommentFilterInput = {
+  id?: ModelIDInput | null,
+  user?: ModelStringInput | null,
+  comment?: ModelStringInput | null,
+  and?: Array< ModelCommentFilterInput | null > | null,
+  or?: Array< ModelCommentFilterInput | null > | null,
+  not?: ModelCommentFilterInput | null,
+  _deleted?: ModelBooleanInput | null,
+  commentBlogId?: ModelIDInput | null,
+};
+
+export type ModelCommentConnection = {
+  __typename: "ModelCommentConnection",
+  items:  Array<Comment | null >,
+  nextToken?: string | null,
+  startedAt?: number | null,
+};
+
 export type ModelBadReceptionFilterInput = {
   id?: ModelIDInput | null,
   url?: ModelStringInput | null,
@@ -622,6 +701,7 @@ export type ModelBlogFilterInput = {
   videoId?: ModelStringInput | null,
   status?: ModelItemStatusInput | null,
   imported_mysql_id?: ModelStringInput | null,
+  featured?: ModelFeaturedStatusInput | null,
   and?: Array< ModelBlogFilterInput | null > | null,
   or?: Array< ModelBlogFilterInput | null > | null,
   not?: ModelBlogFilterInput | null,
@@ -708,11 +788,12 @@ export type ModelAWSCertificationFilterInput = {
   _deleted?: ModelBooleanInput | null,
 };
 
-export type ModelSubscriptionBadReceptionFilterInput = {
+export type ModelSubscriptionCommentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
-  url?: ModelSubscriptionStringInput | null,
-  and?: Array< ModelSubscriptionBadReceptionFilterInput | null > | null,
-  or?: Array< ModelSubscriptionBadReceptionFilterInput | null > | null,
+  user?: ModelSubscriptionStringInput | null,
+  comment?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
+  or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
 };
 
@@ -744,6 +825,14 @@ export type ModelSubscriptionStringInput = {
   beginsWith?: string | null,
   in?: Array< string | null > | null,
   notIn?: Array< string | null > | null,
+};
+
+export type ModelSubscriptionBadReceptionFilterInput = {
+  id?: ModelSubscriptionIDInput | null,
+  url?: ModelSubscriptionStringInput | null,
+  and?: Array< ModelSubscriptionBadReceptionFilterInput | null > | null,
+  or?: Array< ModelSubscriptionBadReceptionFilterInput | null > | null,
+  _deleted?: ModelBooleanInput | null,
 };
 
 export type ModelSubscriptionProjectFilterInput = {
@@ -778,6 +867,7 @@ export type ModelSubscriptionBlogFilterInput = {
   videoId?: ModelSubscriptionStringInput | null,
   status?: ModelSubscriptionStringInput | null,
   imported_mysql_id?: ModelSubscriptionStringInput | null,
+  featured?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   or?: Array< ModelSubscriptionBlogFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
@@ -841,6 +931,135 @@ export type ModelSubscriptionAWSCertificationFilterInput = {
   and?: Array< ModelSubscriptionAWSCertificationFilterInput | null > | null,
   or?: Array< ModelSubscriptionAWSCertificationFilterInput | null > | null,
   _deleted?: ModelBooleanInput | null,
+};
+
+export type CreateCommentMutationVariables = {
+  input: CreateCommentInput,
+  condition?: ModelCommentConditionInput | null,
+};
+
+export type CreateCommentMutation = {
+  createComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateCommentMutationVariables = {
+  input: UpdateCommentInput,
+  condition?: ModelCommentConditionInput | null,
+};
+
+export type UpdateCommentMutation = {
+  updateComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteCommentMutationVariables = {
+  input: DeleteCommentInput,
+  condition?: ModelCommentConditionInput | null,
+};
+
+export type DeleteCommentMutation = {
+  deleteComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
 };
 
 export type CreateBadReceptionMutationVariables = {
@@ -1002,6 +1221,7 @@ export type CreateBlogMutation = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1031,6 +1251,7 @@ export type UpdateBlogMutation = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1060,6 +1281,7 @@ export type DeleteBlogMutation = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1443,6 +1665,103 @@ export type DeleteAWSCertificationMutation = {
   } | null,
 };
 
+export type GetCommentQueryVariables = {
+  id: string,
+};
+
+export type GetCommentQuery = {
+  getComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListCommentsQueryVariables = {
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCommentsQuery = {
+  listComments?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      user?: string | null,
+      comment?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      commentBlogId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
+export type SyncCommentsQueryVariables = {
+  filter?: ModelCommentFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  lastSync?: number | null,
+};
+
+export type SyncCommentsQuery = {
+  syncComments?:  {
+    __typename: "ModelCommentConnection",
+    items:  Array< {
+      __typename: "Comment",
+      id: string,
+      user?: string | null,
+      comment?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+      commentBlogId?: string | null,
+      owner?: string | null,
+    } | null >,
+    nextToken?: string | null,
+    startedAt?: number | null,
+  } | null,
+};
+
 export type GetBadReceptionQueryVariables = {
   id: string,
 };
@@ -1625,6 +1944,7 @@ export type GetBlogQuery = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -1657,6 +1977,7 @@ export type ListBlogsQuery = {
       videoId?: string | null,
       status: ItemStatus,
       imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -1693,6 +2014,7 @@ export type SyncBlogsQuery = {
       videoId?: string | null,
       status: ItemStatus,
       imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
       createdAt: string,
       updatedAt: string,
       _version: number,
@@ -2214,6 +2536,135 @@ export type AWSCertificationsByBioIDQuery = {
   } | null,
 };
 
+export type OnCreateCommentSubscriptionVariables = {
+  filter?: ModelSubscriptionCommentFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnCreateCommentSubscription = {
+  onCreateComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateCommentSubscriptionVariables = {
+  filter?: ModelSubscriptionCommentFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnUpdateCommentSubscription = {
+  onUpdateComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteCommentSubscriptionVariables = {
+  filter?: ModelSubscriptionCommentFilterInput | null,
+  owner?: string | null,
+};
+
+export type OnDeleteCommentSubscription = {
+  onDeleteComment?:  {
+    __typename: "Comment",
+    id: string,
+    user?: string | null,
+    comment?: string | null,
+    Blog?:  {
+      __typename: "Blog",
+      id: string,
+      title?: string | null,
+      text?: string | null,
+      image?: string | null,
+      heroAlignment?: HeroAlignment | null,
+      heroSize?: HeroSize | null,
+      isTwoColumn?: boolean | null,
+      dropCap?: boolean | null,
+      publishDate?: string | null,
+      slides?: Array< string | null > | null,
+      videoId?: string | null,
+      status: ItemStatus,
+      imported_mysql_id?: string | null,
+      featured?: FeaturedStatus | null,
+      createdAt: string,
+      updatedAt: string,
+      _version: number,
+      _deleted?: boolean | null,
+      _lastChangedAt: number,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    _version: number,
+    _deleted?: boolean | null,
+    _lastChangedAt: number,
+    commentBlogId?: string | null,
+    owner?: string | null,
+  } | null,
+};
+
 export type OnCreateBadReceptionSubscriptionVariables = {
   filter?: ModelSubscriptionBadReceptionFilterInput | null,
 };
@@ -2366,6 +2817,7 @@ export type OnCreateBlogSubscription = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2394,6 +2846,7 @@ export type OnUpdateBlogSubscription = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,
@@ -2422,6 +2875,7 @@ export type OnDeleteBlogSubscription = {
     videoId?: string | null,
     status: ItemStatus,
     imported_mysql_id?: string | null,
+    featured?: FeaturedStatus | null,
     createdAt: string,
     updatedAt: string,
     _version: number,

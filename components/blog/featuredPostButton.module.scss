@@ -1,0 +1,35 @@
+@import "../../styles/base";
+
+.FeaturedPostButton {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  z-index: 1000;
+  justify-content: left;
+  align-items: center;
+  width: 300px;
+  border: 2px solid $offwhite;
+  border-radius: 5px;
+  padding: 2px 5px;
+  background-color: rgba(255, 255, 255, 0.2);
+
+  @include for-phone-only {
+    display: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+    border: 2px solid $hot-pink;
+  }
+
+  h1 {
+    color: $offwhite;
+    font-size: 1.5em;
+  }
+
+  .buttonImage {
+    object-fit: contain;
+    width: 100px;
+    height: 100px;
+  }
+}

@@ -7,6 +7,11 @@ const ItemStatus = {
   "INACTIVE": "INACTIVE"
 };
 
+const FeaturedStatus = {
+  "FEATURED": "FEATURED",
+  "NORMAL": "NORMAL"
+};
+
 const HeroAlignment = {
   "TOP": "TOP",
   "BOTTOM": "BOTTOM",
@@ -34,6 +39,7 @@ export {
   Bio,
   AWSCertification,
   ItemStatus,
+  FeaturedStatus,
   HeroAlignment,
   HeroSize
 };

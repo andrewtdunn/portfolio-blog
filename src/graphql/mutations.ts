@@ -8,6 +8,138 @@ type GeneratedMutation<InputType, OutputType> = string & {
   __generatedMutationOutput: OutputType;
 };
 
+export const createComment = /* GraphQL */ `mutation CreateComment(
+  $input: CreateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  createComment(input: $input, condition: $condition) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.CreateCommentMutationVariables,
+  APITypes.CreateCommentMutation
+>;
+export const updateComment = /* GraphQL */ `mutation UpdateComment(
+  $input: UpdateCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  updateComment(input: $input, condition: $condition) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.UpdateCommentMutationVariables,
+  APITypes.UpdateCommentMutation
+>;
+export const deleteComment = /* GraphQL */ `mutation DeleteComment(
+  $input: DeleteCommentInput!
+  $condition: ModelCommentConditionInput
+) {
+  deleteComment(input: $input, condition: $condition) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedMutation<
+  APITypes.DeleteCommentMutationVariables,
+  APITypes.DeleteCommentMutation
+>;
 export const createBadReception = /* GraphQL */ `mutation CreateBadReception(
   $input: CreateBadReceptionInput!
   $condition: ModelBadReceptionConditionInput
@@ -170,6 +302,7 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version
@@ -200,6 +333,7 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version
@@ -230,6 +364,7 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version

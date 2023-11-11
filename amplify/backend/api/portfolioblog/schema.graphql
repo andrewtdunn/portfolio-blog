@@ -1,16 +1,46 @@
-type Comment @model @auth(rules: [{allow: public, operations: [read], provider: iam}, {allow: private, operations: [create, read], provider: iam}, {allow: owner}]) {
+type Comment
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      { allow: private, operations: [create, read], provider: iam }
+      { allow: owner }
+    ]
+  ) {
   id: ID!
   user: String
   comment: String
   Blog: Blog @hasOne
 }
 
-type BadReception @model @auth(rules: [{allow: public, operations: [read], provider: iam}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
+type BadReception
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   url: String
 }
 
-type Project @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: public, operations: [read], provider: iam}]) {
+type Project
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read], provider: iam }
+    ]
+  ) {
   id: ID!
   title: String!
   image: String!
@@ -30,7 +60,18 @@ enum ItemStatus {
   INACTIVE
 }
 
-type Blog @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: public, operations: [read], provider: iam}]) {
+type Blog
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read], provider: iam }
+    ]
+  ) {
   id: ID!
   title: String
   text: String
@@ -44,6 +85,12 @@ type Blog @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [r
   videoId: String
   status: ItemStatus!
   imported_mysql_id: String
+  featured: FeaturedStatus
+}
+
+enum FeaturedStatus {
+  FEATURED
+  NORMAL
 }
 
 enum HeroAlignment {
@@ -60,14 +107,36 @@ enum HeroSize {
   HALF
 }
 
-type Agency @model @auth(rules: [{allow: groups, groups: ["admin"], operations: [read, create, update, delete]}, {allow: public, operations: [read], provider: iam}]) {
+type Agency
+  @model
+  @auth(
+    rules: [
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+      { allow: public, operations: [read], provider: iam }
+    ]
+  ) {
   id: ID!
   name: String
   image: String
   bioID: ID! @index(name: "byBio")
 }
 
-type School @model @auth(rules: [{allow: public, operations: [read], provider: iam}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
+type School
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   degree: String
@@ -75,7 +144,18 @@ type School @model @auth(rules: [{allow: public, operations: [read], provider: i
   bioID: ID! @index(name: "byBio")
 }
 
-type MiscCertification @model @auth(rules: [{allow: public, operations: [read], provider: iam}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
+type MiscCertification
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String
   link: String
@@ -83,24 +163,47 @@ type MiscCertification @model @auth(rules: [{allow: public, operations: [read], 
   bioID: ID! @index(name: "byBio")
 }
 
-type Bio @model @auth(rules: [{allow: public, operations: [read], provider: iam}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
+type Bio
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   image: String
   intro: String!
   introClosing: String!
-  AWSCertifications: [AWSCertification] @hasMany(indexName: "byBio", fields: ["id"])
-  MiscCertifications: [MiscCertification] @hasMany(indexName: "byBio", fields: ["id"])
+  AWSCertifications: [AWSCertification]
+    @hasMany(indexName: "byBio", fields: ["id"])
+  MiscCertifications: [MiscCertification]
+    @hasMany(indexName: "byBio", fields: ["id"])
   Agencies: [Agency] @hasMany(indexName: "byBio", fields: ["id"])
   signatureImage: String
   mainUser: Boolean
   Schools: [School] @hasMany(indexName: "byBio", fields: ["id"])
 }
 
-type AWSCertification @model @auth(rules: [{allow: public, operations: [read], provider: iam}, {allow: groups, groups: ["admin"], operations: [read, create, update, delete]}]) {
+type AWSCertification
+  @model
+  @auth(
+    rules: [
+      { allow: public, operations: [read], provider: iam }
+      {
+        allow: groups
+        groups: ["admin"]
+        operations: [read, create, update, delete]
+      }
+    ]
+  ) {
   id: ID!
   name: String!
   link: String!
   image: String!
   bioID: ID! @index(name: "byBio")
 }
- 

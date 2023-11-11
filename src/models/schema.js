@@ -426,6 +426,15 @@ export const schema = {
                     "isRequired": false,
                     "attributes": []
                 },
+                "featured": {
+                    "name": "featured",
+                    "isArray": false,
+                    "type": {
+                        "enum": "FeaturedStatus"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -1049,6 +1058,13 @@ export const schema = {
                 "INACTIVE"
             ]
         },
+        "FeaturedStatus": {
+            "name": "FeaturedStatus",
+            "values": [
+                "FEATURED",
+                "NORMAL"
+            ]
+        },
         "HeroAlignment": {
             "name": "HeroAlignment",
             "values": [
@@ -1070,5 +1086,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "0965805119e46781d527148d6b5f6ad6"
+    "version": "132be9f6f362112cb43b7510916cc64a"
 };

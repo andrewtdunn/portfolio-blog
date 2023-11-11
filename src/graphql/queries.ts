@@ -8,6 +8,109 @@ type GeneratedQuery<InputType, OutputType> = string & {
   __generatedQueryOutput: OutputType;
 };
 
+export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    user
+    comment
+    Blog {
+      id
+      title
+      text
+      image
+      heroAlignment
+      heroSize
+      isTwoColumn
+      dropCap
+      publishDate
+      slides
+      videoId
+      status
+      imported_mysql_id
+      featured
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      __typename
+    }
+    createdAt
+    updatedAt
+    _version
+    _deleted
+    _lastChangedAt
+    commentBlogId
+    owner
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetCommentQueryVariables,
+  APITypes.GetCommentQuery
+>;
+export const listComments = /* GraphQL */ `query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      user
+      comment
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      commentBlogId
+      owner
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListCommentsQueryVariables,
+  APITypes.ListCommentsQuery
+>;
+export const syncComments = /* GraphQL */ `query SyncComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+  $lastSync: AWSTimestamp
+) {
+  syncComments(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+    lastSync: $lastSync
+  ) {
+    items {
+      id
+      user
+      comment
+      createdAt
+      updatedAt
+      _version
+      _deleted
+      _lastChangedAt
+      commentBlogId
+      owner
+      __typename
+    }
+    nextToken
+    startedAt
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.SyncCommentsQueryVariables,
+  APITypes.SyncCommentsQuery
+>;
 export const getBadReception = /* GraphQL */ `query GetBadReception($id: ID!) {
   getBadReception(id: $id) {
     id
@@ -197,6 +300,7 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
     videoId
     status
     imported_mysql_id
+    featured
     createdAt
     updatedAt
     _version
@@ -226,6 +330,7 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
       videoId
       status
       imported_mysql_id
+      featured
       createdAt
       updatedAt
       _version
@@ -265,6 +370,7 @@ export const syncBlogs = /* GraphQL */ `query SyncBlogs(
       videoId
       status
       imported_mysql_id
+      featured
       createdAt
       updatedAt
       _version

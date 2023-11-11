@@ -2,7 +2,7 @@ import styles from "./blog.module.scss";
 import Header from "../../../components/layout/header";
 import Head from "next/head";
 import { DataStore } from "@aws-amplify/datastore";
-import { Blog, ItemStatus } from "../../../src/models";
+import { Blog, FeaturedStatus, ItemStatus } from "../../../src/models";
 import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
@@ -11,14 +11,25 @@ import { useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import YearFilter from "../../../components/blog/year-filter";
 import { albertusFont } from "../../../components/bio/bio-post";
+import FeaturedPostButton from "../../../components/blog/featuredPostButton";
+import Title from "../../../components/utils/title";
 
 const PAGE_LENGTH = 5;
 const START_YEAR = "2008";
 
-const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
+const BlogPage = ({
+  blogs,
+  featuredBlogs,
+  year,
+}: {
+  blogs: Blog[];
+  featuredBlogs: Blog[];
+  year: string;
+}) => {
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
   const [pageNum, setPageNum] = useState<number>(1);
   const [currYear, setCurrYear] = useState<string>(year);
+  const [featuredMode, setFeaturedMode] = useState<boolean>(false);
 
   //const currYearRef = useRef(currYear);
   const prevYearRef = useRef<string>(currYear);
@@ -34,12 +45,23 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
 
   const yearSelection = (year: string) => {
     //console.log("yearSelection", year);
+    setFeaturedMode(false);
     setCurrYear(year);
     setPageNum(0);
     setBlogPosts([]);
   };
 
+  const setFeaturedModel = (model: Blog) => {
+    setFeaturedMode(true);
+    setBlogPosts([model]);
+    setPageNum(0);
+    setCurrYear(model.publishDate!.split("-")[0]);
+  };
+
   useEffect(() => {
+    if (featuredMode) {
+      return;
+    }
     const getModels = async () => {
       //console.log("query - ", currYear, pageNum);
       const models = await DataStore.query(
@@ -71,7 +93,7 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
       setBlogPosts((prev) => [...prev, ...models]);
     };
     getModels();
-  }, [pageNum, currYear]);
+  }, [pageNum, currYear, featuredMode]);
 
   return (
     <div className={styles.Blog}>
@@ -90,12 +112,27 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
         currYear={currYear}
         callback={yearSelection}
       />
+      {featuredBlogs && (
+        <div className={styles.featuredPosts}>
+          <Title>FEATURED POSTS</Title>
+          <div className={styles.postButtons}>
+            {featuredBlogs.map((blog, index) => (
+              <FeaturedPostButton
+                key={index}
+                model={blog}
+                callback={setFeaturedModel}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
           <InfiniteScroll
             dataLength={blogPosts.length} //This is important field to render the next data
             next={fetchNextPage}
-            hasMore={parseInt(currYear) > 2007}
+            hasMore={parseInt(currYear) > 2007 && !featuredMode}
             scrollableTarget="blogHolder"
             loader={
               <h4
@@ -116,11 +153,17 @@ const BlogPage = ({ blogs, year }: { blogs: Blog[]; year: string }) => {
                   textAlign: "center",
                   paddingBottom: "200px",
                   color: "rgb(200,200,200)",
-                  fontSize: "2em",
+                  fontSize: "1.4em",
+                  cursor: "pointer",
                 }}
                 className={albertusFont.className}
+                onClick={() => {
+                  setFeaturedMode(false);
+                  setBlogPosts([]);
+                  setCurrYear(year);
+                }}
               >
-                <b>THAT&apos;S ALL FOLKS !!!</b>
+                see all posts
               </p>
             }
           >
@@ -155,11 +198,17 @@ export const getStaticProps: GetStaticProps = async () => {
         ]),
       { sort: (s) => s.publishDate("DESCENDING"), page: 0, limit: PAGE_LENGTH }
     );
+    const featuredModels = await DataStore.query(
+      Blog,
+      (c) => c.featured?.eq(FeaturedStatus.FEATURED),
+      { sort: (s) => s.publishDate("DESCENDING"), page: 0, limit: PAGE_LENGTH }
+    );
 
     return {
       props: {
         year,
         blogs: JSON.parse(JSON.stringify(models)),
+        featuredBlogs: JSON.parse(JSON.stringify(featuredModels)),
       },
       revalidate: 10,
     };
