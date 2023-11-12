@@ -6,14 +6,8 @@ import { Blog, FeaturedStatus, ItemStatus } from "../../../src/models";
 import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
-import { withSSRContext, Predicates } from "aws-amplify";
-import {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { withSSRContext } from "aws-amplify";
+import { useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import YearFilter from "../../../components/blog/year-filter";
 import { albertusFont } from "../../../components/bio/bio-post";
@@ -41,7 +35,6 @@ const BlogPage = ({
   const onYearSelection = async (year: string) => {
     setFeaturedPost(null);
     setCurrYear(year);
-    setPage(1);
   };
 
   const onSetFeaturedModel = (model: Blog) => {
@@ -63,9 +56,6 @@ const BlogPage = ({
   }, []);
 
   useEffect(() => {
-    // console.log("CurrPage Effect ", currPage);
-    // console.log("currentYear", getYear());
-    // console.log("* * * * * * * * * * * *");
     const getModels = async () => {
       const models = await DataStore.query(
         Blog,
@@ -80,7 +70,6 @@ const BlogPage = ({
           sort: (s) => s.publishDate(SortDirection.DESCENDING),
         }
       );
-      // console.log(models);
       setBlogPosts((prev) => [...prev, ...models]);
       if (models.length < PAGE_LENGTH) {
         if (parseInt(getYear()) > 2007) {
@@ -92,41 +81,31 @@ const BlogPage = ({
     getModels();
   }, [currPage, getYear, setYear, setBlogPosts]);
 
-  useEffect(() => {
-    const getYearPosts = async () => {
-      //console.log("Year Effect ", currYear);
-      setFeaturedPost(null);
-      //setPage(1);
+  // useEffect(() => {
+  //   const getYearPosts = async () => {
+  //     //console.log("Year Effect ", currYear);
+  //     setFeaturedPost(null);
+  //     //setPage(1);
 
-      //setBlogPosts([]);
-      const models = await DataStore.query(
-        Blog,
-        (c) =>
-          c.and((c) => [
-            c.publishDate.contains(currYear),
-            c.status.eq(ItemStatus.ACTIVE),
-          ]),
-        {
-          page: 0,
-          limit: PAGE_LENGTH,
-          sort: (s) => s.publishDate(SortDirection.DESCENDING),
-        }
-      );
-      setBlogPosts(models);
-      // console.log(models);
-      // setBlogPosts(models);
-      // let pageNum;
-      // if (reset) {
-      //   pageNum = 0;
-      // } else if (currPage == 0 && blogPosts.length > 0) {
-      //   pageNum = 1;
-      // } else {
-      //   pageNum = currPage;
-      // }
-      // console.log("fetchNextPage: ", currPage, " year: ", currYear);
-    };
-    getYearPosts();
-  }, [currYear, setPage]);
+  //     //setBlogPosts([]);
+  //     const models = await DataStore.query(
+  //       Blog,
+  //       (c) =>
+  //         c.and((c) => [
+  //           c.publishDate.contains(currYear),
+  //           c.status.eq(ItemStatus.ACTIVE),
+  //         ]),
+  //       {
+  //         page: 0,
+  //         limit: PAGE_LENGTH,
+  //         sort: (s) => s.publishDate(SortDirection.DESCENDING),
+  //       }
+  //     );
+  //     setBlogPosts(models);
+  //   };
+  //   getYearPosts();
+  //   setPage(1);
+  // }, [currYear, setPage]);
 
   return (
     <div className={styles.Blog}>
