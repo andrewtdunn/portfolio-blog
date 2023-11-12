@@ -33,8 +33,8 @@ const BlogPage = ({
   const [featuredPost, setFeaturedPost] = useState<Blog | null>(null);
 
   const onYearSelection = async (year: string) => {
-    setFeaturedPost(null);
-    setCurrYear(year);
+    //setFeaturedPost(null);
+    //setCurrYear(year);
   };
 
   const onSetFeaturedModel = (model: Blog) => {
@@ -50,6 +50,11 @@ const BlogPage = ({
     setCurrYear(year);
     setCurrPage(0);
   }, []);
+
+  const featuredCallback = () => {
+    setFeaturedPost(null);
+  };
+
   const getPage = useCallback(() => currPage, [currPage]);
   const setPage = useCallback((page: number) => {
     setCurrPage(page);
@@ -142,7 +147,13 @@ const BlogPage = ({
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
           {featuredPost ? (
-            <BlogPost post={featuredPost} priority={false} backLink={false} />
+            <BlogPost
+              post={featuredPost}
+              priority={false}
+              backLink={false}
+              callback={featuredCallback}
+              callbackLabel="Back to All Posts"
+            />
           ) : (
             <InfiniteScroll
               dataLength={blogPosts.length} //This is important field to render the next data

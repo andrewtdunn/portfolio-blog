@@ -15,9 +15,17 @@ type BlogProps = {
   post: Blog;
   priority: boolean;
   backLink: boolean;
+  callback?: () => void;
+  callbackLabel?: string;
 };
 
-const BlogPost: FC<BlogProps> = ({ post, priority, backLink }) => {
+const BlogPost: FC<BlogProps> = ({
+  post,
+  priority,
+  backLink,
+  callback,
+  callbackLabel,
+}) => {
   const {
     id,
     title,
@@ -51,7 +59,15 @@ const BlogPost: FC<BlogProps> = ({ post, priority, backLink }) => {
 
   return (
     <div className={styles.Post}>
-      {backLink && (
+      {callback && (
+        <p
+          className={`${albertusFont.className} ${styles.backLink}`}
+          onClick={callback}
+        >
+          {callbackLabel ? callbackLabel : "Back"}
+        </p>
+      )}
+      {!callback && backLink && (
         <Link
           href="/blog"
           className={`${albertusFont.className} ${styles.backLink}`}
