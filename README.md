@@ -4,7 +4,7 @@
 
 ## Mobile
 
-<div class="imageHolder" style="display: flex; flexDirection: row; gap: 10px">
+<div class="imageHolder" style="display: flex; flex-direction: row; gap: 10px; align-items: center;">
   <img src="public/images/qr.png?raw=true" alt="qr code" width="300" height="389">
   <img src="public/images/mobile.jpg" alt="mobile snapshot" width="300"  height="auto">
 </div>
