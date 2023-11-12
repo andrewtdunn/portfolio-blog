@@ -41,49 +41,31 @@ const BlogPage = ({
   const onYearSelection = async (year: string) => {
     setFeaturedPost(null);
     setCurrYear(year);
-    // setCurrPage(1);
-
-    // console.log("call for models by year ", year);
-    // setBlogPosts([]);
-    // const models = await DataStore.query(
-    //   Blog,
-    //   (c) =>
-    //     c.and((c) => [
-    //       c.publishDate.contains(year),
-    //       c.status.eq(ItemStatus.ACTIVE),
-    //     ]),
-    //   {
-    //     page: 0,
-    //     limit: PAGE_LENGTH,
-    //     sort: (s) => s.publishDate(SortDirection.DESCENDING),
-    //   }
-    // );
-    // console.log(models);
-    // setBlogPosts(models);
+    setPage(1);
   };
 
   const onSetFeaturedModel = (model: Blog) => {
     setFeaturedPost(model);
   };
 
-  const fetchNextPage = async () => {
+  const fetchNextPage = () => {
     setCurrPage((prev) => prev + 1);
   };
-
-  useEffect(() => {
-    console.log(currYear);
-  }, [currYear]);
 
   const getYear = useCallback(() => currYear, [currYear]);
   const setYear = useCallback((year: string) => {
     setCurrYear(year);
     setCurrPage(0);
   }, []);
+  const getPage = useCallback(() => currPage, [currPage]);
+  const setPage = useCallback((page: number) => {
+    setCurrPage(page);
+  }, []);
 
   useEffect(() => {
-    console.log("CurrPage Effect ", currPage);
-    console.log("currentYear", getYear());
-    console.log("* * * * * * * * * * * *");
+    // console.log("CurrPage Effect ", currPage);
+    // console.log("currentYear", getYear());
+    // console.log("* * * * * * * * * * * *");
     const getModels = async () => {
       const models = await DataStore.query(
         Blog,
@@ -98,7 +80,7 @@ const BlogPage = ({
           sort: (s) => s.publishDate(SortDirection.DESCENDING),
         }
       );
-      console.log(models);
+      // console.log(models);
       setBlogPosts((prev) => [...prev, ...models]);
       if (models.length < PAGE_LENGTH) {
         if (parseInt(getYear()) > 2007) {
@@ -107,92 +89,44 @@ const BlogPage = ({
       }
       //setCurrPage(currPage + 1);
     };
-
-    // setFeaturedPost(null);
-    // setCurrYear(year);
-    // setCurrPage(1);
-
-    // console.log("call for models by year ", year);
-    // setBlogPosts([]);
-    // const models = await DataStore.query(
-    //   Blog,
-    //   (c) =>
-    //     c.and((c) => [
-    //       c.publishDate.contains(year),
-    //       c.status.eq(ItemStatus.ACTIVE),
-    //     ]),
-    //   {
-    //     page: 0,
-    //     limit: PAGE_LENGTH,
-    //     sort: (s) => s.publishDate(SortDirection.DESCENDING),
-    //   }
-    // );
-    // console.log(models);
-    // setBlogPosts(models);
     getModels();
   }, [currPage, getYear, setYear, setBlogPosts]);
 
   useEffect(() => {
-    console.log("Year Effect ", currYear);
-    // setFeaturedPost(null);
-    // setCurrYear(year);
-    // setCurrPage(1);
+    const getYearPosts = async () => {
+      //console.log("Year Effect ", currYear);
+      setFeaturedPost(null);
+      //setPage(1);
 
-    // console.log("call for models by year ", year);
-    // setBlogPosts([]);
-    // const models = await DataStore.query(
-    //   Blog,
-    //   (c) =>
-    //     c.and((c) => [
-    //       c.publishDate.contains(year),
-    //       c.status.eq(ItemStatus.ACTIVE),
-    //     ]),
-    //   {
-    //     page: 0,
-    //     limit: PAGE_LENGTH,
-    //     sort: (s) => s.publishDate(SortDirection.DESCENDING),
-    //   }
-    // );
-    // console.log(models);
-    // setBlogPosts(models);
-    // let pageNum;
-    // if (reset) {
-    //   pageNum = 0;
-    // } else if (currPage == 0 && blogPosts.length > 0) {
-    //   pageNum = 1;
-    // } else {
-    //   pageNum = currPage;
-    // }
-    // console.log("fetchNextPage: ", currPage, " year: ", currYear);
-
-    // const models = await DataStore.query(
-    //   Blog,
-    //   (c) =>
-    //     c.and((c) => [
-    //       c.publishDate.contains(currYear),
-    //       c.status.eq(ItemStatus.ACTIVE),
-    //     ]),
-    //   {
-    //     page: pageNum,
-    //     limit: PAGE_LENGTH,
-    //     sort: (s) => s.publishDate(SortDirection.DESCENDING),
-    //   }
-    // );
-    // setBlogPosts((prev) => [...prev, ...models]);
-    // console.log("models found: ", models.length);
-    // models.forEach((model, index) =>
-    //   console.log(index, model.title ? model.title : "untitled")
-    // );
-    // if (models.length == PAGE_LENGTH) {
-    //   setCurrPage((prev) => prev + 1);
-    // } else {
-    //   console.log("SETTING A YEAR BACK");
-    //   setCurrPage(0);
-    //   setCurrYear((prev) => (parseInt(prev) - 1).toString());
-    // }
-    // if (models.length == 0) {
-    //   fetchNextP
-  }, [currYear]);
+      //setBlogPosts([]);
+      const models = await DataStore.query(
+        Blog,
+        (c) =>
+          c.and((c) => [
+            c.publishDate.contains(currYear),
+            c.status.eq(ItemStatus.ACTIVE),
+          ]),
+        {
+          page: 0,
+          limit: PAGE_LENGTH,
+          sort: (s) => s.publishDate(SortDirection.DESCENDING),
+        }
+      );
+      setBlogPosts(models);
+      // console.log(models);
+      // setBlogPosts(models);
+      // let pageNum;
+      // if (reset) {
+      //   pageNum = 0;
+      // } else if (currPage == 0 && blogPosts.length > 0) {
+      //   pageNum = 1;
+      // } else {
+      //   pageNum = currPage;
+      // }
+      // console.log("fetchNextPage: ", currPage, " year: ", currYear);
+    };
+    getYearPosts();
+  }, [currYear, setPage]);
 
   return (
     <div className={styles.Blog}>
@@ -234,7 +168,7 @@ const BlogPage = ({
             <InfiniteScroll
               dataLength={blogPosts.length} //This is important field to render the next data
               next={fetchNextPage}
-              hasMore={parseInt(currYear) > parseInt(START_YEAR) - 1}
+              hasMore={parseInt(currYear) >= parseInt(START_YEAR) - 1}
               scrollableTarget="blogHolder"
               loader={
                 <h4
@@ -249,6 +183,7 @@ const BlogPage = ({
                   Loading...
                 </h4>
               }
+              refreshFunction={() => console.log("refresh")}
               endMessage={
                 <p
                   style={{
