@@ -18,16 +18,14 @@ const BlogImage = ({
   heroSize,
   title,
   priority,
-  publishDate,
 }: BlogImageType) => {
-  const [year, month, date] = publishDate.split("-");
   const photoUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
 
   return (
     <div className={styles.BlogImage}>
       <Image
         src={`${photoUrl}/${image}`}
-        alt={title}
+        alt={title ? title : "blog image"}
         width={500}
         height={500}
         className={`${styles.image} ${

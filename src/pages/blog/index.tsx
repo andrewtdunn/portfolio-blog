@@ -7,20 +7,16 @@ import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
 import { withSSRContext, Predicates } from "aws-amplify";
-import { useEffect, useRef, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import YearFilter from "../../../components/blog/year-filter";
 import { albertusFont } from "../../../components/bio/bio-post";
 import FeaturedPostButton from "../../../components/blog/featuredPostButton";
 import Title from "../../../components/utils/title";
+import { SortDirection } from "aws-amplify";
 
 const PAGE_LENGTH = 5;
 const START_YEAR = "2008";
-
-type YearPageType = {
-  year: number;
-  page: number;
-};
 
 const BlogPage = ({
   blogs,
@@ -32,52 +28,78 @@ const BlogPage = ({
   year: string;
 }) => {
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
-  const [featuredModel, setFeaturedModel] = useState<Blog | null>(null);
+  const [currYear, setCurrYear] = useState<string>(year);
+  const [currPage, setCurrPage] = useState<number>(1);
+  const [featuredPost, setFeaturedPost] = useState<Blog | null>(null);
 
-  const [yearPage, setYearPage] = useState<YearPageType>({
-    year: parseInt(year),
-    page: 0,
-  });
+  const onYearSelection = async (year: string) => {
+    setFeaturedPost(null);
+    setCurrYear(year);
+    setCurrPage(1);
 
-  const fetchNextPage = async () => {
-    setYearPage((prev) => ({ ...prev, page: prev.page + 1 }));
-  };
-
-  const yearSelection = (selectedYear: string) => {
-    setFeaturedModel(null);
+    console.log("call for models by year ", year);
     setBlogPosts([]);
-    setYearPage({ year: parseInt(selectedYear), page: 0 });
+    const models = await DataStore.query(
+      Blog,
+      (c) =>
+        c.and((c) => [
+          c.publishDate.contains(year),
+          c.status.eq(ItemStatus.ACTIVE),
+        ]),
+      {
+        page: 0,
+        limit: PAGE_LENGTH,
+        sort: (s) => s.publishDate(SortDirection.DESCENDING),
+      }
+    );
+    console.log(models);
+    setBlogPosts(models);
   };
 
   const onSetFeaturedModel = (model: Blog) => {
-    console.log("setFeaturedModel", model);
-    setFeaturedModel(model);
+    setFeaturedPost(model);
   };
 
-  useEffect(() => {
-    const getModels = async () => {
-      const models = await DataStore.query(
-        Blog,
-        (c) =>
-          c.and((c) => [
-            c.status!.eq(ItemStatus.ACTIVE),
-            c.publishDate.contains(yearPage.year.toString()),
-          ]),
-        {
-          sort: (s) => s.publishDate("DESCENDING"),
-          page: yearPage.page,
-          limit: PAGE_LENGTH,
-        }
-      );
+  const fetchNextPage = async (reset?: Boolean) => {
+    let pageNum;
+    if (reset) {
+      pageNum = 0;
+    } else if (currPage == 0 && blogPosts.length > 0) {
+      pageNum = 1;
+    } else {
+      pageNum = currPage;
+    }
+    console.log("fetchNextPage: ", currPage, " year: ", currYear);
 
-      if (models.length == 0) {
-        setYearPage((prev) => ({ year: prev.year - 1, page: 0 }));
+    const models = await DataStore.query(
+      Blog,
+      (c) =>
+        c.and((c) => [
+          c.publishDate.contains(currYear),
+          c.status.eq(ItemStatus.ACTIVE),
+        ]),
+      {
+        page: pageNum,
+        limit: PAGE_LENGTH,
+        sort: (s) => s.publishDate(SortDirection.DESCENDING),
       }
-
-      setBlogPosts((prev) => [...prev, ...models]);
-    };
-    getModels();
-  }, [yearPage]);
+    );
+    setBlogPosts((prev) => [...prev, ...models]);
+    console.log("models found: ", models.length);
+    models.forEach((model, index) =>
+      console.log(index, model.title ? model.title : "untitled")
+    );
+    if (models.length == PAGE_LENGTH) {
+      setCurrPage((prev) => prev + 1);
+    } else {
+      console.log("SETTING A YEAR BACK");
+      setCurrPage(0);
+      setCurrYear((prev) => (parseInt(prev) - 1).toString());
+    }
+    if (models.length == 0) {
+      fetchNextPage(true);
+    }
+  };
 
   return (
     <div className={styles.Blog}>
@@ -93,8 +115,8 @@ const BlogPage = ({
       <YearFilter
         startYear={START_YEAR}
         endYear={year}
-        currYear={yearPage.year.toString()}
-        callback={yearSelection}
+        currYear={currYear}
+        callback={onYearSelection}
       />
       {featuredBlogs && (
         <div className={styles.featuredPosts}>
@@ -113,13 +135,13 @@ const BlogPage = ({
 
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
-          {featuredModel ? (
-            <BlogPost post={featuredModel} priority={false} backLink={false} />
+          {featuredPost ? (
+            <BlogPost post={featuredPost} priority={false} backLink={false} />
           ) : (
             <InfiniteScroll
               dataLength={blogPosts.length} //This is important field to render the next data
               next={fetchNextPage}
-              hasMore={yearPage.year > parseInt(START_YEAR) - 1}
+              hasMore={parseInt(currYear) > parseInt(START_YEAR) - 1}
               scrollableTarget="blogHolder"
               loader={
                 <h4
