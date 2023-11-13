@@ -16,6 +16,7 @@ import AdminContext from "../../store/admin-context";
 import BlogCreateForm from "@/ui-components/BlogCreateForm";
 import { AdminForm, AdminModel } from "../../type-definitions/enums";
 import AdminContentForm from "../admin/admin-content-form";
+import PaintSplatter from "../utils/paint-splatter";
 
 export default function Layout({
   children,
@@ -51,6 +52,7 @@ export default function Layout({
       <LeftNav />
       <RightNav />
       <VolumeButton home={home} />
+
       <NewSoundsLabel />
       <Modal>
         <AdminContentForm />
@@ -64,7 +66,9 @@ export default function Layout({
         <Nametag home={home} />
         <div className={styles.inner}>{children}</div>
       </main>
+
       <Logo home={home} />
+      {(navigationCtx.leftOpen || navigationCtx.rightOpen) && <PaintSplatter />}
     </div>
   );
 }

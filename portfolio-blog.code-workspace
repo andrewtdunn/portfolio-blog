@@ -4,10 +4,7 @@
       "path": "."
     },
     {
-      "path": "../../portfolio_relaunch"
-    },
-    {
-      "path": "../../pandasombrero/services/backend"
+      "path": "../../pandasombrero/services/frontend"
     }
   ],
   "settings": {}
