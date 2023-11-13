@@ -44,13 +44,17 @@
 
   .searchForm {
     position: absolute;
-    display: flex;
+    display: none;
     top: 250px;
     left: 15px;
     z-index: 1000000000001;
     color: $offwhite;
     width: 250px !important;
     filter: drop-shadow(-10px 9px 6px rgba(0, 0, 0, 0.55));
+
+    @include for-desktop-up {
+      display: flex;
+    }
 
     input {
       background-color: rgba(255, 255, 255, 0.12);
