@@ -6,6 +6,7 @@
   height: fit-content;
   margin: 0 auto;
   z-index: 20;
+  filter: drop-shadow(-10px 9px 6px rgba(0, 0, 0, 0.55));
 
   @include for-phone-only {
     width: 95%;
