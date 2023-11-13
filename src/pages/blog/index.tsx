@@ -54,6 +54,7 @@ const BlogPage = ({
 
   const featuredCallback = () => {
     setFeaturedPosts(null);
+    setSearchTerm("");
   };
 
   const onTextChange = (e: FormEvent<HTMLInputElement>) => {
