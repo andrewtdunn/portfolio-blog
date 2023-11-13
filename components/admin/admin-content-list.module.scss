@@ -46,6 +46,7 @@
 
 .AdminContentList {
   border-top: 1px solid $darkblue;
+  list-style-type: none;
 
   li {
     margin-left: 0px;
@@ -53,6 +54,12 @@
 
     border-bottom: 1px solid $darkblue;
     padding: 5px 10px;
+    display: flex;
+    align-items: center;
+
+    @include for-phone-only {
+      padding: 3px 5px;
+    }
 
     h3 {
       @include for-phone-only {
