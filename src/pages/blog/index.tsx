@@ -39,8 +39,7 @@ const BlogPage = ({
   };
 
   const onSetFeaturedModel = (model: Blog) => {
-    setFeaturedPosts([model]);
-    setSearchTerm("");
+    loadFeaturedPosts([model]);
   };
 
   const fetchNextPage = () => {
@@ -54,9 +53,17 @@ const BlogPage = ({
   }, []);
 
   const featuredCallback = () => {
-    setFeaturedPosts(null);
-    setSearchTerm("");
+    loadFeaturedPosts([]);
+    clearSearchTerm();
   };
+
+  const clearSearchTerm = useCallback(() => {
+    setSearchTerm("");
+  }, []);
+
+  const loadFeaturedPosts = useCallback((posts: Blog[]) => {
+    setFeaturedPosts(posts);
+  }, []);
 
   const onTextChange = (e: FormEvent<HTMLInputElement>) => {
     console.log(e.currentTarget.value);
