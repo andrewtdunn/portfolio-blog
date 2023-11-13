@@ -7,7 +7,7 @@ import { GetStaticProps } from "next";
 import BlogPost from "../../../components/blog/blog-post";
 import Fader from "../../../components/utils/fader";
 import { withSSRContext } from "aws-amplify";
-import { useCallback, useEffect, useState } from "react";
+import { FormEvent, useCallback, useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import YearFilter from "../../../components/blog/year-filter";
 import { albertusFont } from "../../../components/bio/bio-post";
@@ -30,7 +30,8 @@ const BlogPage = ({
   const [blogPosts, setBlogPosts] = useState<Blog[]>(blogs);
   const [currYear, setCurrYear] = useState<string>(year);
   const [currPage, setCurrPage] = useState<number>(1);
-  const [featuredPost, setFeaturedPost] = useState<Blog | null>(null);
+  const [featuredPosts, setFeaturedPosts] = useState<Blog[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState<string | null>(null);
 
   const onYearSelection = async (year: string) => {
     //setFeaturedPost(null);
@@ -38,7 +39,7 @@ const BlogPage = ({
   };
 
   const onSetFeaturedModel = (model: Blog) => {
-    setFeaturedPost(model);
+    setFeaturedPosts([model]);
   };
 
   const fetchNextPage = () => {
@@ -52,7 +53,16 @@ const BlogPage = ({
   }, []);
 
   const featuredCallback = () => {
-    setFeaturedPost(null);
+    setFeaturedPosts(null);
+  };
+
+  const onTextChange = (e: FormEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.value);
+    setSearchTerm(e.currentTarget.value);
+  };
+
+  const onInputClear = () => {
+    setSearchTerm("");
   };
 
   const getPage = useCallback(() => currPage, [currPage]);
@@ -85,6 +95,26 @@ const BlogPage = ({
     };
     getModels();
   }, [currPage, getYear, setYear, setBlogPosts]);
+
+  useEffect(() => {
+    const getPosts = async () => {
+      if (searchTerm!.length < 3) {
+      }
+      const models = await DataStore.query(Blog, (c) =>
+        c.or((c) => [c.text.contains(searchTerm), c.title.contains(searchTerm)])
+      );
+      const featuredModels = models.filter(
+        (model) => model.status == ItemStatus.ACTIVE && model.publishDate
+      );
+      setFeaturedPosts(JSON.parse(JSON.stringify(featuredModels)));
+    };
+
+    if (searchTerm && searchTerm.length >= 3) {
+      getPosts();
+    } else {
+      return setFeaturedPosts([]);
+    }
+  }, [searchTerm]);
 
   // useEffect(() => {
   //   const getYearPosts = async () => {
@@ -129,7 +159,35 @@ const BlogPage = ({
         currYear={currYear}
         callback={onYearSelection}
       />
-      {featuredBlogs && (
+      <div className={styles.searchForm}>
+        <input
+          value={searchTerm ? searchTerm : ""}
+          onChange={onTextChange}
+          className={`${albertusFont.className} ${
+            featuredPosts &&
+            featuredPosts?.length > 0 &&
+            searchTerm &&
+            searchTerm?.length >= 3
+              ? styles.lit
+              : ""
+          }`}
+          placeholder="search"
+        />
+        <button
+          onClick={onInputClear}
+          className={`${albertusFont.className} ${
+            featuredPosts &&
+            featuredPosts?.length > 0 &&
+            searchTerm &&
+            searchTerm?.length >= 3
+              ? styles.lit
+              : ""
+          }`}
+        >
+          Clear
+        </button>
+      </div>
+      {featuredBlogs && featuredBlogs.length > 0 && (
         <div className={styles.featuredPosts}>
           <Title>FEATURED POSTS</Title>
           <div className={styles.postButtons}>
@@ -146,14 +204,17 @@ const BlogPage = ({
 
       <div id="blogHolder" className={styles.blogHolder}>
         <div className={styles.innerContainer}>
-          {featuredPost ? (
-            <BlogPost
-              post={featuredPost}
-              priority={false}
-              backLink={false}
-              callback={featuredCallback}
-              callbackLabel="Back to All Posts"
-            />
+          {featuredPosts?.length ? (
+            featuredPosts.map((post, index) => (
+              <BlogPost
+                key={index}
+                post={post}
+                priority={false}
+                backLink={false}
+                callback={featuredCallback}
+                callbackLabel="Back to All Posts"
+              />
+            ))
           ) : (
             <InfiniteScroll
               dataLength={blogPosts.length} //This is important field to render the next data

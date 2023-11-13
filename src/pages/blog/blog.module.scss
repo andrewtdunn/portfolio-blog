@@ -42,6 +42,70 @@
     // }
   }
 
+  .searchForm {
+    position: absolute;
+    display: flex;
+    top: 250px;
+    left: 15px;
+    z-index: 1000000000001;
+    color: $offwhite;
+    width: 250px !important;
+    filter: drop-shadow(-10px 9px 6px rgba(0, 0, 0, 0.55));
+
+    input {
+      background-color: rgba(255, 255, 255, 0.12);
+      border: 2px solid $offwhite;
+      border-radius: 5px 0px 0px 5px;
+      border-right: none;
+      font-size: 1.3em;
+      padding: 5px 5px;
+      color: $offwhite;
+      width: 175px !important;
+      text-align: right;
+
+      &.lit {
+        border: 2px solid $hot-pink;
+      }
+
+      @media (max-width: 1250px) {
+        // width: 133px;
+        width: 80px !important;
+      }
+    }
+
+    button {
+      background-color: $darkestgray;
+      border: 2px solid $offwhite;
+      border-bottom-right-radius: 5px;
+      border-top-right-radius: 5px;
+      color: $offwhite;
+      width: 75px;
+
+      @media (max-width: 1250px) {
+        // width: 133px;
+        width: 52px !important;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgba(255, 255, 255, 0.4);
+      }
+
+      &:active {
+        color: $darkestgray;
+      }
+
+      &.lit {
+        border: 2px solid $hot-pink;
+        border-left: 2px $offwhite;
+      }
+    }
+
+    @include for-phone-only {
+      display: none;
+    }
+  }
+
   .featuredPosts {
     position: absolute;
     display: flex;
