@@ -188,6 +188,7 @@ const AdminProjectList = ({
                   height={15}
                   alt={model.title ? model.title : "logo"}
                   style={{ objectFit: "contain" }}
+                  className={styles.thumbHolder}
                 />
                 <h3>
                   {model.title ? (

@@ -2,7 +2,7 @@ import { Blog, ItemStatus, Project } from "@/models";
 import { DataStore, Predicates, SortDirection } from "aws-amplify";
 import { GetServerSideProps } from "next";
 import { AdminForm, AdminModel } from "../../type-definitions/enums";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { MdOutlineEditNote, MdStarRate, MdLink } from "react-icons/md";
 import styles from "./admin-content-list.module.scss";
 import ProjectUpdateForm from "@/ui-components/ProjectUpdateForm";
@@ -38,7 +38,7 @@ const ContentList = ({
 
   const [filteredModels, setFileteredModels] = useState(models);
 
-  const getPage = async () => {
+  const getPage = useCallback(async () => {
     if (searchTerm) {
       return;
     }
@@ -49,7 +49,7 @@ const ContentList = ({
       limit: PAGELIMIT,
     });
     setModels(models);
-  };
+  }, [currentPageIndex, searchTerm, modelType]);
 
   const paginationProps = usePagination({
     totalPages: 8,
@@ -116,7 +116,7 @@ const ContentList = ({
     if (!adminCtx?.editing) {
       getModels();
     }
-  }, [modelType, adminCtx, currentPageIndex, searchTerm]);
+  }, [modelType, adminCtx, currentPageIndex, searchTerm, getPage]);
 
   useEffect(() => {
     const getNumberOfPages = async () => {
