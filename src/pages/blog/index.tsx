@@ -257,10 +257,7 @@ const BlogPage = ({
                   That&apos;s All Folks!!
                 </p>
               }
-              style={{
-                paddingLeft: "20px",
-                paddingRight: "20px",
-              }}
+              className={styles.infscr}
             >
               {blogPosts.map((post, i) => {
                 return (

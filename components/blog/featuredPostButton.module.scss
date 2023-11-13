@@ -11,7 +11,7 @@
   border: 2px solid $offwhite;
   border-radius: 5px;
   padding: 5px 5px;
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(0, 0, 0, 0.1);
 
   @include for-phone-only {
     display: none;
