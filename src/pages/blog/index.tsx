@@ -40,6 +40,7 @@ const BlogPage = ({
 
   const onSetFeaturedModel = (model: Blog) => {
     setFeaturedPosts([model]);
+    setSearchTerm("");
   };
 
   const fetchNextPage = () => {
