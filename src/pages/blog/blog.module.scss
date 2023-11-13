@@ -8,6 +8,12 @@
   justify-content: center;
   overflow-y: scroll;
 
+  .featuredHeadline {
+    color: $offwhite;
+    font-size: 1.4em;
+    margin-top: 10px;
+  }
+
   .blogHolder {
     width: 100%;
     display: flex;

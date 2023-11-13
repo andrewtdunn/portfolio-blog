@@ -198,7 +198,11 @@ const BlogPage = ({
       </div>
       {featuredBlogs && featuredBlogs.length > 0 && (
         <div className={styles.featuredPosts}>
-          <Title>FEATURED POSTS</Title>
+          <h2
+            className={`${albertusFont.className} ${styles.featuredHeadline}`}
+          >
+            Featured Posts
+          </h2>
           <div className={styles.postButtons}>
             {featuredBlogs.map((blog, index) => (
               <FeaturedPostButton
