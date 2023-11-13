@@ -346,6 +346,39 @@ const GaugeWidget = () => {
       }
     };
 
+    const drawMinuteHand = (ctx: CanvasRenderingContext2D) => {
+      const gD = gaugeDetailsRef.current;
+      ctx.save();
+      //rotate
+      // arc
+
+      ctx.beginPath();
+      //ctx.moveTo(size.width * 0.49, 0);
+
+      ctx!.rotate((gD.currBallPosition * Math.PI) / 180);
+      //ctx.arc(size.width * 0.3, 0, size.width * 0.04, 0, 2 * Math.PI, false);
+      //let segmentAlpha = (Math.sin(4 * counter) + 1) / 2;
+      //segmentAlpha = segmentAlpha * 0.5 + 0.5;
+      ctx.moveTo(size.width * 0.35, 0);
+      ctx.lineTo(20, 0);
+      let segmentAlpha = 0.8;
+      ctx.fillStyle = `rgba(35, 255, 253,${segmentAlpha})`;
+      ctx.fill();
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = `rgba(255, 255, 255,${segmentAlpha})`;
+      ctx.stroke();
+      ctx.restore();
+      gD.currBallPosition += gD.ballSpeed;
+      gD.currBallPosition = gD.currBallPosition % 360;
+      // if (gD.ballRotation < 180) {
+      //   gD.ballSpeed += gD.ballSpeedAcceleration;
+      //   gD.ballSpeedAcceleration *= gD.ballSpeedAccelerationRate;
+      // } else {
+      //   gD.ballSpeed -= gD.ballSpeedAcceleration;
+      //   gD.ballSpeedAcceleration /= gD.ballSpeedAccelerationRate;
+      // }
+    };
+
     const drawBall = (ctx: CanvasRenderingContext2D) => {
       const gD = gaugeDetailsRef.current;
       ctx.save();
@@ -449,7 +482,8 @@ const GaugeWidget = () => {
           );
         }
         if (!isFocused) {
-          drawBall(ctx!);
+          //drawBall(ctx!);
+          drawMinuteHand(ctx!);
         }
         drawDividers(
           ctx!,
