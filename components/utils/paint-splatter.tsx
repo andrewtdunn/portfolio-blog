@@ -16,6 +16,9 @@ const PaintSplatter = () => {
       <div className={styles.pink_splatter} />
       <div className={styles.green_splatter} />
       <div className={styles.blue_splatter} />
+      <div className={styles.pink_splatter2} />
+      <div className={styles.green_splatter2} />
+      <div className={styles.blue_splatter2} />
     </div>
   );
 };
