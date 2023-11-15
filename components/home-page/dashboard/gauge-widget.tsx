@@ -138,7 +138,6 @@ const GaugeWidget = () => {
 
       ctx.imageSmoothingEnabled = true;
       if (gD.logo == null || gD.logoSrc != image) {
-        console.log("url", imageBase + "/" + image);
         gD.logoSrc = image;
         ctx!.globalAlpha = 0;
         const imageLoaded = new Promise((resolve, reject) => {

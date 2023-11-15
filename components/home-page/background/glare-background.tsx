@@ -11,7 +11,6 @@ type GlareReflectionProps = {
 };
 
 const GlareReflection = ({ project, image_url, lit }: GlareReflectionProps) => {
-  console.log("image_url", image_url);
   const slideCtx = useContext(SlideshowContext);
   const { isFocused, secondaryIndex } = slideCtx!;
   let imageUrl: string;

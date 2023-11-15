@@ -121,7 +121,7 @@ const HeadsUpDisplay = ({
         <SlideCover />
         {!isFocused && (
           <GlitchyImage
-            url={projects[currentIndex].image}
+            url={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${projects[currentIndex].image}`}
             slideSpeed={slideInterval}
           />
         )}
