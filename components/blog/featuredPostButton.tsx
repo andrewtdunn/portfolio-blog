@@ -4,6 +4,8 @@ import Title from "../utils/title";
 import Image from "next/image";
 import { mod } from "three/examples/jsm/nodes/Nodes.js";
 import { albertusFont } from "../bio/bio-post";
+import { useContext } from "react";
+import { SoundContext } from "../../store/sound-context";
 
 type FeaturedPostButtonType = {
   model: Blog;
@@ -11,8 +13,15 @@ type FeaturedPostButtonType = {
 };
 
 const FeaturedPostButton = ({ model, callback }: FeaturedPostButtonType) => {
+  const soundCtx = useContext(SoundContext);
   return (
-    <div className={styles.FeaturedPostButton} onClick={() => callback(model)}>
+    <div
+      className={styles.FeaturedPostButton}
+      onClick={() => {
+        soundCtx?.buttonNoise();
+        callback(model);
+      }}
+    >
       {model.image ? (
         <Image
           src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${model.image!}`}
