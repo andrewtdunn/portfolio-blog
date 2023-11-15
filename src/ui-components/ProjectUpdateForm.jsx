@@ -196,9 +196,11 @@ export default function ProjectUpdateForm(props) {
     tagline: "",
     projectLogo: "",
     details: [],
+    cities: [],
     slides: [],
     showcaseType: "",
     vimeoId: "",
+    startDate: "",
     completionData: "",
     status: "",
   };
@@ -212,11 +214,13 @@ export default function ProjectUpdateForm(props) {
     initialValues.projectLogo
   );
   const [details, setDetails] = React.useState(initialValues.details);
+  const [cities, setCities] = React.useState(initialValues.cities);
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [showcaseType, setShowcaseType] = React.useState(
     initialValues.showcaseType
   );
   const [vimeoId, setVimeoId] = React.useState(initialValues.vimeoId);
+  const [startDate, setStartDate] = React.useState(initialValues.startDate);
   const [completionData, setCompletionData] = React.useState(
     initialValues.completionData
   );
@@ -233,10 +237,13 @@ export default function ProjectUpdateForm(props) {
     setProjectLogo(cleanValues.projectLogo);
     setDetails(cleanValues.details ?? []);
     setCurrentDetailsValue("");
+    setCities(cleanValues.cities ?? []);
+    setCurrentCitiesValue("");
     setSlides(cleanValues.slides ?? []);
     setCurrentSlidesValue("");
     setShowcaseType(cleanValues.showcaseType);
     setVimeoId(cleanValues.vimeoId);
+    setStartDate(cleanValues.startDate);
     setCompletionData(cleanValues.completionData);
     setStatus(cleanValues.status);
     setErrors({});
@@ -254,8 +261,22 @@ export default function ProjectUpdateForm(props) {
   React.useEffect(resetStateValues, [projectRecord]);
   const [currentDetailsValue, setCurrentDetailsValue] = React.useState("");
   const detailsRef = React.createRef();
+  const [currentCitiesValue, setCurrentCitiesValue] = React.useState("");
+  const citiesRef = React.createRef();
   const [currentSlidesValue, setCurrentSlidesValue] = React.useState("");
   const slidesRef = React.createRef();
+  const getDisplayValue = {
+    cities: (r) => {
+      const enumDisplayValueMap = {
+        NYC: "Nyc",
+        PHILADELPIA: "Philadelpia",
+        WASHDC: "Washdc",
+        SF: "Sf",
+        CHICAGO: "Chicago",
+      };
+      return enumDisplayValueMap[r];
+    },
+  };
   const validations = {
     title: [{ type: "Required" }],
     image: [{ type: "Required" }],
@@ -263,9 +284,11 @@ export default function ProjectUpdateForm(props) {
     tagline: [],
     projectLogo: [{ type: "Required" }],
     details: [{ type: "Required" }],
+    cities: [],
     slides: [],
     showcaseType: [{ type: "Required" }],
     vimeoId: [],
+    startDate: [],
     completionData: [],
     status: [{ type: "Required" }],
   };
@@ -301,9 +324,11 @@ export default function ProjectUpdateForm(props) {
           tagline,
           projectLogo,
           details,
+          cities,
           slides,
           showcaseType,
           vimeoId,
+          startDate,
           completionData,
           status,
         };
@@ -367,9 +392,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -401,9 +428,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -435,9 +464,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -469,9 +500,11 @@ export default function ProjectUpdateForm(props) {
               tagline: value,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -503,9 +536,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo: value,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -533,9 +568,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details: values,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -588,9 +625,95 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities: values,
+              slides,
+              showcaseType,
+              vimeoId,
+              startDate,
+              completionData,
+              status,
+            };
+            const result = onChange(modelFields);
+            values = result?.cities ?? values;
+          }
+          setCities(values);
+          setCurrentCitiesValue("");
+        }}
+        currentFieldValue={currentCitiesValue}
+        label={"Cities"}
+        items={cities}
+        hasError={errors?.cities?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("cities", currentCitiesValue)
+        }
+        errorMessage={errors?.cities?.errorMessage}
+        getBadgeText={getDisplayValue.cities}
+        setFieldValue={setCurrentCitiesValue}
+        inputFieldRef={citiesRef}
+        defaultFieldValue={""}
+      >
+        <SelectField
+          label="Cities"
+          placeholder="Please select an option"
+          isDisabled={false}
+          value={currentCitiesValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.cities?.hasError) {
+              runValidationTasks("cities", value);
+            }
+            setCurrentCitiesValue(value);
+          }}
+          onBlur={() => runValidationTasks("cities", currentCitiesValue)}
+          errorMessage={errors.cities?.errorMessage}
+          hasError={errors.cities?.hasError}
+          ref={citiesRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "cities")}
+        >
+          <option
+            children="Nyc"
+            value="NYC"
+            {...getOverrideProps(overrides, "citiesoption0")}
+          ></option>
+          <option
+            children="Philadelpia"
+            value="PHILADELPIA"
+            {...getOverrideProps(overrides, "citiesoption1")}
+          ></option>
+          <option
+            children="Washdc"
+            value="WASHDC"
+            {...getOverrideProps(overrides, "citiesoption2")}
+          ></option>
+          <option
+            children="Sf"
+            value="SF"
+            {...getOverrideProps(overrides, "citiesoption3")}
+          ></option>
+          <option
+            children="Chicago"
+            value="CHICAGO"
+            {...getOverrideProps(overrides, "citiesoption4")}
+          ></option>
+        </SelectField>
+      </ArrayField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              title,
+              image,
+              description,
+              tagline,
+              projectLogo,
+              details,
+              cities,
               slides: values,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -647,9 +770,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType: value,
               vimeoId,
+              startDate,
               completionData,
               status,
             };
@@ -681,9 +806,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId: value,
+              startDate,
               completionData,
               status,
             };
@@ -701,6 +828,43 @@ export default function ProjectUpdateForm(props) {
         {...getOverrideProps(overrides, "vimeoId")}
       ></TextField>
       <TextField
+        label="Start date"
+        isRequired={false}
+        isReadOnly={false}
+        type="date"
+        value={startDate}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              image,
+              description,
+              tagline,
+              projectLogo,
+              details,
+              cities,
+              slides,
+              showcaseType,
+              vimeoId,
+              startDate: value,
+              completionData,
+              status,
+            };
+            const result = onChange(modelFields);
+            value = result?.startDate ?? value;
+          }
+          if (errors.startDate?.hasError) {
+            runValidationTasks("startDate", value);
+          }
+          setStartDate(value);
+        }}
+        onBlur={() => runValidationTasks("startDate", startDate)}
+        errorMessage={errors.startDate?.errorMessage}
+        hasError={errors.startDate?.hasError}
+        {...getOverrideProps(overrides, "startDate")}
+      ></TextField>
+      <TextField
         label="Completion data"
         isRequired={false}
         isReadOnly={false}
@@ -716,9 +880,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData: value,
               status,
             };
@@ -750,9 +916,11 @@ export default function ProjectUpdateForm(props) {
               tagline,
               projectLogo,
               details,
+              cities,
               slides,
               showcaseType,
               vimeoId,
+              startDate,
               completionData,
               status: value,
             };

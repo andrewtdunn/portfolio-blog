@@ -233,6 +233,16 @@ export const schema = {
                     "attributes": [],
                     "isArrayNullable": true
                 },
+                "cities": {
+                    "name": "cities",
+                    "isArray": true,
+                    "type": {
+                        "enum": "ProjectLocation"
+                    },
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
                 "slides": {
                     "name": "slides",
                     "isArray": true,
@@ -252,6 +262,13 @@ export const schema = {
                     "name": "vimeoId",
                     "isArray": false,
                     "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "startDate": {
+                    "name": "startDate",
+                    "isArray": false,
+                    "type": "AWSDate",
                     "isRequired": false,
                     "attributes": []
                 },
@@ -397,6 +414,14 @@ export const schema = {
                 },
                 "slides": {
                     "name": "slides",
+                    "isArray": true,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isArrayNullable": true
+                },
+                "tags": {
+                    "name": "tags",
                     "isArray": true,
                     "type": "String",
                     "isRequired": false,
@@ -1058,6 +1083,16 @@ export const schema = {
                 "INACTIVE"
             ]
         },
+        "ProjectLocation": {
+            "name": "ProjectLocation",
+            "values": [
+                "NYC",
+                "PHILADELPIA",
+                "WASHDC",
+                "SF",
+                "CHICAGO"
+            ]
+        },
         "FeaturedStatus": {
             "name": "FeaturedStatus",
             "values": [
@@ -1086,5 +1121,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.4.4",
-    "version": "132be9f6f362112cb43b7510916cc64a"
+    "version": "d71d8b10af215019efc3214afc8a3e5a"
 };

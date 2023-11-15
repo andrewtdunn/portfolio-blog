@@ -27,6 +27,7 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -71,6 +72,7 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -115,6 +117,7 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -209,9 +212,11 @@ export const createProject = /* GraphQL */ `mutation CreateProject(
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -238,9 +243,11 @@ export const updateProject = /* GraphQL */ `mutation UpdateProject(
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -267,9 +274,11 @@ export const deleteProject = /* GraphQL */ `mutation DeleteProject(
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -299,6 +308,7 @@ export const createBlog = /* GraphQL */ `mutation CreateBlog(
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id
@@ -330,6 +340,7 @@ export const updateBlog = /* GraphQL */ `mutation UpdateBlog(
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id
@@ -361,6 +372,7 @@ export const deleteBlog = /* GraphQL */ `mutation DeleteBlog(
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id

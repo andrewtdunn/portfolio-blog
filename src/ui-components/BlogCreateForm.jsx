@@ -7,13 +7,19 @@
 /* eslint-disable */
 import * as React from "react";
 import {
+  Badge,
   Button,
+  Divider,
   Flex,
   Grid,
+  Icon,
+  ScrollView,
   SelectField,
   SwitchField,
+  Text,
   TextAreaField,
   TextField,
+  useTheme,
 } from "@aws-amplify/ui-react";
 import { StorageManager } from "@aws-amplify/ui-react-storage";
 import { Blog } from "../models";
@@ -25,6 +31,161 @@ import {
 } from "./utils";
 import { Field } from "@aws-amplify/ui-react/internal";
 import { DataStore } from "aws-amplify";
+function ArrayField({
+  items = [],
+  onChange,
+  label,
+  inputFieldRef,
+  children,
+  hasError,
+  setFieldValue,
+  currentFieldValue,
+  defaultFieldValue,
+  lengthLimit,
+  getBadgeText,
+  runValidationTasks,
+  errorMessage,
+}) {
+  const labelElement = <Text>{label}</Text>;
+  const {
+    tokens: {
+      components: {
+        fieldmessages: { error: errorStyles },
+      },
+    },
+  } = useTheme();
+  const [selectedBadgeIndex, setSelectedBadgeIndex] = React.useState();
+  const [isEditing, setIsEditing] = React.useState();
+  React.useEffect(() => {
+    if (isEditing) {
+      inputFieldRef?.current?.focus();
+    }
+  }, [isEditing]);
+  const removeItem = async (removeIndex) => {
+    const newItems = items.filter((value, index) => index !== removeIndex);
+    await onChange(newItems);
+    setSelectedBadgeIndex(undefined);
+  };
+  const addItem = async () => {
+    const { hasError } = runValidationTasks();
+    if (
+      currentFieldValue !== undefined &&
+      currentFieldValue !== null &&
+      currentFieldValue !== "" &&
+      !hasError
+    ) {
+      const newItems = [...items];
+      if (selectedBadgeIndex !== undefined) {
+        newItems[selectedBadgeIndex] = currentFieldValue;
+        setSelectedBadgeIndex(undefined);
+      } else {
+        newItems.push(currentFieldValue);
+      }
+      await onChange(newItems);
+      setIsEditing(false);
+    }
+  };
+  const arraySection = (
+    <React.Fragment>
+      {!!items?.length && (
+        <ScrollView height="inherit" width="inherit" maxHeight={"7rem"}>
+          {items.map((value, index) => {
+            return (
+              <Badge
+                key={index}
+                style={{
+                  cursor: "pointer",
+                  alignItems: "center",
+                  marginRight: 3,
+                  marginTop: 3,
+                  backgroundColor:
+                    index === selectedBadgeIndex ? "#B8CEF9" : "",
+                }}
+                onClick={() => {
+                  setSelectedBadgeIndex(index);
+                  setFieldValue(items[index]);
+                  setIsEditing(true);
+                }}
+              >
+                {getBadgeText ? getBadgeText(value) : value.toString()}
+                <Icon
+                  style={{
+                    cursor: "pointer",
+                    paddingLeft: 3,
+                    width: 20,
+                    height: 20,
+                  }}
+                  viewBox={{ width: 20, height: 20 }}
+                  paths={[
+                    {
+                      d: "M10 10l5.09-5.09L10 10l5.09 5.09L10 10zm0 0L4.91 4.91 10 10l-5.09 5.09L10 10z",
+                      stroke: "black",
+                    },
+                  ]}
+                  ariaLabel="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    removeItem(index);
+                  }}
+                />
+              </Badge>
+            );
+          })}
+        </ScrollView>
+      )}
+      <Divider orientation="horizontal" marginTop={5} />
+    </React.Fragment>
+  );
+  if (lengthLimit !== undefined && items.length >= lengthLimit && !isEditing) {
+    return (
+      <React.Fragment>
+        {labelElement}
+        {arraySection}
+      </React.Fragment>
+    );
+  }
+  return (
+    <React.Fragment>
+      {labelElement}
+      {isEditing && children}
+      {!isEditing ? (
+        <>
+          <Button
+            onClick={() => {
+              setIsEditing(true);
+            }}
+          >
+            Add item
+          </Button>
+          {errorMessage && hasError && (
+            <Text color={errorStyles.color} fontSize={errorStyles.fontSize}>
+              {errorMessage}
+            </Text>
+          )}
+        </>
+      ) : (
+        <Flex justifyContent="flex-end">
+          {(currentFieldValue || isEditing) && (
+            <Button
+              children="Cancel"
+              type="button"
+              size="small"
+              onClick={() => {
+                setFieldValue(defaultFieldValue);
+                setIsEditing(false);
+                setSelectedBadgeIndex(undefined);
+              }}
+            ></Button>
+          )}
+          <Button size="small" variation="link" onClick={addItem}>
+            {selectedBadgeIndex !== undefined ? "Save" : "Add"}
+          </Button>
+        </Flex>
+      )}
+      {arraySection}
+    </React.Fragment>
+  );
+}
 export default function BlogCreateForm(props) {
   const {
     clearOnSuccess = true,
@@ -48,6 +209,7 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: "",
     status: "",
+    tags: [],
     featured: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
@@ -67,6 +229,7 @@ export default function BlogCreateForm(props) {
   const [slides, setSlides] = React.useState(initialValues.slides);
   const [videoId, setVideoId] = React.useState(initialValues.videoId);
   const [status, setStatus] = React.useState(initialValues.status);
+  const [tags, setTags] = React.useState(initialValues.tags);
   const [featured, setFeatured] = React.useState(initialValues.featured);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
@@ -81,9 +244,13 @@ export default function BlogCreateForm(props) {
     setSlides(initialValues.slides);
     setVideoId(initialValues.videoId);
     setStatus(initialValues.status);
+    setTags(initialValues.tags);
+    setCurrentTagsValue("");
     setFeatured(initialValues.featured);
     setErrors({});
   };
+  const [currentTagsValue, setCurrentTagsValue] = React.useState("");
+  const tagsRef = React.createRef();
   const validations = {
     title: [],
     text: [],
@@ -96,6 +263,7 @@ export default function BlogCreateForm(props) {
     slides: [],
     videoId: [],
     status: [{ type: "Required" }],
+    tags: [],
     featured: [],
   };
   const runValidationTasks = async (
@@ -135,6 +303,7 @@ export default function BlogCreateForm(props) {
           slides,
           videoId,
           status,
+          tags,
           featured,
         };
         const validationResponses = await Promise.all(
@@ -201,6 +370,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -235,6 +405,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -274,6 +445,7 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
+                  tags,
                   featured,
                 };
                 const result = onChange(modelFields);
@@ -298,6 +470,7 @@ export default function BlogCreateForm(props) {
                   slides,
                   videoId,
                   status,
+                  tags,
                   featured,
                 };
                 const result = onChange(modelFields);
@@ -336,6 +509,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -392,6 +566,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -448,6 +623,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -483,6 +659,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -519,6 +696,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -558,6 +736,7 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
+                  tags,
                   featured,
                 };
                 const result = onChange(modelFields);
@@ -582,6 +761,7 @@ export default function BlogCreateForm(props) {
                   slides: value,
                   videoId,
                   status,
+                  tags,
                   featured,
                 };
                 const result = onChange(modelFields);
@@ -620,6 +800,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId: value,
               status,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -655,6 +836,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status: value,
+              tags,
               featured,
             };
             const result = onChange(modelFields);
@@ -681,6 +863,63 @@ export default function BlogCreateForm(props) {
           {...getOverrideProps(overrides, "statusoption1")}
         ></option>
       </SelectField>
+      <ArrayField
+        onChange={async (items) => {
+          let values = items;
+          if (onChange) {
+            const modelFields = {
+              title,
+              text,
+              image,
+              heroAlignment,
+              heroSize,
+              isTwoColumn,
+              dropCap,
+              publishDate,
+              slides,
+              videoId,
+              status,
+              tags: values,
+              featured,
+            };
+            const result = onChange(modelFields);
+            values = result?.tags ?? values;
+          }
+          setTags(values);
+          setCurrentTagsValue("");
+        }}
+        currentFieldValue={currentTagsValue}
+        label={"Tags"}
+        items={tags}
+        hasError={errors?.tags?.hasError}
+        runValidationTasks={async () =>
+          await runValidationTasks("tags", currentTagsValue)
+        }
+        errorMessage={errors?.tags?.errorMessage}
+        setFieldValue={setCurrentTagsValue}
+        inputFieldRef={tagsRef}
+        defaultFieldValue={""}
+      >
+        <TextField
+          label="Tags"
+          isRequired={false}
+          isReadOnly={false}
+          value={currentTagsValue}
+          onChange={(e) => {
+            let { value } = e.target;
+            if (errors.tags?.hasError) {
+              runValidationTasks("tags", value);
+            }
+            setCurrentTagsValue(value);
+          }}
+          onBlur={() => runValidationTasks("tags", currentTagsValue)}
+          errorMessage={errors.tags?.errorMessage}
+          hasError={errors.tags?.hasError}
+          ref={tagsRef}
+          labelHidden={true}
+          {...getOverrideProps(overrides, "tags")}
+        ></TextField>
+      </ArrayField>
       <SelectField
         label="Featured"
         placeholder="Please select an option"
@@ -701,6 +940,7 @@ export default function BlogCreateForm(props) {
               slides,
               videoId,
               status,
+              tags,
               featured: value,
             };
             const result = onChange(modelFields);

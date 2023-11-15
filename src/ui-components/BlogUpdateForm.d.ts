@@ -35,6 +35,7 @@ export declare type BlogUpdateFormInputValues = {
     slides?: string[];
     videoId?: string;
     status?: string;
+    tags?: string[];
     imported_mysql_id?: string;
     featured?: string;
 };
@@ -50,6 +51,7 @@ export declare type BlogUpdateFormValidationValues = {
     slides?: ValidationFunction<string>;
     videoId?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
+    tags?: ValidationFunction<string>;
     imported_mysql_id?: ValidationFunction<string>;
     featured?: ValidationFunction<string>;
 };
@@ -67,6 +69,7 @@ export declare type BlogUpdateFormOverridesProps = {
     slides?: PrimitiveOverrideProps<StorageManagerProps>;
     videoId?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
+    tags?: PrimitiveOverrideProps<TextFieldProps>;
     imported_mysql_id?: PrimitiveOverrideProps<TextFieldProps>;
     featured?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;

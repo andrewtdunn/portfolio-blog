@@ -34,6 +34,7 @@ export declare type BlogCreateFormInputValues = {
     slides?: string[];
     videoId?: string;
     status?: string;
+    tags?: string[];
     featured?: string;
 };
 export declare type BlogCreateFormValidationValues = {
@@ -48,6 +49,7 @@ export declare type BlogCreateFormValidationValues = {
     slides?: ValidationFunction<string>;
     videoId?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
+    tags?: ValidationFunction<string>;
     featured?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
@@ -64,6 +66,7 @@ export declare type BlogCreateFormOverridesProps = {
     slides?: PrimitiveOverrideProps<StorageManagerProps>;
     videoId?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
+    tags?: PrimitiveOverrideProps<TextFieldProps>;
     featured?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
 export declare type BlogCreateFormProps = React.PropsWithChildren<{

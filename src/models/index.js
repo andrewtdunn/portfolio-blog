@@ -7,6 +7,14 @@ const ItemStatus = {
   "INACTIVE": "INACTIVE"
 };
 
+const ProjectLocation = {
+  "NYC": "NYC",
+  "PHILADELPIA": "PHILADELPIA",
+  "WASHDC": "WASHDC",
+  "SF": "SF",
+  "CHICAGO": "CHICAGO"
+};
+
 const FeaturedStatus = {
   "FEATURED": "FEATURED",
   "NORMAL": "NORMAL"
@@ -39,6 +47,7 @@ export {
   Bio,
   AWSCertification,
   ItemStatus,
+  ProjectLocation,
   FeaturedStatus,
   HeroAlignment,
   HeroSize

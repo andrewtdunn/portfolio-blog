@@ -9,6 +9,7 @@ import Head from "next/head";
 import { BadReception, ItemStatus, Project } from "@/models";
 import HeadsUpDisplay from "../../components/home-page/heads-up-display";
 import SlideshowContext from "../../store/slideshow-context";
+import { SortDirection } from "aws-amplify";
 
 const ProjectPage = ({
   projects,
@@ -43,8 +44,12 @@ const ProjectPage = ({
 };
 
 export const getStaticProps: GetStaticProps = async (context) => {
-  const models = await DataStore.query(Project, (c) =>
-    c.status!.eq(ItemStatus.ACTIVE)
+  const models = await DataStore.query(
+    Project,
+    (c) => c.status!.eq(ItemStatus.ACTIVE),
+    {
+      sort: (s) => s.completionData(SortDirection.DESCENDING),
+    }
   );
   const projects = await JSON.parse(JSON.stringify(models));
   const videoList = await DataStore.query(BadReception);

@@ -7,6 +7,14 @@ export enum ItemStatus {
   INACTIVE = "INACTIVE"
 }
 
+export enum ProjectLocation {
+  NYC = "NYC",
+  PHILADELPIA = "PHILADELPIA",
+  WASHDC = "WASHDC",
+  SF = "SF",
+  CHICAGO = "CHICAGO"
+}
+
 export enum FeaturedStatus {
   FEATURED = "FEATURED",
   NORMAL = "NORMAL"
@@ -102,9 +110,11 @@ type EagerProject = {
   readonly tagline?: string | null;
   readonly projectLogo: string;
   readonly details?: string[] | null;
+  readonly cities?: (ProjectLocation | null)[] | Array<keyof typeof ProjectLocation> | null;
   readonly slides?: (string | null)[] | null;
   readonly showcaseType: string;
   readonly vimeoId?: string | null;
+  readonly startDate?: string | null;
   readonly completionData?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
@@ -123,9 +133,11 @@ type LazyProject = {
   readonly tagline?: string | null;
   readonly projectLogo: string;
   readonly details?: string[] | null;
+  readonly cities?: (ProjectLocation | null)[] | Array<keyof typeof ProjectLocation> | null;
   readonly slides?: (string | null)[] | null;
   readonly showcaseType: string;
   readonly vimeoId?: string | null;
+  readonly startDate?: string | null;
   readonly completionData?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly createdAt?: string | null;
@@ -153,6 +165,7 @@ type EagerBlog = {
   readonly dropCap?: boolean | null;
   readonly publishDate?: string | null;
   readonly slides?: (string | null)[] | null;
+  readonly tags?: (string | null)[] | null;
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly imported_mysql_id?: string | null;
@@ -176,6 +189,7 @@ type LazyBlog = {
   readonly dropCap?: boolean | null;
   readonly publishDate?: string | null;
   readonly slides?: (string | null)[] | null;
+  readonly tags?: (string | null)[] | null;
   readonly videoId?: string | null;
   readonly status: ItemStatus | keyof typeof ItemStatus;
   readonly imported_mysql_id?: string | null;

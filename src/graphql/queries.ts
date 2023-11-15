@@ -24,6 +24,7 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -192,9 +193,11 @@ export const getProject = /* GraphQL */ `query GetProject($id: ID!) {
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -223,9 +226,11 @@ export const listProjects = /* GraphQL */ `query ListProjects(
       tagline
       projectLogo
       details
+      cities
       slides
       showcaseType
       vimeoId
+      startDate
       completionData
       status
       createdAt
@@ -264,9 +269,11 @@ export const syncProjects = /* GraphQL */ `query SyncProjects(
       tagline
       projectLogo
       details
+      cities
       slides
       showcaseType
       vimeoId
+      startDate
       completionData
       status
       createdAt
@@ -297,6 +304,7 @@ export const getBlog = /* GraphQL */ `query GetBlog($id: ID!) {
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id
@@ -327,6 +335,7 @@ export const listBlogs = /* GraphQL */ `query ListBlogs(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -367,6 +376,7 @@ export const syncBlogs = /* GraphQL */ `query SyncBlogs(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id

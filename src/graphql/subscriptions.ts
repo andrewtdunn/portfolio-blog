@@ -27,6 +27,7 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -71,6 +72,7 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -115,6 +117,7 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       dropCap
       publishDate
       slides
+      tags
       videoId
       status
       imported_mysql_id
@@ -203,9 +206,11 @@ export const onCreateProject = /* GraphQL */ `subscription OnCreateProject($filt
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -229,9 +234,11 @@ export const onUpdateProject = /* GraphQL */ `subscription OnUpdateProject($filt
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -255,9 +262,11 @@ export const onDeleteProject = /* GraphQL */ `subscription OnDeleteProject($filt
     tagline
     projectLogo
     details
+    cities
     slides
     showcaseType
     vimeoId
+    startDate
     completionData
     status
     createdAt
@@ -284,6 +293,7 @@ export const onCreateBlog = /* GraphQL */ `subscription OnCreateBlog($filter: Mo
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id
@@ -312,6 +322,7 @@ export const onUpdateBlog = /* GraphQL */ `subscription OnUpdateBlog($filter: Mo
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id
@@ -340,6 +351,7 @@ export const onDeleteBlog = /* GraphQL */ `subscription OnDeleteBlog($filter: Mo
     dropCap
     publishDate
     slides
+    tags
     videoId
     status
     imported_mysql_id

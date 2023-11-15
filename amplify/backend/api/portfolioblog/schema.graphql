@@ -48,9 +48,11 @@ type Project
   tagline: String
   projectLogo: String!
   details: [String!]
+  cities: [ProjectLocation]
   slides: [String]
   showcaseType: String!
   vimeoId: String
+  startDate: AWSDate
   completionData: AWSDate
   status: ItemStatus!
 }
@@ -58,6 +60,14 @@ type Project
 enum ItemStatus {
   ACTIVE
   INACTIVE
+}
+
+enum ProjectLocation {
+  NYC
+  PHILADELPIA
+  WASHDC
+  SF
+  CHICAGO
 }
 
 type Blog
@@ -82,6 +92,7 @@ type Blog
   dropCap: Boolean
   publishDate: AWSDate
   slides: [String]
+  tags: [String]
   videoId: String
   status: ItemStatus!
   imported_mysql_id: String

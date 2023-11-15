@@ -28,9 +28,11 @@ export declare type ProjectCreateFormInputValues = {
     tagline?: string;
     projectLogo?: string;
     details?: string[];
+    cities?: string[];
     slides?: string[];
     showcaseType?: string;
     vimeoId?: string;
+    startDate?: string;
     completionData?: string;
     status?: string;
 };
@@ -41,9 +43,11 @@ export declare type ProjectCreateFormValidationValues = {
     tagline?: ValidationFunction<string>;
     projectLogo?: ValidationFunction<string>;
     details?: ValidationFunction<string>;
+    cities?: ValidationFunction<string>;
     slides?: ValidationFunction<string>;
     showcaseType?: ValidationFunction<string>;
     vimeoId?: ValidationFunction<string>;
+    startDate?: ValidationFunction<string>;
     completionData?: ValidationFunction<string>;
     status?: ValidationFunction<string>;
 };
@@ -56,9 +60,11 @@ export declare type ProjectCreateFormOverridesProps = {
     tagline?: PrimitiveOverrideProps<TextFieldProps>;
     projectLogo?: PrimitiveOverrideProps<TextFieldProps>;
     details?: PrimitiveOverrideProps<TextFieldProps>;
+    cities?: PrimitiveOverrideProps<SelectFieldProps>;
     slides?: PrimitiveOverrideProps<TextFieldProps>;
     showcaseType?: PrimitiveOverrideProps<TextFieldProps>;
     vimeoId?: PrimitiveOverrideProps<TextFieldProps>;
+    startDate?: PrimitiveOverrideProps<TextFieldProps>;
     completionData?: PrimitiveOverrideProps<TextFieldProps>;
     status?: PrimitiveOverrideProps<SelectFieldProps>;
 } & EscapeHatchProps;
