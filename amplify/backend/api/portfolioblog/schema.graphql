@@ -64,10 +64,11 @@ enum ItemStatus {
 
 enum ProjectLocation {
   NYC
-  PHILADELPIA
   WASHDC
   SF
   CHICAGO
+  PHILADELPHIA
+  ATLANTA
 }
 
 type Blog

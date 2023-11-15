@@ -1087,10 +1087,11 @@ export const schema = {
             "name": "ProjectLocation",
             "values": [
                 "NYC",
-                "PHILADELPIA",
                 "WASHDC",
                 "SF",
-                "CHICAGO"
+                "CHICAGO",
+                "PHILADELPHIA",
+                "ATLANTA"
             ]
         },
         "FeaturedStatus": {

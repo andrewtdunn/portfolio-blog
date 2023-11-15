@@ -9,10 +9,11 @@ export enum ItemStatus {
 
 export enum ProjectLocation {
   NYC = "NYC",
-  PHILADELPIA = "PHILADELPIA",
   WASHDC = "WASHDC",
   SF = "SF",
-  CHICAGO = "CHICAGO"
+  CHICAGO = "CHICAGO",
+  PHILADELPHIA = "PHILADELPHIA",
+  ATLANTA = "ATLANTA"
 }
 
 export enum FeaturedStatus {

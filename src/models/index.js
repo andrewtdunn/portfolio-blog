@@ -9,10 +9,11 @@ const ItemStatus = {
 
 const ProjectLocation = {
   "NYC": "NYC",
-  "PHILADELPIA": "PHILADELPIA",
   "WASHDC": "WASHDC",
   "SF": "SF",
-  "CHICAGO": "CHICAGO"
+  "CHICAGO": "CHICAGO",
+  "PHILADELPHIA": "PHILADELPHIA",
+  "ATLANTA": "ATLANTA"
 };
 
 const FeaturedStatus = {

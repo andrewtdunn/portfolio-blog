@@ -269,10 +269,11 @@ export default function ProjectUpdateForm(props) {
     cities: (r) => {
       const enumDisplayValueMap = {
         NYC: "Nyc",
-        PHILADELPIA: "Philadelpia",
         WASHDC: "Washdc",
         SF: "Sf",
         CHICAGO: "Chicago",
+        PHILADELPHIA: "Philadelphia",
+        ATLANTA: "Atlanta",
       };
       return enumDisplayValueMap[r];
     },
@@ -677,24 +678,29 @@ export default function ProjectUpdateForm(props) {
             {...getOverrideProps(overrides, "citiesoption0")}
           ></option>
           <option
-            children="Philadelpia"
-            value="PHILADELPIA"
-            {...getOverrideProps(overrides, "citiesoption1")}
-          ></option>
-          <option
             children="Washdc"
             value="WASHDC"
-            {...getOverrideProps(overrides, "citiesoption2")}
+            {...getOverrideProps(overrides, "citiesoption1")}
           ></option>
           <option
             children="Sf"
             value="SF"
-            {...getOverrideProps(overrides, "citiesoption3")}
+            {...getOverrideProps(overrides, "citiesoption2")}
           ></option>
           <option
             children="Chicago"
             value="CHICAGO"
+            {...getOverrideProps(overrides, "citiesoption3")}
+          ></option>
+          <option
+            children="Philadelphia"
+            value="PHILADELPHIA"
             {...getOverrideProps(overrides, "citiesoption4")}
+          ></option>
+          <option
+            children="Atlanta"
+            value="ATLANTA"
+            {...getOverrideProps(overrides, "citiesoption5")}
           ></option>
         </SelectField>
       </ArrayField>

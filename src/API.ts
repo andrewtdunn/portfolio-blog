@@ -219,10 +219,11 @@ export type CreateProjectInput = {
 
 export enum ProjectLocation {
   NYC = "NYC",
-  PHILADELPIA = "PHILADELPIA",
   WASHDC = "WASHDC",
   SF = "SF",
   CHICAGO = "CHICAGO",
+  PHILADELPHIA = "PHILADELPHIA",
+  ATLANTA = "ATLANTA",
 }
 
 
