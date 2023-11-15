@@ -110,6 +110,8 @@ const GaugeWidget = () => {
     ctx!.restore();
   };
 
+  const imageBase = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
+
   // set off animation loop
   useEffect(() => {
     let counter = 0.1;
@@ -136,13 +138,14 @@ const GaugeWidget = () => {
 
       ctx.imageSmoothingEnabled = true;
       if (gD.logo == null || gD.logoSrc != image) {
+        console.log("url", imageBase + "/" + image);
         gD.logoSrc = image;
         ctx!.globalAlpha = 0;
         const imageLoaded = new Promise((resolve, reject) => {
           const img = new Image();
           img.onerror = (e) => reject(`${image} failed to load`);
           img.onload = (e) => resolve(img);
-          img.src = image;
+          img.src = `${imageBase}/${image}`;
         });
         imageLoaded.then((img: any) => {
           let canvasHeight = 36;
@@ -520,7 +523,7 @@ const GaugeWidget = () => {
       gaugeDetailsRef.current.ballSpeed =
         gaugeDetailsRef.current.initialBallSpeed;
     }
-  }, [gaugeDetailsRef, isFocused]);
+  }, [gaugeDetailsRef, isFocused, imageBase]);
 
   return (
     <div className={styles.GaugeWidget}>

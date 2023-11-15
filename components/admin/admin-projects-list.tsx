@@ -183,7 +183,9 @@ const AdminProjectList = ({
                   <MdLink className={styles.link} />
                 </Link>
                 <Image
-                  src={(model as Project).projectLogo}
+                  src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${
+                    (model as Project).projectLogo
+                  }`}
                   width={15}
                   height={15}
                   alt={model.title ? model.title : "logo"}

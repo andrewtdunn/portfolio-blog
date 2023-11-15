@@ -113,7 +113,7 @@ const HeadsUpDisplay = ({
       <Header />
       <GlareReflection
         project={projects[currentIndex]}
-        image_url={projects[currentIndex].image}
+        image_url={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${projects[currentIndex].image}`}
         lit={true}
       />
       <ReverseFader />

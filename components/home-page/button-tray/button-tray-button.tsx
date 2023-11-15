@@ -35,6 +35,8 @@ const ButtonTrayButton: FC<ButtonTrayButtonProps> = ({
     focus(index!);
   };
 
+  const photoUrl = process.env.NEXT_PUBLIC_CLOUDFRONT_URL;
+
   return (
     <button
       className={`${styles.ButtonTrayButton} ${isCurrent && styles.lit}`}
@@ -48,7 +50,7 @@ const ButtonTrayButton: FC<ButtonTrayButtonProps> = ({
       ></div>
       <Image
         className={styles.logoImg}
-        src={project.projectLogo!}
+        src={`${photoUrl}/${project.projectLogo!}`}
         alt={project.title}
         width={50}
         height={50}

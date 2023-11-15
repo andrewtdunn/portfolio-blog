@@ -26,12 +26,16 @@ const FocusedSlide = ({
       />
     );
   }
+  const slideImages = newSlides?.map(
+    (slide) => `${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${slide}`
+  );
+  console.log(slideImages);
   return (
     <CrossFader
       title={project.id}
       width={700}
       height={350}
-      slides={newSlides}
+      slides={slideImages}
       time={3000}
       isMain={true}
     />
