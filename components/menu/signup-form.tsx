@@ -43,8 +43,8 @@ const SignUpForm = ({ callback }: SignUpFormTypes) => {
     setTouched(false);
     if (response && response!.user) {
       // clear form and redirect to confirm
-      console.log("user in sign up form", response!.user);
-      console.log(response);
+      // console.log("user in sign up form", response!.user);
+      // console.log(response);
       callback(
         response!.user,
         response!.userConfirmed,

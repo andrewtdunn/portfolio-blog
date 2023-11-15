@@ -66,7 +66,7 @@ const BlogPage = ({
   }, []);
 
   const onTextChange = (e: FormEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setSearchTerm(e.currentTarget.value);
   };
 

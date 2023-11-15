@@ -30,7 +30,7 @@ const AdminBlogsList = ({
   const [searchTerm, setSearchTerm] = useState("");
 
   const getPage = useCallback(async () => {
-    console.log("getting page", currentPageIndex);
+    //console.log("getting page", currentPageIndex);
     const models = await DataStore.query(
       Blog,
       searchTerm

@@ -16,7 +16,7 @@ const HyperspaceButton = () => {
   let { isFocused, restartTimer, focus, currentIndex } = slidesCtx!;
   const handleClick = useCallback(() => {
     if (isFocused) {
-      console.log("click restart");
+      //console.log("click restart");
       restartTimer();
       soundCtx?.playHyperspaceSound();
     } else {

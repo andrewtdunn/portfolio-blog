@@ -68,19 +68,19 @@ const ContentList = ({
   };
 
   const handleNextPage = () => {
-    console.log("handleNextPage");
+    //console.log("handleNextPage");
     setCurrentPageIndex(currentPageIndex + 1);
   };
 
   const handlePreviousPage = () => {
-    console.log("handlePreviousPage");
+    //console.log("handlePreviousPage");
     setCurrentPageIndex(currentPageIndex - 1);
   };
 
   const handleOnChange = (newPageIndex: any, prevPageIndex: any) => {
-    console.log(
-      `handleOnChange \n - newPageIndex: ${newPageIndex} \n - prevPageIndex: ${prevPageIndex}`
-    );
+    //console.log(
+    //   `handleOnChange \n - newPageIndex: ${newPageIndex} \n - prevPageIndex: ${prevPageIndex}`
+    // );
     setCurrentPageIndex(newPageIndex);
     getPage();
   };
@@ -196,13 +196,6 @@ const ContentList = ({
     }
   }
 
-  const gotoLink = (id: string) => {
-    console.log("gotoLink", id);
-  };
-
-  const handleSearchChange = (e: React.FormEvent<HTMLInputElement>) => {
-    setSearchTerm(e.currentTarget.value);
-  };
   return (
     <>
       {adminCtx?.modelType == AdminModel.PROJECT && (

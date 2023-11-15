@@ -28,8 +28,8 @@ const VerifyForm = ({
       errors.username.length > 0 ||
       errors.verify.length > 0
     ) {
-      console.log("do not goback...");
-      console.log("response");
+      // console.log("do not goback...");
+      // console.log("response");
       setVerify("");
     } else {
       callback();

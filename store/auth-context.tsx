@@ -334,7 +334,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         return;
       }
       const response = await Auth.confirmSignUp(username, verifyCode);
-      console.log("autn ctx", response);
+      //console.log("autn ctx", response);
       return response;
     } catch (error: any) {
       console.log("error verifying", error!.name!);

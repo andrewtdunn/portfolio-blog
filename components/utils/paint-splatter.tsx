@@ -6,7 +6,6 @@ const PaintSplatter = () => {
   const navContext = useContext(NavigationContext);
   const { rightOpen } = navContext;
 
-  console.log("rightOpen", rightOpen);
   return (
     <div
       className={`${styles.PaintSplatter} ${
