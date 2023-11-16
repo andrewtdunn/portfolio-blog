@@ -484,6 +484,7 @@ export default function ProjectUpdateForm(props) {
             isResumable={false}
             showThumbnails={true}
             maxFileCount={1}
+            maxSize={1000000000}
             {...getOverrideProps(overrides, "image")}
           ></StorageManager>
         )}
@@ -626,6 +627,7 @@ export default function ProjectUpdateForm(props) {
             isResumable={false}
             showThumbnails={true}
             maxFileCount={1}
+            maxSize={1000000000}
             {...getOverrideProps(overrides, "projectLogo")}
           ></StorageManager>
         )}
@@ -841,6 +843,8 @@ export default function ProjectUpdateForm(props) {
             acceptedFileTypes={["image/*"]}
             isResumable={false}
             showThumbnails={true}
+            maxFileCount={10}
+            maxSize={1000000000}
             {...getOverrideProps(overrides, "slides")}
           ></StorageManager>
         )}

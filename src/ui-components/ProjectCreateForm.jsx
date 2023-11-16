@@ -466,6 +466,7 @@ export default function ProjectCreateForm(props) {
           isResumable={false}
           showThumbnails={true}
           maxFileCount={1}
+          maxSize={1000000000}
           {...getOverrideProps(overrides, "image")}
         ></StorageManager>
       </Field>
@@ -605,6 +606,7 @@ export default function ProjectCreateForm(props) {
           isResumable={false}
           showThumbnails={true}
           maxFileCount={1}
+          maxSize={1000000000}
           {...getOverrideProps(overrides, "projectLogo")}
         ></StorageManager>
       </Field>
@@ -817,6 +819,8 @@ export default function ProjectCreateForm(props) {
           acceptedFileTypes={["image/*"]}
           isResumable={false}
           showThumbnails={true}
+          maxFileCount={10}
+          maxSize={1000000000}
           {...getOverrideProps(overrides, "slides")}
         ></StorageManager>
       </Field>
