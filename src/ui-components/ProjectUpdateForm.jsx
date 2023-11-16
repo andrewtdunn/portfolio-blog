@@ -19,8 +19,15 @@ import {
   TextField,
   useTheme,
 } from "@aws-amplify/ui-react";
+import { StorageManager } from "@aws-amplify/ui-react-storage";
 import { Project } from "../models";
-import { fetchByPath, getOverrideProps, validateField } from "./utils";
+import {
+  fetchByPath,
+  getOverrideProps,
+  processFile,
+  validateField,
+} from "./utils";
+import { Field } from "@aws-amplify/ui-react/internal";
 import { DataStore } from "aws-amplify";
 function ArrayField({
   items = [],
@@ -191,10 +198,10 @@ export default function ProjectUpdateForm(props) {
   } = props;
   const initialValues = {
     title: "",
-    image: "",
+    image: undefined,
     description: "",
     tagline: "",
-    projectLogo: "",
+    projectLogo: undefined,
     details: [],
     cities: [],
     slides: [],
@@ -240,7 +247,6 @@ export default function ProjectUpdateForm(props) {
     setCities(cleanValues.cities ?? []);
     setCurrentCitiesValue("");
     setSlides(cleanValues.slides ?? []);
-    setCurrentSlidesValue("");
     setShowcaseType(cleanValues.showcaseType);
     setVimeoId(cleanValues.vimeoId);
     setStartDate(cleanValues.startDate);
@@ -263,8 +269,6 @@ export default function ProjectUpdateForm(props) {
   const detailsRef = React.createRef();
   const [currentCitiesValue, setCurrentCitiesValue] = React.useState("");
   const citiesRef = React.createRef();
-  const [currentSlidesValue, setCurrentSlidesValue] = React.useState("");
-  const slidesRef = React.createRef();
   const getDisplayValue = {
     cities: (r) => {
       const enumDisplayValueMap = {
@@ -414,42 +418,76 @@ export default function ProjectUpdateForm(props) {
         hasError={errors.title?.hasError}
         {...getOverrideProps(overrides, "title")}
       ></TextField>
-      <TextField
-        label="Image"
-        isRequired={true}
-        isReadOnly={false}
-        value={image}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              image: value,
-              description,
-              tagline,
-              projectLogo,
-              details,
-              cities,
-              slides,
-              showcaseType,
-              vimeoId,
-              startDate,
-              completionData,
-              status,
-            };
-            const result = onChange(modelFields);
-            value = result?.image ?? value;
-          }
-          if (errors.image?.hasError) {
-            runValidationTasks("image", value);
-          }
-          setImage(value);
-        }}
-        onBlur={() => runValidationTasks("image", image)}
+      <Field
         errorMessage={errors.image?.errorMessage}
         hasError={errors.image?.hasError}
-        {...getOverrideProps(overrides, "image")}
-      ></TextField>
+        label={"Image"}
+        isRequired={true}
+        isReadOnly={false}
+      >
+        {projectRecord && (
+          <StorageManager
+            defaultFiles={[{ key: projectRecord.image }]}
+            onUploadSuccess={({ key }) => {
+              setImage((prev) => {
+                let value = key;
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    image: value,
+                    description,
+                    tagline,
+                    projectLogo,
+                    details,
+                    cities,
+                    slides,
+                    showcaseType,
+                    vimeoId,
+                    startDate,
+                    completionData,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.image ?? value;
+                }
+                return value;
+              });
+            }}
+            onFileRemove={({ key }) => {
+              setImage((prev) => {
+                let value = initialValues?.image;
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    image: value,
+                    description,
+                    tagline,
+                    projectLogo,
+                    details,
+                    cities,
+                    slides,
+                    showcaseType,
+                    vimeoId,
+                    startDate,
+                    completionData,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.image ?? value;
+                }
+                return value;
+              });
+            }}
+            processFile={processFile}
+            accessLevel={"public"}
+            acceptedFileTypes={["image/*"]}
+            isResumable={false}
+            showThumbnails={true}
+            maxFileCount={1}
+            {...getOverrideProps(overrides, "image")}
+          ></StorageManager>
+        )}
+      </Field>
       <TextField
         label="Description"
         isRequired={true}
@@ -522,42 +560,76 @@ export default function ProjectUpdateForm(props) {
         hasError={errors.tagline?.hasError}
         {...getOverrideProps(overrides, "tagline")}
       ></TextField>
-      <TextField
-        label="Project logo"
-        isRequired={true}
-        isReadOnly={false}
-        value={projectLogo}
-        onChange={(e) => {
-          let { value } = e.target;
-          if (onChange) {
-            const modelFields = {
-              title,
-              image,
-              description,
-              tagline,
-              projectLogo: value,
-              details,
-              cities,
-              slides,
-              showcaseType,
-              vimeoId,
-              startDate,
-              completionData,
-              status,
-            };
-            const result = onChange(modelFields);
-            value = result?.projectLogo ?? value;
-          }
-          if (errors.projectLogo?.hasError) {
-            runValidationTasks("projectLogo", value);
-          }
-          setProjectLogo(value);
-        }}
-        onBlur={() => runValidationTasks("projectLogo", projectLogo)}
+      <Field
         errorMessage={errors.projectLogo?.errorMessage}
         hasError={errors.projectLogo?.hasError}
-        {...getOverrideProps(overrides, "projectLogo")}
-      ></TextField>
+        label={"Project logo"}
+        isRequired={true}
+        isReadOnly={false}
+      >
+        {projectRecord && (
+          <StorageManager
+            defaultFiles={[{ key: projectRecord.projectLogo }]}
+            onUploadSuccess={({ key }) => {
+              setProjectLogo((prev) => {
+                let value = key;
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    image,
+                    description,
+                    tagline,
+                    projectLogo: value,
+                    details,
+                    cities,
+                    slides,
+                    showcaseType,
+                    vimeoId,
+                    startDate,
+                    completionData,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.projectLogo ?? value;
+                }
+                return value;
+              });
+            }}
+            onFileRemove={({ key }) => {
+              setProjectLogo((prev) => {
+                let value = initialValues?.projectLogo;
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    image,
+                    description,
+                    tagline,
+                    projectLogo: value,
+                    details,
+                    cities,
+                    slides,
+                    showcaseType,
+                    vimeoId,
+                    startDate,
+                    completionData,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.projectLogo ?? value;
+                }
+                return value;
+              });
+            }}
+            processFile={processFile}
+            accessLevel={"public"}
+            acceptedFileTypes={["image/*"]}
+            isResumable={false}
+            showThumbnails={true}
+            maxFileCount={1}
+            {...getOverrideProps(overrides, "projectLogo")}
+          ></StorageManager>
+        )}
+      </Field>
       <ArrayField
         onChange={async (items) => {
           let values = items;
@@ -704,63 +776,75 @@ export default function ProjectUpdateForm(props) {
           ></option>
         </SelectField>
       </ArrayField>
-      <ArrayField
-        onChange={async (items) => {
-          let values = items;
-          if (onChange) {
-            const modelFields = {
-              title,
-              image,
-              description,
-              tagline,
-              projectLogo,
-              details,
-              cities,
-              slides: values,
-              showcaseType,
-              vimeoId,
-              startDate,
-              completionData,
-              status,
-            };
-            const result = onChange(modelFields);
-            values = result?.slides ?? values;
-          }
-          setSlides(values);
-          setCurrentSlidesValue("");
-        }}
-        currentFieldValue={currentSlidesValue}
+      <Field
+        errorMessage={errors.slides?.errorMessage}
+        hasError={errors.slides?.hasError}
         label={"Slides"}
-        items={slides}
-        hasError={errors?.slides?.hasError}
-        runValidationTasks={async () =>
-          await runValidationTasks("slides", currentSlidesValue)
-        }
-        errorMessage={errors?.slides?.errorMessage}
-        setFieldValue={setCurrentSlidesValue}
-        inputFieldRef={slidesRef}
-        defaultFieldValue={""}
+        isRequired={false}
+        isReadOnly={false}
       >
-        <TextField
-          label="Slides"
-          isRequired={false}
-          isReadOnly={false}
-          value={currentSlidesValue}
-          onChange={(e) => {
-            let { value } = e.target;
-            if (errors.slides?.hasError) {
-              runValidationTasks("slides", value);
-            }
-            setCurrentSlidesValue(value);
-          }}
-          onBlur={() => runValidationTasks("slides", currentSlidesValue)}
-          errorMessage={errors.slides?.errorMessage}
-          hasError={errors.slides?.hasError}
-          ref={slidesRef}
-          labelHidden={true}
-          {...getOverrideProps(overrides, "slides")}
-        ></TextField>
-      </ArrayField>
+        {projectRecord && (
+          <StorageManager
+            defaultFiles={projectRecord.slides.map((key) => ({ key }))}
+            onUploadSuccess={({ key }) => {
+              setSlides((prev) => {
+                let value = [...prev, key];
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    image,
+                    description,
+                    tagline,
+                    projectLogo,
+                    details,
+                    cities,
+                    slides: value,
+                    showcaseType,
+                    vimeoId,
+                    startDate,
+                    completionData,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.slides ?? value;
+                }
+                return value;
+              });
+            }}
+            onFileRemove={({ key }) => {
+              setSlides((prev) => {
+                let value = prev.filter((f) => f !== key);
+                if (onChange) {
+                  const modelFields = {
+                    title,
+                    image,
+                    description,
+                    tagline,
+                    projectLogo,
+                    details,
+                    cities,
+                    slides: value,
+                    showcaseType,
+                    vimeoId,
+                    startDate,
+                    completionData,
+                    status,
+                  };
+                  const result = onChange(modelFields);
+                  value = result?.slides ?? value;
+                }
+                return value;
+              });
+            }}
+            processFile={processFile}
+            accessLevel={"public"}
+            acceptedFileTypes={["image/*"]}
+            isResumable={false}
+            showThumbnails={true}
+            {...getOverrideProps(overrides, "slides")}
+          ></StorageManager>
+        )}
+      </Field>
       <TextField
         label="Showcase type"
         isRequired={true}

@@ -772,7 +772,7 @@ export default function BlogCreateForm(props) {
           }}
           processFile={processFile}
           accessLevel={"public"}
-          acceptedFileTypes={[]}
+          acceptedFileTypes={["image/*"]}
           isResumable={false}
           showThumbnails={true}
           maxFileCount={10}

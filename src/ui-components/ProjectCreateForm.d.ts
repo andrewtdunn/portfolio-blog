@@ -6,6 +6,7 @@
 
 import * as React from "react";
 import { GridProps, SelectFieldProps, TextFieldProps } from "@aws-amplify/ui-react";
+import { StorageManagerProps } from "@aws-amplify/ui-react-storage";
 export declare type EscapeHatchProps = {
     [elementHierarchy: string]: Record<string, unknown>;
 } | null;
@@ -55,13 +56,13 @@ export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes
 export declare type ProjectCreateFormOverridesProps = {
     ProjectCreateFormGrid?: PrimitiveOverrideProps<GridProps>;
     title?: PrimitiveOverrideProps<TextFieldProps>;
-    image?: PrimitiveOverrideProps<TextFieldProps>;
+    image?: PrimitiveOverrideProps<StorageManagerProps>;
     description?: PrimitiveOverrideProps<TextFieldProps>;
     tagline?: PrimitiveOverrideProps<TextFieldProps>;
-    projectLogo?: PrimitiveOverrideProps<TextFieldProps>;
+    projectLogo?: PrimitiveOverrideProps<StorageManagerProps>;
     details?: PrimitiveOverrideProps<TextFieldProps>;
     cities?: PrimitiveOverrideProps<SelectFieldProps>;
-    slides?: PrimitiveOverrideProps<TextFieldProps>;
+    slides?: PrimitiveOverrideProps<StorageManagerProps>;
     showcaseType?: PrimitiveOverrideProps<TextFieldProps>;
     vimeoId?: PrimitiveOverrideProps<TextFieldProps>;
     startDate?: PrimitiveOverrideProps<TextFieldProps>;
