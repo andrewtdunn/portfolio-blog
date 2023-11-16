@@ -30,7 +30,7 @@ const SlideVideo = ({
       <Image
         width={width}
         height={height}
-        src={project.image}
+        src={`${process.env.NEXT_PUBLIC_CLOUDFRONT_URL}/${project.image}`}
         alt={project.title}
         className={styles.placeHolderImage}
       />
